@@ -1,0 +1,51 @@
+body, html {
+    height: 2500px;
+    font: 400 15px/1.8 "Lato", sans-serif;
+  }
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+.caption span.border {
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+  
+.parallax1 {
+    /* The image used */
+    background-image: url("http://localhost/img/parallax1.jpg");
+
+    /* Set a specific height */
+   height: 800px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+  
+.parallax2 {
+    /* The image used */
+    background-image: url("http://localhost/img/parallax1.jpg");
+
+    /* Set a specific height */
+   height: 800px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
