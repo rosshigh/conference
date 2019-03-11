@@ -2,7 +2,16 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   Model = mongoose.model('Agenda'),
-  logger = require('../../config/logger');
+  Person = mongoose.model('Person'),
+  Abstract = mongoose.model('Abstract'),
+  logger = require('../../config/logger'),
+  multer = require('multer'),
+  mkdirp = require('mkdirp'),
+  passportService = require('../../config/passport'),
+  passport = require('passport');
+
+  var requireAuth = passport.authenticate('jwt', { session: false }),
+  requireLogin = passport.authenticate('local', { session: false });
 
 module.exports = function (app) {
   app.use('/', router);
@@ -65,5 +74,172 @@ module.exports = function (app) {
             res.status(200).json({message: "chapter deleted"});
         }
     })
+  });
+
+  //Person
+
+  router.route('/api/people/login')
+  .post(requireLogin, login);
+
+  router.get('/api/people',  function(req, res, next){
+    logger.log('info','Get people',"verbose");
+    
+    var query = Person.find();
+    query.exec(function(err, object){
+        if (err) {
+          return next(err);
+        } else {
+          res.status(200).json(object);
+        }
+      });
+  });
+
+  router.get('/api/people/:id',  function(req, res, next){
+    logger.log('info','Get people ' + req.params.id,"verbose");
+    Person.findById(req.params.id, function(err, object){
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(object);
+      }
+    });
+  });
+
+  router.post('/api/people',  function(req, res, next){
+     logger.log('info','Create a people',"verbose");
+
+    var chapter =  new Person(req.body);
+    chapter.save( function ( err, object ){
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(object);
+      }
+    });
+  });
+
+  router.put('/api/people',  function(req, res, next){
+    logger.log('info','Update people ' + req.body._id,"verbose");
+
+    Person.findOneAndUpdate({_id: req.body._id}, req.body, {new:true, safe:true, multi:false}, function(err, result){
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(result);
+      }
+    })
+  });
+
+  router.delete('/api/people/:id',  function(req, res, next){
+    logger.log('info','Delete people ' + req.body._id,"verbose");
+    Person.find({_id: req.params.id}).remove().exec(function(err, object){
+        if (err) {
+            return next(err);
+        } else {
+            res.status(200).json({message: "people deleted"});
+        }
+    })
+  });
+
+  //Abstract
+  router.get('/api/abstract',  function(req, res, next){
+    abstract    
+    var query = Abstract.find();
+    query.exec(function(err, object){
+        if (err) {
+          return next(err);
+        } else {
+          res.status(200).json(object);
+        }
+      });
+  });
+
+  router.get('/api/abstract/:id',  function(req, res, next){
+    logger.log('info','Get abstract ' + req.params.id,"verbose");
+    Abstract.findById(req.params.id, function(err, object){
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(object);
+      }
+    });
+  });
+
+  router.post('/api/abstract',  function(req, res, next){
+     logger.log('info','Create a abstract',"verbose");
+
+    var chapter =  new Abstract(req.body);
+    chapter.save( function ( err, object ){
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(object);
+      }
+    });
+  });
+
+  router.put('/api/abstract',  function(req, res, next){
+    logger.log('info','Update abstract ' + req.body._id,"verbose");
+
+    Abstract.findOneAndUpdate({_id: req.body._id}, req.body, {new:true, safe:true, multi:false}, function(err, result){
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(result);
+      }
+    })
+  });
+
+  router.delete('/api/abstract/:id',  function(req, res, next){
+    logger.log('info','Delete abstract ' + req.body._id,"verbose");
+    Abstract.find({_id: req.params.id}).remove().exec(function(err, object){
+        if (err) {
+            return next(err);
+        } else {
+            res.status(200).json({message: "abstract deleted"});
+        }
+    })
+  });
+
+  var storageTech = multer.diskStorage({
+    destination: function (req, file, cb) {
+
+      var path = config.uploads + '/abstracts';
+     
+      mkdirp(path, function(err) {
+        if(err){
+          res.status(500).json(err);
+        } else {
+          cb(null, path);
+        }
+      });
+    },
+    filename: function (req, file, cb) {
+      cb(null, req.params.id + file.originalname.substring(file.originalname.indexOf('.')));
+    }
+  });
+
+  var uploadTechnotes = multer({ storage: storageTech});
+
+  router.post('/api/abstract/upload/:id',  uploadTechnotes.any(), function(req, res, next){
+     logger.log('info','Upload File ', 'verbose');  
+     Abstract.findById(req.params.id, function(err, abstract){   
+        if(err){
+          return next(err);
+        } else {              
+          abstract.file =  {
+            originalFileName: req.files[0].originalname,  
+              fileName: req.files[0].filename,
+              dateCreated: new Date()
+            };                    
+            abstract.save(function(err, abstract) {
+              if(err){
+                return next(err);
+              } else {
+                res.status(200).json(abstract);
+              }
+            });
+          }        
+      });
   });
 };

@@ -3,6 +3,10 @@ body, html {
     font: 400 15px/1.8 "Lato", sans-serif;
   }
 
+  .has-error {
+      color:red;
+  }
+
 .caption {
     position: absolute;
     left: 0;
@@ -26,7 +30,7 @@ body, html {
     background-image: url("http://localhost/img/parallax1.jpg");
 
     /* Set a specific height */
-   height: 800px;
+   height: 900px;
 
     /* Create the parallax scrolling effect */
     background-attachment: fixed;

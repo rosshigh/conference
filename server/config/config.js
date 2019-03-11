@@ -24,6 +24,8 @@ var config = {
     },
     port: 80,
     db: 'mongodb://localhost/conf',
+    secret: "Ci23fWtahDYE3dfirAHrJhzrUEoslIxqwcDN9VNhRJCWf8Tyc1F1mqYrjGYF",
+    uploads: './public/uploadedFiles',
     corsDomain: 'http://conference.ucc.uwm.edu',
     smtp: 'smtprelay.uwm.edu',
     emailAddress: 'ucc@uwm.edu',

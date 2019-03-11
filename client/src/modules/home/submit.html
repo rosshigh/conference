@@ -1,0 +1,51 @@
+<template>
+    <div class="container">
+        <div class="card" style="margin-top:100px;">
+            <div class="card-body">
+                <form>
+                    <h3>${userObj.firstName} ${userObj.lastName}</h3>
+                    <h3>${userObj.university}</h3>
+                    <div class="form-group">
+                        <label for="title">Title *</label>
+                        <input value.bind="title" type="text" class="form-control" id="title"
+                            aria-describedby="titleHelp" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description *</label>
+                        <textarea value.bind="description" type="text" class="form-control" id="description"
+                            aria-describedby="descriptionHelp" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                            <label for="description">Track *</label>
+                            <select value.bind="track" class="form-control" id="track">
+                                <option value="">Select a track</option>
+                                    <option value="${type}" repeat.for="type of tracks">${type}</optionp>
+                                </select>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-2">
+                            <label class="btn btn-primary">
+                                Browse for files&hellip; <input type="file" style="display: none;"
+                                    change.delegate="changeFiles()" files.bind="files">
+                            </label>
+                            <span id="files"></span>
+                        </div>
+                        <div class="col">
+
+                            <ul>
+                                <li repeat.for="file of filesToUpload" class="list-group-item">${file.name}<span
+                                        click.delegate="removeFile($index)" class="pull-right"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></span></li>
+                            </ul>
+                           
+                        </div>
+                       
+                    </div>
+                    
+                    <button class="btn btn-primary" click.trigger="submit()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>

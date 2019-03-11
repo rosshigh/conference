@@ -53,6 +53,17 @@
           "aurelia-loader-default",
           "aurelia-pal-browser",
           {
+            "name": "toastr",
+            "main": "toastr.js",
+            "path": "../node_modules/toastr",
+            "resources": [
+              "build/toastr.min.css"
+            ],
+            "deps": [
+              "jquery"
+            ]
+          },
+          {
             "name": "aurelia-testing",
             "env": "dev"
           },
