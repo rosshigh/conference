@@ -102,28 +102,13 @@ define('modules/home/agenda',["exports"], function (_exports) {
   _exports.Agenda = Agenda;
 });;
 define('text!modules/home/agenda.html',[],function(){return "<template>\r\n    \r\n</template>";});;
-define('modules/home/home',["exports", "toastr"], function (_exports, toastr) {
+define('modules/home/home',["exports"], function (_exports) {
   "use strict";
 
   _exports.__esModule = true;
   _exports.Home = void 0;
-  toastr = _interopRequireWildcard(toastr);
 
-  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-  var Home =
-  /*#__PURE__*/
-  function () {
-    function Home() {}
-
-    var _proto = Home.prototype;
-
-    _proto.attached = function attached() {
-      toastr.success('This a toast');
-    };
-
-    return Home;
-  }();
+  var Home = function Home() {};
 
   _exports.Home = Home;
 });;
