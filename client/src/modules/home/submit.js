@@ -19,7 +19,7 @@ export class Submit {
         this._setupValidation();
 
         this.tracks = [
-            "This Track", "That Track"
+            "Innovations in Teaching", "High Impact Practices","Incorporating Latest Developments in Curriculum","Research in Teaching"
         ];
     }
 

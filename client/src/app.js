@@ -36,6 +36,13 @@ export class App {
         name: 'Submission',
         settings: { auth: false, roles: [] },
         title: 'Conference'
+      },
+      {
+        route: 'milwaukee',
+        moduleId: './modules/home/milwaukee',
+        name: 'Milwaukee',
+        settings: { auth: false, roles: [] },
+        title: 'Conference'
       }
     ])
   }

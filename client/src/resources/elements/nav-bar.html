@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <img class="navbar-brand" style="height:50px;" src="http://localhost/img/c3po.jpg">
+    <img class="navbar-brand" style="height:50px;" src="img/c3po.jpg">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,12 @@
           <a class="nav-link" href="#/agenda">Agenda</a>
         </li>
       </ul>
-    </div>>
+    </div>
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#/milwaukee" style="color:white;" href="#">Milwaukee</a>
+      </li>
+    </ul>
     <form if.bind="!isAuthenticated" class="form-inline my-2 my-lg-0">
         <label if.bind="loginError" style="color:white;margin-right:5px;">${loginError}</label>
       <div class="form-group mb-2">
