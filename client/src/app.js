@@ -3,7 +3,14 @@ export class App {
     this.router = router;
     config.map([
       {
-        route: ['', 'home'],
+        route: ['', 'landing'],
+        moduleId: './modules/home/landing',
+        name: 'Landing',
+        settings: { auth: false, roles: [] },
+        title: 'Conference'
+      },
+      {
+        route: 'home',
         moduleId: './modules/home/home',
         name: 'Home',
         settings: { auth: false, roles: [] },

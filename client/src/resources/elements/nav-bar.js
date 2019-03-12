@@ -39,13 +39,14 @@ export class NavBar {
         if (this.userObj) this.auth.logout(this.userObj.email);
         this.userObj = new Object();
         this.isAuthenticated = this.auth.isAuthenticated();
-        this.router.navigate("home");
+        this.router.navigate("landing");
     }
 
     async loginSuccess() {
         this.userObj = JSON.parse(sessionStorage.getItem('user'));
         if (this.userObj) {
             sessionStorage.setItem('role', this.userObj.role)
+            this.router.navigate("home");
         }
 
     }

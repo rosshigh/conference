@@ -14,7 +14,16 @@ define('app',["exports"], function (_exports) {
     _proto.configureRouter = function configureRouter(config, router) {
       this.router = router;
       config.map([{
-        route: ['', 'home'],
+        route: ['', 'landing'],
+        moduleId: './modules/home/landing',
+        name: 'Landing',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'Conference'
+      }, {
+        route: 'home',
         moduleId: './modules/home/home',
         name: 'Home',
         settings: {
@@ -112,7 +121,18 @@ define('modules/home/home',["exports"], function (_exports) {
 
   _exports.Home = Home;
 });;
-define('text!modules/home/home.html',[],function(){return "<template>\r\n    <div class=\"parallax1\" style=\"text-align:center;padding-top:75px;\">\r\n        <div class=\"caption\">\r\n            <span class=\"border\">Community - Collaboration - Curriculum for Professors and Others</span>\r\n        </div>\r\n\r\n    </div>\r\n    <div class=\"row center-text\"\r\n        style=\"height:400px;color: #777;background-color:white;text-align:center;padding:25px 80px;text-align: justify;\">\r\n\r\n    </div>\r\n\r\n    <div class=\"parallax2\"></div>\r\n</template>";});;
+define('text!modules/home/home.html',[],function(){return "<template>\r\n    <div class=\"container\">\r\n        <h1 class=\"text-center\" style=\"margin-top:100px;\">Community - Collaboration - Curriculum for Professors and Others</h1>\r\n    </div>\r\n</template>";});;
+define('modules/home/landing',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Landing = void 0;
+
+  var Landing = function Landing() {};
+
+  _exports.Landing = Landing;
+});;
+define('text!modules/home/landing.html',[],function(){return "<template>\r\n    <div class=\"parallax1\" style=\"text-align:center;padding-top:75px;\">\r\n        <div class=\"caption\">\r\n            <span class=\"border\">Community - Collaboration - Curriculum for Professors and Others</span>\r\n        </div>\r\n\r\n    </div>\r\n    <div class=\"row center-text\"\r\n        style=\"height:400px;color: #777;background-color:white;text-align:center;padding:25px 80px;text-align: justify;\">\r\n\r\n    </div>\r\n\r\n    <div class=\"parallax2\"></div>\r\n</template>";});;
 define('modules/home/register',["exports", "aurelia-framework", "../../resources/utils/validation", "../../resources/data/services", "aurelia-router", "jquery", "toastr"], function (_exports, _aureliaFramework, _validation, _services, _aureliaRouter, _jquery, toastr) {
   "use strict";
 
@@ -970,7 +990,7 @@ define('resources/elements/nav-bar',["exports", "aurelia-framework", "aurelia-ro
       if (this.userObj) this.auth.logout(this.userObj.email);
       this.userObj = new Object();
       this.isAuthenticated = this.auth.isAuthenticated();
-      this.router.navigate("home");
+      this.router.navigate("landing");
     };
 
     _proto.loginSuccess =
@@ -987,6 +1007,7 @@ define('resources/elements/nav-bar',["exports", "aurelia-framework", "aurelia-ro
 
                 if (this.userObj) {
                   sessionStorage.setItem('role', this.userObj.role);
+                  this.router.navigate("home");
                 }
 
               case 2:
