@@ -30,4 +30,23 @@ export class Services {
              return response;
         }
      }
+
+     async getPersonAbstracts(id){
+         let response = await this.data.get('abstract/person/' + id);
+         if(!response.error){
+             this.abstractArray = response;
+         } else {
+            this.abstractArray = [];
+         }
+
+     }
+
+     async getAgenda(){
+         let response = await this.data.get('agenda');
+         if(!response.error){
+             this.agendaArray = response;
+         } else {
+             this.agendaArray = [];
+         }
+     }
 }

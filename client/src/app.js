@@ -24,6 +24,13 @@ export class App {
         title: 'Conference'
       },
       {
+        route: 'logistics',
+        moduleId: './modules/home/logistics',
+        name: 'Logistics',
+        settings: { auth: false, roles: [] },
+        title: 'Logistics'
+      },
+      {
         route: 'agenda',
         moduleId: './modules/home/agenda',
         name: 'Agenda',
@@ -38,11 +45,11 @@ export class App {
         title: 'Conference'
       },
       {
-        route: 'milwaukee',
-        moduleId: './modules/home/milwaukee',
-        name: 'Milwaukee',
+        route: 'contact',
+        moduleId: './modules/home/contact',
+        name: 'Contact',
         settings: { auth: false, roles: [] },
-        title: 'Conference'
+        title: 'Contact'
       }
     ])
   }

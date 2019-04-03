@@ -1,3 +1,104 @@
 <template>
-    
+    <div class="container" style="padding-top:100px;">
+        <h2>Agenda</h2>
+
+
+        <h3>Sunday - July 14 – DAY 1</h3>
+        <div class="agenda">
+            <div class="table-responsive">
+                <table class="table table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Event</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="agenda-date" class="active" rowspan="${sundayRowSpan}">
+                                <div class="dayofmonth">14</div>
+                                <div class="dayofweek">Sunday</div>
+                                <div class="shortdate text-muted">July, 2019</div>
+                            </td>
+                            <td class="agenda-time">
+                                    ${sundayFirstItem.time}
+                                </td>
+                            <td class="agenda-events">
+                                <div class="agenda-event" innerhtml.bind="sundayFirstItem.name">
+                                </div>
+                            </td>
+                            <td class="agenda-events">
+                                <div class="agenda-event" innerhtml.bind="sundayFirstItem.description">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr repeat.for="item of sundayArray">
+                            <td class="agenda-time">
+                                ${item.time}
+                            </td>
+                            <td class="agenda-events">
+                                <div class="agenda-event" innerhtml.bind="item.name">
+                                </div>
+                            </td>
+                            <td class="agenda-events">
+                                <div class="agenda-event" innerhtml.bind="item.description">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="lead">
+                    
+                </p>
+                <h3>Monday - July 15 – DAY 2</h3>
+            <div class="table-responsive">
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Event</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="agenda-date" class="active" rowspan="${mondayRowSpan}">
+                                    <div class="dayofmonth">15</div>
+                                    <div class="dayofweek">Monday</div>
+                                    <div class="shortdate text-muted">July, 2019</div>
+                                </td>
+                                <td class="agenda-time">
+                                        ${mondayFirstItem.time}
+                                    </td>
+                                <td class="agenda-events">
+                                    <div class="agenda-event" innerhtml.bind="mondayFirstItem.name">
+                                    </div>
+                                </td>
+                                <td class="agenda-events">
+                                    <div class="agenda-event" innerhtml.bind="mondayFirstItem.description">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr repeat.for="item of mondayArray">
+                                <td class="agenda-time">
+                                    ${item.time}
+                                </td>
+                                <td class="agenda-events">
+                                    <div class="agenda-event" innerhtml.bind="item.name">
+                                    </div>
+                                </td>
+                                <td class="agenda-events">
+                                    <div class="agenda-event" innerhtml.bind="item.description">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+           
+        </div>
 </template>
