@@ -9,7 +9,7 @@ export class DataServices {
         this.http = http;
     
 		this.http.configure(x => {
-			x.withBaseUrl("http://localhost/api/");
+			x.withBaseUrl("http://c3po.ucc.uwm.edu/api/");
 		});
     }
 
