@@ -39,7 +39,7 @@ body, html {
   
 .parallax1 {
     /* The image used */
-    background-image: url("http://localhost/img/parallax1.jpg");
+    background-image: url("/img/parallax1.jpg");
 
     /* Set a specific height */
    height: 500px;
@@ -54,7 +54,7 @@ body, html {
   
 .parallax2 {
     /* The image used */
-    background-image: url("http://localhost/img/parallax1.jpg");
+    background-image: url("/img/parallax1.jpg");
 
     /* Set a specific height */
    height: 200px;
