@@ -6,39 +6,14 @@
     "auditLog": "log\\.6425b6ef59d56488746d0ccea1d2ee6caecd0fd0-audit.json",
     "files": [
         {
-            "date": 1551992338302,
-            "name": "log\\error-2019-03-07-14.log",
-            "hash": "7d7f7ad0f9f91a8cee48e86011367a6e"
+            "date": 1554747584765,
+            "name": "log\\error-2019-04-08-13.log",
+            "hash": "14c37bbfa4bd46bde43e1f69ae006336"
         },
         {
-            "date": 1552232144781,
-            "name": "log\\error-2019-03-10-10.log",
-            "hash": "781d81179979c710fd02cfde30d13099"
-        },
-        {
-            "date": 1552318190075,
-            "name": "log\\error-2019-03-11-10.log",
-            "hash": "c796fe7ab4784b3f73f3b938897087cb"
-        },
-        {
-            "date": 1552394335983,
-            "name": "log\\error-2019-03-12-07.log",
-            "hash": "c9a222283d01c0b03c95488cc25ac58d"
-        },
-        {
-            "date": 1552406358657,
-            "name": "log\\error-2019-03-12-10.log",
-            "hash": "151cad91c1e945a2f627f5034110c33c"
-        },
-        {
-            "date": 1552406424254,
-            "name": "log\\error-2019-03-12-11.log",
-            "hash": "8709699dc8c3e15d909ae50c68de1b12"
-        },
-        {
-            "date": 1552578716766,
-            "name": "log\\error-2019-03-14-10.log",
-            "hash": "0432d75b188e874db8b3317449f099a7"
+            "date": 1554819944936,
+            "name": "log\\error-2019-04-09-09.log",
+            "hash": "8b3718b805a478e7b5389622518722aa"
         }
     ]
 }
