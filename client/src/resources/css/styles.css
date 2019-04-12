@@ -9,7 +9,15 @@ body, html {
     width:100%;
     left:0;
     background-color:ghostwhite;
-    }
+  }
+
+  .smallMarginRight{
+    margin-right: 5px;
+  }
+
+  .sortable {
+    cursor: pointer;   
+  }
 
   .has-error {
       color:red;

@@ -8,8 +8,6 @@
                             <h5>Register to submit an abstract.</h5>
                         </div>
                         <form if.bind="!isAuthenticated && !showRegisterPanel" class="form-inline">
-
-                            <label if.bind="loginError" style="color:white;margin-right:5px;">${loginError}</label>
                             <div class="form-group mb-2">
                                 <input value.bind="email" type="email" autofocus class="form-control" id="loginemail"
                                     placeholder="Email"></input>
@@ -22,6 +20,7 @@
                             <button class="btn btn-primary mb-2" style="margin-left:5px;"
                                 click.delegate='showRegister()'>Register</button>
                         </form>
+                        <label if.bind="loginError" style="color:black;margin-right:5px;">${loginError}</label>
                         <div show.bind="showRegisterPanel">
                             <h2>Register as an Author</h2>
                             <form>
@@ -58,78 +57,20 @@
                                 </div>
                                 <button class="btn btn-primary" style="margin-top:25px"
                                     click.trigger="save()">Register</button>
-                            </form>
-                        </div>
-                        <div show.bind="isAuthenticated">
-                            <form>
-                                <h3>${userObj.firstName} ${userObj.lastName}</h3>
-                                <h3>${userObj.university}</h3>
-                                <div class="form-group">
-                                    <label for="title">Title *</label>
-                                    <input value.bind="title" type="text" class="form-control" id="title"
-                                        aria-describedby="titleHelp" placeholder="Title">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Track *</label>
-                                    <select value.bind="track" class="form-control" id="track">
-                                        <option value="">Select a track</option>
-                                        <option value="${type}" repeat.for="type of tracks">${type}</optionp>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description *</label>
-                                    <textarea value.bind="description" type="text" class="form-control" id="description"
-                                        aria-describedby="descriptionHelp" placeholder="Description"
-                                        rows="10"></textarea>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="btn btn-primary">
-                                            Browse for files&hellip; <input type="file" style="display: none;"
-                                                change.delegate="changeFiles()" files.bind="files">
-                                        </label>
-                                        <span id="files"></span>
-                                    </div>
-                                    <div class="col">
-                                        <ul>
-                                            <li repeat.for="file of filesToUpload" class="list-group-item">
-                                                ${file.name}<span click.delegate="removeFile($index)"
-                                                    class="pull-right"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i></span></li>
-                                        </ul>
-                                    </div>
-                                </div>
                                 <button class="btn btn-primary" style="margin-top:25px"
-                                    click.trigger="submit()">Submit</button>
+                                    click.trigger="showRegister()">Cancel</button>
                             </form>
                         </div>
                     </div>
-                    <div class="col-5" show.bind="!isAuthenticated">
+                    <div if.bind="!isAuthenticated" class="col-5">
                         <compose view="./guidelines.html"></compose>
                     </div>
-                    <div class="col-5 offset-1" show.bind="isAuthenticated">
-                        <p>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                View Submission Guidelines
-                            </a>
-                            <div class="collapse" id="collapseExample">
-                                <div class="card card-body">
-                                    <compose view="./guidelines.html"></compose>
-                                </div>
-                            </div>
-                            <h2>Your Submissions</h2>
-                            <ul class="list-group">
-                                <li repeat.for="submission of services.abstractArray" class="list-group-item">
-                                    <h3>${submission.title}</h3>
-                                    <h6>Status: ${submission.status}</h6>
-                                </li>
-                            </ul>
-                    </div>
                 </div>
-
-
+                <div show.bind="isAuthenticated">
+                    <compose view="./submitTabs.html"></compose>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 </template>

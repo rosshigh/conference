@@ -1,0 +1,18 @@
+<template>
+    <div class="col-5">
+        <p>
+            <div show.bind="services.abstractArray.length">
+                <h2>Your Submissions</h2>
+                <ul class="list-group">
+                    <li repeat.for="submission of services.abstractArray" class="list-group-item">
+                        <h3>${submission.title}</h3>
+                        <h6>Status: <strong>${submission.status}</strong></h6>
+                    </li>
+                </ul>
+            </div>
+            <div show.bind="!services.abstractArray.length">
+                <h2>You haven't submitted an abstract yet.</h2>
+            </div>
+        </p>
+    </div>
+</template>

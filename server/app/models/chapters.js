@@ -19,7 +19,8 @@ var PersonSchema = new Schema({
   email: { type: String },
   password: { type: String },
   role: { type: String, default: 'user' },
-  dateRegistered: { type: Date, default: Date.now }
+  dateRegistered: { type: Date, default: Date.now },
+  abstracts: [Schema.Types.ObjectId ]
 });
 
 PersonSchema.pre('save', function(next){
@@ -63,7 +64,9 @@ var Abstractchema = new Schema({
   title: { type: String },
   description: { type: String },
   agendaId: { type: Schema.Types.ObjectId }, 
-  track: { type: String }
+  track: { type: String },
+  status: { type: String, default: 'Submitted'},
+  reviewers: [Schema.Types.ObjectId ]
 });
 
 module.exports = Mongoose.model('Abstract', Abstractchema);

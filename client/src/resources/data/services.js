@@ -38,7 +38,15 @@ export class Services {
          } else {
             this.abstractArray = [];
          }
+     }
 
+     async getAbstracts(){
+        let response = await this.data.get('abstract');
+        if(!response.error){
+            this.allAbstractArray = response;
+        } else {
+           this.allAbstractArray = [];
+        }
      }
 
      async getAgenda(){
@@ -48,5 +56,33 @@ export class Services {
          } else {
              this.agendaArray = [];
          }
+     }
+
+     async getPeople(){
+        let response = await this.data.get('people');
+        if(!response.error){
+            this.peopleArray = response;
+        } else {
+            this.peopleArray = [];
+        }
+     }
+
+     async savePerson(person){
+         let response = await this.data.saveObject(person, 'people', 'put');
+         return response;
+     }
+
+     async saveAbstractReviewer(abstract){
+        let response = await this.data.saveObject(abstract, 'abstract', 'put');
+        return response;
+     }
+
+     async getAbstract(id){
+        let response = await this.data.get('abstract/' + id);
+        if(!response.error){
+            return response;
+        } else {
+           return null;
+        }
      }
 }
