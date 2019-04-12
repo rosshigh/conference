@@ -21,24 +21,31 @@
                     <textarea value.bind="abstract.description" type="text" class="form-control" id="description"
                         aria-describedby="descriptionHelp" placeholder="Description" rows="10"></textarea>
                 </div>
-                <button class="btn btn-primary" style="margin-top:25px" click.trigger="saveEditAbstract()">Submit</button>
+                <div class="form-group">
+                    <a href="uploadedFiles/${abstract.file.fileName}" target="_blank"
+                        style="margin-top:20px;">${abstract.file.originalFileName}</a>
+                </div>
+                <button class="btn btn-primary" style="margin-top:25px"
+                    click.trigger="saveEditAbstract()">Submit</button>
                 <button class="btn btn-primary" style="margin-top:25px" click.trigger="cancelEdit()">Cancel</button>
             </form>
+
         </div>
         <div class="col-5">
             <h5>You don't have to click submit to save changes to the abstract reviewers</h5>
-                <h3>Reviewers</h3>
-                <h2 show.bind="!abstract.reviewers.length">No reviewers are assigned yet</h2>
-                <ul class="list-group">
-                    <li class="list-group-item" click.trigger="removeReviewerFromAbstract(person)"
-                        repeat.for="person of abstract.reviewers">${person.firstName}
-                        ${person.lastName}<br>${person.university}
-                    </li>
-                </ul>
+            <h3>Reviewers</h3>
+            <h2 show.bind="!abstract.reviewers.length">No reviewers are assigned yet</h2>
+            <ul class="list-group">
+                <li class="list-group-item" click.trigger="removeReviewerFromAbstract(person)"
+                    repeat.for="person of abstract.reviewers">${person.firstName}
+                    ${person.lastName}<br>${person.university}
+                </li>
+            </ul>
             <h3 style="margin-top:20px;">Available Reviewers</h3>
             <ul class="list-group">
                 <li class="list-group-item" click.trigger="addReviewerToAbstract(person)"
-                    repeat.for="person of services.peopleArray | availableReviewers:abstract.reviewers">${person.firstName}
+                    repeat.for="person of services.peopleArray | availableReviewers:abstract.reviewers">
+                    ${person.firstName}
                     ${person.lastName}<br>${person.university}
                 </li>
             </ul>

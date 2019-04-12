@@ -96,12 +96,12 @@
                                         class="form-control" />
                                 </th>
                             </tr>
-                            <tr click.trigger="edit(abstract)" repeat.for="abstract of dataTable.displayArray">
-                                <td>${abstract.personId.firstName} ${abstract.personId.lastName}</td>
-                                <td>${abstract.personId.email}</td>
-                                <td>${abstract.title}</td>
-                                <td>${abstract.track}</td>
-                                <td>${abstract.status}</td>
+                            <tr  repeat.for="abstract of dataTable.displayArray">
+                                <td click.trigger="edit(abstract)">${abstract.personId.firstName} ${abstract.personId.lastName}</td>
+                                <td click.trigger="edit(abstract)">${abstract.personId.email}</td>
+                                <td click.trigger="edit(abstract)">${abstract.title}</td>
+                                <td click.trigger="edit(abstract)">${abstract.track}</td>
+                                <td click.trigger="edit(abstract)">${abstract.status}</td>
                                 <td><a href="uploadedFiles/${abstract.file.fileName}" target="_blank"
                                         }>${abstract.file.originalFileName}</a></td>
                             </tr>

@@ -49642,6 +49642,7 @@ define('jquery',['jquery/dist/jquery'],function(m){return m;});
 define('moment',['moment/moment'],function(m){return m;});
 define('text',['text/text'],function(m){return m;});
 define('toastr',['toastr/toastr'],function(m){return m;});
+define('valueConverters/available-reviewers',['resources/value-converters/available-reviewers'],function(m){return m;});
 define('valueConverters/reviewers',['resources/value-converters/reviewers'],function(m){return m;});;
 function _aureliaConfigureModuleLoader(){requirejs.config({
   "baseUrl": "src",
@@ -49665,6 +49666,7 @@ function _aureliaConfigureModuleLoader(){requirejs.config({
       "text!app.html",
       "environment",
       "main",
+      "text!modules/home/abstractEdit.html",
       "modules/home/agenda",
       "text!modules/home/agenda.html",
       "modules/home/contact",
@@ -49701,6 +49703,7 @@ function _aureliaConfigureModuleLoader(){requirejs.config({
       "resources/utils/dataTable",
       "resources/utils/utils",
       "resources/utils/validation",
+      "resources/value-converters/available-reviewers",
       "resources/value-converters/reviewers"
     ]
   }
