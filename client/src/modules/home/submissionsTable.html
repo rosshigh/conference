@@ -85,7 +85,7 @@
                                     <select value.bind="statusFilter"
                                         input.delegate="dataTable.filterList($event, { type: 'value',  filter: 'statusFilter', lookupArray: '', lookupProperty: '', collectionProperty: 'status', displayProperty: 'status', matchProperty:'', compare:'match'} )"
                                         class="form-control">
-                                        <option value=""></option>
+                                        <option value=""></option> 
                                         <option repeat.for="stat of status" value="${stat}">
                                             ${stat}</option>
                                     </select>
@@ -102,7 +102,7 @@
                                 <td click.trigger="edit(abstract)">${abstract.title}</td>
                                 <td click.trigger="edit(abstract)">${abstract.track}</td>
                                 <td click.trigger="edit(abstract)">${abstract.status}</td>
-                                <td><a href="uploadedFiles/${abstract.file.fileName}" target="_blank"
+                                <td><a href="uploadedFiles/abstracts/${abstract.file.fileName}" target="_blank"
                                         }>${abstract.file.originalFileName}</a></td>
                             </tr>
                         </tbody>
