@@ -25,7 +25,7 @@ export class Submit {
         this.showTable = true;
 
         this.tracks = [
-            "Innovations in Teaching", "High Impact Practices", "Incorporating Latest Developments in Curriculum", "Research in Teaching"
+            "Innovations in Teaching", "High Impact Practices", "Incorporating Latest Developments in Curriculum", "Research in Teaching", "HANAify Everything"
         ];
         this.status = [
             'Submitted', 'Under Review', 'Accepted', 'Rejected'

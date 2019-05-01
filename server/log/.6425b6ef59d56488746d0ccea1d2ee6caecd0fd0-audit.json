@@ -6,54 +6,14 @@
     "auditLog": "log\\.6425b6ef59d56488746d0ccea1d2ee6caecd0fd0-audit.json",
     "files": [
         {
-            "date": 1554747584765,
-            "name": "log\\error-2019-04-08-13.log",
-            "hash": "14c37bbfa4bd46bde43e1f69ae006336"
+            "date": 1556653167294,
+            "name": "log\\error-2019-04-30-14.log",
+            "hash": "7dcf128a2033777350b577ad6a072239"
         },
         {
-            "date": 1554819944936,
-            "name": "log\\error-2019-04-09-09.log",
-            "hash": "8b3718b805a478e7b5389622518722aa"
-        },
-        {
-            "date": 1554824887880,
-            "name": "log\\error-2019-04-09-10.log",
-            "hash": "53181f9b03ee15ce62f57dc21d32f0f0"
-        },
-        {
-            "date": 1554912687105,
-            "name": "log\\error-2019-04-10-11.log",
-            "hash": "3b7fa0c0e05629605c067b69f3bbd849"
-        },
-        {
-            "date": 1554916366205,
-            "name": "log\\error-2019-04-10-12.log",
-            "hash": "62c64141a438e6d1ee93826dda560f8d"
-        },
-        {
-            "date": 1554923060859,
-            "name": "log\\error-2019-04-10-14.log",
-            "hash": "d231451c08d11fe98e6fb10c2cba4899"
-        },
-        {
-            "date": 1555004113010,
-            "name": "log\\error-2019-04-11-12.log",
-            "hash": "24024dccfb0a63a846a4f8a3690ac7ef"
-        },
-        {
-            "date": 1555077332719,
-            "name": "log\\error-2019-04-12-08.log",
-            "hash": "544423e360096f5bd7869a894fc35031"
-        },
-        {
-            "date": 1555080453663,
-            "name": "log\\error-2019-04-12-09.log",
-            "hash": "ccbbe29b32fd495b40eb5a23fd0169b3"
-        },
-        {
-            "date": 1555081211431,
-            "name": "log\\error-2019-04-12-10.log",
-            "hash": "d3b882cda5992bd62ee0c0bf59c19b4b"
+            "date": 1556717490423,
+            "name": "log\\error-2019-05-01-08.log",
+            "hash": "f4ed0b99137b23ec9c3846840192c9d1"
         }
     ]
 }
