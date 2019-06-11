@@ -1314,8 +1314,7 @@ define('resources/data/dataServices',["exports", "aurelia-framework", "aurelia-h
       this.DOCUMENTS_FILE_UPLOAD = 'documents/file';
       this.http = http;
       this.http.configure(function (x) {
-        // x.withBaseUrl("http://c3po.ucc.uwm.edu/api/");
-        x.withBaseUrl("http://localhost/api/");
+        x.withBaseUrl("http://c3po.ucc.uwm.edu/api/"); // x.withBaseUrl("http://localhost/api/");
       });
     }
 
