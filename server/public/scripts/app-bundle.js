@@ -118,7 +118,7 @@ define('main',["exports", "./environment"], function (_exports, _environment) {
     });
   }
 });;
-define('text!modules/home/abstractEdit.html',[],function(){return "<template>\r\n    <div class=\"row\">\r\n        <div class=\"col-5 offset-1\">\r\n            <form>\r\n                <h3>${abstract.personId.firstName} ${abstract.personId.lastName}</h3>\r\n                <h3>${abstract.personId.university}</h3>\r\n                <div class=\"form-group\">\r\n                    <label for=\"title\">Title *</label>\r\n                    <input value.bind=\"abstract.title\" type=\"text\" class=\"form-control\" id=\"title\"\r\n                        aria-describedby=\"titleHelp\" placeholder=\"Title\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"description\">Track *</label>\r\n                    <select value.bind=\"abstract.track\" class=\"form-control\" id=\"track\">\r\n                        <option value=\"\">Select a track</option>\r\n                        <option value=\"${type}\" repeat.for=\"type of tracks\">${type}</optionp>\r\n                    </select>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"description\">Description *</label>\r\n                    <textarea value.bind=\"abstract.description\" type=\"text\" class=\"form-control\" id=\"description\"\r\n                        aria-describedby=\"descriptionHelp\" placeholder=\"Description\" rows=\"10\"></textarea>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <a href=\"uploadedFiles/${abstract.file.fileName}\" target=\"_blank\"\r\n                        style=\"margin-top:20px;\">${abstract.file.originalFileName}</a>\r\n                </div>\r\n                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                    click.trigger=\"saveEditAbstract()\">Submit</button>\r\n                <button class=\"btn btn-primary\" style=\"margin-top:25px\" click.trigger=\"cancelEdit()\">Cancel</button>\r\n            </form>\r\n\r\n        </div>\r\n        <div class=\"col-5\">\r\n            <h5>You don't have to click submit to save changes to the abstract reviewers</h5>\r\n            <h3>Reviewers</h3>\r\n            <h2 show.bind=\"!abstract.reviewers.length\">No reviewers are assigned yet</h2>\r\n            <ul class=\"list-group\">\r\n                <li class=\"list-group-item\" click.trigger=\"removeReviewerFromAbstract(person)\"\r\n                    repeat.for=\"person of abstract.reviewers\">${person.firstName}\r\n                    ${person.lastName}<br>${person.university}\r\n                </li>\r\n            </ul>\r\n            <h3 style=\"margin-top:20px;\">Available Reviewers</h3>\r\n            <ul class=\"list-group\">\r\n                <li class=\"list-group-item\" click.trigger=\"addReviewerToAbstract(person)\"\r\n                    repeat.for=\"person of services.peopleArray | availableReviewers:abstract.reviewers\">\r\n                    ${person.firstName}\r\n                    ${person.lastName}<br>${person.university}\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/home/abstractEdit.html',[],function(){return "<template>\r\n    <div class=\"row\">\r\n        <div class=\"col-5 offset-1\">\r\n            <form>\r\n                <h3>${abstract.personId.firstName} ${abstract.personId.lastName}</h3>\r\n                <h3>${abstract.personId.university}</h3>\r\n                <div class=\"form-group\">\r\n                    <label for=\"title\">Title *</label>\r\n                    <input value.bind=\"abstract.title\" type=\"text\" class=\"form-control\" id=\"title\"\r\n                        aria-describedby=\"titleHelp\" placeholder=\"Title\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"description\">Track *</label>\r\n                    <select value.bind=\"abstract.track\" class=\"form-control\" id=\"track\">\r\n                        <option value=\"\">Select a track</option>\r\n                        <option value=\"${type}\" repeat.for=\"type of tracks\">${type}</optionp>\r\n                    </select>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"description\">Description *</label>\r\n                    <textarea value.bind=\"abstract.description\" type=\"text\" class=\"form-control\" id=\"description\"\r\n                        aria-describedby=\"descriptionHelp\" placeholder=\"Description\" rows=\"10\"></textarea>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <a href=\"uploadedFiles/${abstract.file.fileName}\" target=\"_blank\"\r\n                        style=\"margin-top:20px;\">${abstract.file.originalFileName}</a>\r\n                </div>\r\n                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                    click.trigger=\"saveEditAbstract()\">Submit</button>\r\n                <button class=\"btn btn-primary\" style=\"margin-top:25px\" click.trigger=\"cancelEdit()\">Cancel</button>\r\n            </form>\r\n            <div class=\"card\" style=\"margin-top:10px;\">\r\n                <div class=\"card-body\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-4\">\r\n                            <label class=\"btn btn-primary\" >\r\n                                Browse for files&hellip; <input type=\"file\" style=\"display: none;\"\r\n                                    change.delegate=\"changeFiles()\" files.bind=\"files\">\r\n                            </label>\r\n                            <span id=\"files\"></span>\r\n                        </div>\r\n                        <div class=\"col\">\r\n                            <ul>\r\n                                <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\r\n                                    ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i\r\n                                            class=\"fa fa-trash\" aria-hidden=\"true\"></i></span></li>\r\n                            </ul>\r\n                        </div>\r\n                    </div>\r\n                    <button click.trigger=\"uploadReview()\" class=\"btn btn-primary\" style=\"margin-top:5px;\">Save Review</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-5\">\r\n            <h5>You don't have to click submit to save changes to the abstract reviewers</h5>\r\n            <h3>Reviewers</h3>\r\n            <h2 show.bind=\"!abstract.reviewers.length\">No reviewers are assigned yet</h2>\r\n            <ul class=\"list-group\">\r\n                <li class=\"list-group-item\" click.trigger=\"removeReviewerFromAbstract(person)\"\r\n                    repeat.for=\"person of abstract.reviewers\">${person.firstName}\r\n                    ${person.lastName}<br>${person.university}\r\n                </li>\r\n            </ul>\r\n            <h3 style=\"margin-top:20px;\">Available Reviewers</h3>\r\n            <ul class=\"list-group\">\r\n                <li class=\"list-group-item\" click.trigger=\"addReviewerToAbstract(person)\"\r\n                    repeat.for=\"person of services.peopleArray | availableReviewers:abstract.reviewers\">\r\n                    ${person.firstName}\r\n                    ${person.lastName}<br>${person.university}\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</template>";});;
 define('modules/home/agenda',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
   "use strict";
 
@@ -280,7 +280,7 @@ define('modules/home/milwaukee',["exports"], function (_exports) {
   _exports.Milwaukee = Milwaukee;
 });;
 define('text!modules/home/milwaukee.html',[],function(){return "<template>\r\n    \r\n</template>";});;
-define('text!modules/home/mySubmissions.html',[],function(){return "<template>\r\n    <div class=\"col-5\">\r\n        <p>\r\n            <div show.bind=\"services.abstractArray.length\">\r\n                <h2>Your Submissions</h2>\r\n                <ul class=\"list-group\">\r\n                    <li repeat.for=\"submission of services.abstractArray\" class=\"list-group-item\">\r\n                        <h3>${submission.title}</h3>\r\n                        <h6>Status: <strong>${submission.status}</strong></h6>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            <div show.bind=\"!services.abstractArray.length\">\r\n                <h2>You haven't submitted an abstract yet.</h2>\r\n            </div>\r\n        </p>\r\n    </div>\r\n</template>";});;
+define('text!modules/home/mySubmissions.html',[],function(){return "<template>\r\n    <div class=\"row\">\r\n        <div class=\"col-6\">\r\n            <div show.bind=\"services.abstractArray.length\">\r\n                <h2>Your Submissions</h2>\r\n                <ul class=\"list-group\">\r\n                    <li click.trigger=\"showReviews(submission)\" repeat.for=\"submission of services.abstractArray\"\r\n                        class=\"list-group-item\">\r\n                        <h3>${submission.title}</h3>\r\n                        <h6>Status: <strong>${submission.status}</strong></h6>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            <div show.bind=\"!services.abstractArray.length\">\r\n                <h2>You haven't submitted an abstract yet.</h2>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-6\">\r\n            <div show.bind=\"selectedSubmission.reviews && selectedSubmission.reviews.length\">\r\n                <h2>Your Reviews</h2>\r\n                <ul class=\"list-group\">\r\n                    <li repeat.for=\"review of selectedSubmission.reviews\" class=\"list-group-item\">\r\n                        <h3><a href=\"uploadedFiles/reviews/${review.fileName}\"\r\n                                target=\"_blank\">${review.originalFileName}</a></h3>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            <div show.bind=\"!selectedSubmission.reviews || !selectedSubmission.reviews.length\">\r\n                <h2>You don't have any reviews yet.</h2>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
 define('modules/home/register',["exports", "aurelia-framework", "../../resources/utils/validation", "../../resources/data/services", "aurelia-router", "jquery", "toastr"], function (_exports, _aureliaFramework, _validation, _services, _aureliaRouter, _jquery, toastr) {
   "use strict";
 
@@ -1065,6 +1065,48 @@ define('modules/home/submit',["exports", "aurelia-framework", "../../resources/u
       return false;
     };
 
+    _proto.uploadReview =
+    /*#__PURE__*/
+    function () {
+      var _uploadReview = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee12() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                _context12.next = 2;
+                return this.services.saveReview(this.abstract, this.filesToUpload);
+
+              case 2:
+                response = _context12.sent;
+
+                if (!response.error) {
+                  toastr['success']('The review was uploaded successfully.');
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this);
+      }));
+
+      function uploadReview() {
+        return _uploadReview.apply(this, arguments);
+      }
+
+      return uploadReview;
+    }();
+
+    _proto.showReviews = function showReviews(submission) {
+      this.selectedSubmission = submission;
+    };
+
     _proto.emailCustomFilter = function emailCustomFilter(value, item, context) {
       return item.personId && item.personId.email.toUpperCase().indexOf(value.toUpperCase()) > -1;
     };
@@ -1131,7 +1173,8 @@ define('modules/home/submit',["exports", "aurelia-framework", "../../resources/u
   _exports.Submit = Submit;
 });;
 define('text!modules/home/submit.html',[],function(){return "<template>\r\n    <div style=\"padding-top:100px;padding-left:50px;padding-right:50px;\">\r\n        <div class=\"card\">\r\n            <div class=\"card-body\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-5 offset-1\">\r\n                        <div if.bind=\"!isAuthenticated && !showRegisterPanel\">\r\n                            <h5>Register to submit an abstract.</h5>\r\n                        </div>\r\n                        <form if.bind=\"!isAuthenticated && !showRegisterPanel\" class=\"form-inline\">\r\n                            <div class=\"form-group mb-2\">\r\n                                <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"loginemail\"\r\n                                    placeholder=\"Email\"></input>\r\n                            </div>\r\n                            <div class=\"form-group mx-sm-3 mb-2\">\r\n                                <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"loginpassword\"\r\n                                    placeholder=\"Password\"></input>\r\n                            </div>\r\n                            <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\r\n                            <button class=\"btn btn-primary mb-2\" style=\"margin-left:5px;\"\r\n                                click.delegate='showRegister()'>Register</button>\r\n                        </form>\r\n                        <label if.bind=\"loginError\" style=\"color:black;margin-right:5px;\">${loginError}</label>\r\n                        <div show.bind=\"showRegisterPanel\">\r\n                            <h2>Register as an Author</h2>\r\n                            <form>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"firstName\">First name *</label>\r\n                                    <input value.bind=\"firstName\" type=\"text\" class=\"form-control\" id=\"firstName\"\r\n                                        aria-describedby=\"firstNameHelp\" placeholder=\"First Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"lastName\">Last name *</label>\r\n                                    <input value.bind=\"lastName\" type=\"text\" class=\"form-control\" id=\"lastName\"\r\n                                        aria-describedby=\"lastNameHelp\" placeholder=\"Last Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"university\">University/Company *</label>\r\n                                    <input value.bind=\"university\" type=\"text\" class=\"form-control\" id=\"university\"\r\n                                        aria-describedby=\"universityHelp\" placeholder=\"University\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"email\">Email *</label>\r\n                                    <input value.bind=\"email\" type=\"email\" class=\"form-control\" id=\"email\"\r\n                                        aria-describedby=\"emailHelp\" placeholder=\"Email\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password\">Password *</label>\r\n                                    <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\"\r\n                                        aria-describedby=\"passwordHelp\" placeholder=\"Password\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password_repeat\">Repeat password *</label>\r\n                                    <input value.bind=\"password_repeat\" type=\"password\" class=\"form-control\"\r\n                                        id=\"password_repeat\" aria-describedby=\"passwordrepeatHelp\"\r\n                                        placeholder=\"Repeat Password\">\r\n                                </div>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"save()\">Register</button>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"showRegister()\">Cancel</button>\r\n                            </form>\r\n                        </div>\r\n                    </div>\r\n                    <div if.bind=\"!isAuthenticated\" class=\"col-5\">\r\n                        <compose view=\"./guidelines.html\"></compose>\r\n                    </div>\r\n                </div>\r\n                <div show.bind=\"isAuthenticated\">\r\n                    <compose view=\"./submitTabs.html\"></compose>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</template>";});;
-define('text!modules/home/submitTabs.html',[],function(){return "<template>\r\n    <ul class=\"nav nav-pills\">\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link active\" id=\"submitAbstract-tab\" data-toggle=\"tab\" href=\"#submitAbstract\" role=\"tab\"\r\n                aria-controls=\"submitAbstract\" aria-selected=\"true\">Submit an Abstract</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"guidelines-tab\" data-toggle=\"tab\" href=\"#guidelines\" role=\"tab\"\r\n                aria-controls=\"guidelines\" aria-selected=\"true\">Guidelines</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"mysubmissions-tab\" data-toggle=\"tab\" href=\"#mysubmissions\" role=\"tab\"\r\n                aria-controls=\"mysubmissions\" aria-selected=\"true\">My Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submissions-tab\" data-toggle=\"tab\"\r\n                href=\"#submissions\" role=\"tab\" aria-controls=\"submissions\" aria-selected=\"true\">Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"reviewers-tab\" data-toggle=\"tab\" href=\"#reviewers\"\r\n                role=\"tab\" aria-controls=\"reviewers\" aria-selected=\"true\">Reviewers</a>\r\n        </li>\r\n    </ul>\r\n    <p></p>\r\n    <div class=\"tab-content\" id=\"myTabContent\">\r\n        <div class=\"tab-pane fade show active\" id=\"submitAbstract\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-5\">\r\n                <compose view=\"./registerPanel.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"guidelines\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-7\">\r\n                <compose view=\"./guidelines.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"mysubmissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./mySubmissions.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submissionsTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"reviewers\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./reviewersTable.html\"></compose>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/home/submitReview.html',[],function(){return "<template>\r\n    <h1>Here</h1>\r\n</template>";});;
+define('text!modules/home/submitTabs.html',[],function(){return "<template>\r\n    <ul class=\"nav nav-pills\">\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link active\" id=\"submitAbstract-tab\" data-toggle=\"tab\" href=\"#submitAbstract\" role=\"tab\"\r\n                aria-controls=\"submitAbstract\" aria-selected=\"true\">Submit an Abstract</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"guidelines-tab\" data-toggle=\"tab\" href=\"#guidelines\" role=\"tab\"\r\n                aria-controls=\"guidelines\" aria-selected=\"true\">Guidelines</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"mysubmissions-tab\" data-toggle=\"tab\" href=\"#mysubmissions\" role=\"tab\"\r\n                aria-controls=\"mysubmissions\" aria-selected=\"true\">My Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submissions-tab\" data-toggle=\"tab\"\r\n                href=\"#submissions\" role=\"tab\" aria-controls=\"submissions\" aria-selected=\"true\">Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"reviewers-tab\" data-toggle=\"tab\" href=\"#reviewers\"\r\n                role=\"tab\" aria-controls=\"reviewers\" aria-selected=\"true\">Reviewers</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submitReview-tab\" data-toggle=\"tab\" href=\"#submitReview\"\r\n                role=\"tab\" aria-controls=\"submitReview\" aria-selected=\"true\">Submit Review</a>\r\n        </li>\r\n    </ul>\r\n    <p></p>\r\n    <div class=\"tab-content\" id=\"myTabContent\">\r\n        <div class=\"tab-pane fade show active\" id=\"submitAbstract\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-5\">\r\n                <compose view=\"./registerPanel.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"guidelines\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-7\">\r\n                <compose view=\"./guidelines.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"mysubmissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./mySubmissions.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submissionsTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"reviewers\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./reviewersTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submitReview\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submitReview.html\"></compose>\r\n        </div>\r\n    </div>\r\n</template>";});;
 define('text!modules/home/userSubmit.html',[],function(){return "";});;
 define('text!resources/css/styles.css',[],function(){return "body, html {\r\n    height: 2500px;\r\n    font: 400 15px/1.8 \"Lato\", sans-serif;\r\n  }\r\n\r\n  .toolbar {\r\n    position:fixed;\r\n    z-index:1000;\r\n    width:100%;\r\n    left:0;\r\n    background-color:ghostwhite;\r\n  }\r\n\r\n  .smallMarginRight{\r\n    margin-right: 5px;\r\n  }\r\n\r\n  .sortable {\r\n    cursor: pointer;   \r\n  }\r\n\r\n  .has-error {\r\n      color:red;\r\n  }\r\n\r\n  .underline {\r\n    text-decoration: underline;\r\n    }\r\n\r\n.caption {\r\n    position: absolute;\r\n    left: 0;\r\n    top: 25%;\r\n    width: 100%;\r\n    text-align: center;\r\n    color: #000;\r\n}\r\n\r\n.caption span.border {\r\n    background-color: #111;\r\n    color: #fff;\r\n    padding: 18px;\r\n    font-size: 25px;\r\n    letter-spacing: 10px;\r\n}\r\n\r\n  \r\n.parallax1 {\r\n    /* The image used */\r\n    background-image: url(\"/img/parallax1.jpg\");\r\n\r\n    /* Set a specific height */\r\n   height: 500px;\r\n\r\n    /* Create the parallax scrolling effect */\r\n    background-attachment: fixed;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: cover;\r\n}\r\n\r\n  \r\n.parallax2 {\r\n    /* The image used */\r\n    background-image: url(\"/img/parallax1.jpg\");\r\n\r\n    /* Set a specific height */\r\n   height: 200px;\r\n\r\n    /* Create the parallax scrolling effect */\r\n    background-attachment: fixed;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: cover;\r\n}\r\n\r\n.agenda {  }\r\n\r\n/* Dates */\r\n.agenda .agenda-date { width: 170px; }\r\n.agenda .agenda-date .dayofmonth {\r\n  width: 40px;\r\n  font-size: 36px;\r\n  line-height: 36px;\r\n  float: left;\r\n  text-align: right;\r\n  margin-right: 10px; \r\n}\r\n.agenda .agenda-date .shortdate {\r\n  font-size: 0.75em; \r\n}\r\n\r\n\r\n/* Times */\r\n.agenda .agenda-time { width: 140px; } \r\n\r\n\r\n/* Events */\r\n.agenda .agenda-events {  } \r\n.agenda .agenda-events .agenda-event {  } \r\n\r\n@media (max-width: 767px) {\r\n    \r\n}";});;
 define('resources/data/auth',["exports", "aurelia-framework", "aurelia-event-aggregator", "./dataServices"], function (_exports, _aureliaFramework, _aureliaEventAggregator, _dataServices) {
@@ -1271,7 +1314,8 @@ define('resources/data/dataServices',["exports", "aurelia-framework", "aurelia-h
       this.DOCUMENTS_FILE_UPLOAD = 'documents/file';
       this.http = http;
       this.http.configure(function (x) {
-        x.withBaseUrl("http://c3po.ucc.uwm.edu/api/"); // x.withBaseUrl("http://localhost/api/");
+        // x.withBaseUrl("http://c3po.ucc.uwm.edu/api/");
+        x.withBaseUrl("http://localhost/api/");
       });
     }
 
@@ -1568,7 +1612,8 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
       var _saveAbstract = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(abstract, files) {
-        var response, uploadResponse;
+        var response, _uploadResponse;
+
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -1588,8 +1633,8 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
                 return this.uploadFile(files, response._id);
 
               case 6:
-                uploadResponse = _context2.sent;
-                return _context2.abrupt("return", uploadResponse);
+                _uploadResponse = _context2.sent;
+                return _context2.abrupt("return", _uploadResponse);
 
               case 8:
               case "end":
@@ -1645,22 +1690,62 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
       return uploadFile;
     }();
 
-    _proto.getPersonAbstracts =
+    _proto.saveReview =
     /*#__PURE__*/
     function () {
-      var _getPersonAbstracts = _asyncToGenerator(
+      var _saveReview = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4(id) {
+      regeneratorRuntime.mark(function _callee4(abstract, files) {
         var response;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
+                console.log('there');
+                _context4.next = 3;
+                return this.data.uploadFiles(files, 'abstract/review/' + abstract._id, 'put');
+
+              case 3:
+                response = _context4.sent;
+
+                if (response.error) {
+                  _context4.next = 6;
+                  break;
+                }
+
+                return _context4.abrupt("return", uploadResponse);
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function saveReview(_x6, _x7) {
+        return _saveReview.apply(this, arguments);
+      }
+
+      return saveReview;
+    }();
+
+    _proto.getPersonAbstracts =
+    /*#__PURE__*/
+    function () {
+      var _getPersonAbstracts = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee5(id) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
                 return this.data.get('abstract/person/' + id);
 
               case 2:
-                response = _context4.sent;
+                response = _context5.sent;
 
                 if (!response.error) {
                   this.abstractArray = response;
@@ -1670,13 +1755,13 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
-      function getPersonAbstracts(_x6) {
+      function getPersonAbstracts(_x8) {
         return _getPersonAbstracts.apply(this, arguments);
       }
 
@@ -1688,17 +1773,17 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getAbstracts = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee5() {
+      regeneratorRuntime.mark(function _callee6() {
         var response;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.next = 2;
+                _context6.next = 2;
                 return this.data.get('abstract');
 
               case 2:
-                response = _context5.sent;
+                response = _context6.sent;
 
                 if (!response.error) {
                   this.allAbstractArray = response;
@@ -1708,10 +1793,10 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
 
       function getAbstracts() {
@@ -1726,17 +1811,17 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getAgenda = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6() {
+      regeneratorRuntime.mark(function _callee7() {
         var response;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.next = 2;
+                _context7.next = 2;
                 return this.data.get('agenda');
 
               case 2:
-                response = _context6.sent;
+                response = _context7.sent;
 
                 if (!response.error) {
                   this.agendaArray = response;
@@ -1746,10 +1831,10 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       function getAgenda() {
@@ -1764,17 +1849,17 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getPeople = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee7() {
+      regeneratorRuntime.mark(function _callee8() {
         var response;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context7.next = 2;
+                _context8.next = 2;
                 return this.data.get('people');
 
               case 2:
-                response = _context7.sent;
+                response = _context8.sent;
 
                 if (!response.error) {
                   this.peopleArray = response;
@@ -1784,10 +1869,10 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee8, this);
       }));
 
       function getPeople() {
@@ -1802,47 +1887,14 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _savePerson = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee8(person) {
-        var response;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _context8.next = 2;
-                return this.data.saveObject(person, 'people', 'put');
-
-              case 2:
-                response = _context8.sent;
-                return _context8.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8, this);
-      }));
-
-      function savePerson(_x7) {
-        return _savePerson.apply(this, arguments);
-      }
-
-      return savePerson;
-    }();
-
-    _proto.saveAbstractReviewer =
-    /*#__PURE__*/
-    function () {
-      var _saveAbstractReviewer = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee9(abstract) {
+      regeneratorRuntime.mark(function _callee9(person) {
         var response;
         return regeneratorRuntime.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
                 _context9.next = 2;
-                return this.data.saveObject(abstract, 'abstract', 'put');
+                return this.data.saveObject(person, 'people', 'put');
 
               case 2:
                 response = _context9.sent;
@@ -1856,7 +1908,40 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
         }, _callee9, this);
       }));
 
-      function saveAbstractReviewer(_x8) {
+      function savePerson(_x9) {
+        return _savePerson.apply(this, arguments);
+      }
+
+      return savePerson;
+    }();
+
+    _proto.saveAbstractReviewer =
+    /*#__PURE__*/
+    function () {
+      var _saveAbstractReviewer = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee10(abstract) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.next = 2;
+                return this.data.saveObject(abstract, 'abstract', 'put');
+
+              case 2:
+                response = _context10.sent;
+                return _context10.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function saveAbstractReviewer(_x10) {
         return _saveAbstractReviewer.apply(this, arguments);
       }
 
@@ -1868,37 +1953,37 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getAbstract = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee10(id) {
+      regeneratorRuntime.mark(function _callee11(id) {
         var response;
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
-                _context10.next = 2;
+                _context11.next = 2;
                 return this.data.get('abstract/' + id);
 
               case 2:
-                response = _context10.sent;
+                response = _context11.sent;
 
                 if (response.error) {
-                  _context10.next = 7;
+                  _context11.next = 7;
                   break;
                 }
 
-                return _context10.abrupt("return", response);
+                return _context11.abrupt("return", response);
 
               case 7:
-                return _context10.abrupt("return", null);
+                return _context11.abrupt("return", null);
 
               case 8:
               case "end":
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee11, this);
       }));
 
-      function getAbstract(_x9) {
+      function getAbstract(_x11) {
         return _getAbstract.apply(this, arguments);
       }
 
