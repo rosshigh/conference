@@ -1,10 +1,11 @@
 <template>
-    <div class="col-5">
-        <p>
+    <div class="row">
+        <div class="col-6">
             <div show.bind="services.abstractArray.length">
                 <h2>Your Submissions</h2>
                 <ul class="list-group">
-                    <li repeat.for="submission of services.abstractArray" class="list-group-item">
+                    <li click.trigger="showReviews(submission)" repeat.for="submission of services.abstractArray"
+                        class="list-group-item">
                         <h3>${submission.title}</h3>
                         <h6>Status: <strong>${submission.status}</strong></h6>
                     </li>
@@ -13,6 +14,20 @@
             <div show.bind="!services.abstractArray.length">
                 <h2>You haven't submitted an abstract yet.</h2>
             </div>
-        </p>
+        </div>
+        <div class="col-6">
+            <div show.bind="selectedSubmission.reviews && selectedSubmission.reviews.length">
+                <h2>Your Reviews</h2>
+                <ul class="list-group">
+                    <li repeat.for="review of selectedSubmission.reviews" class="list-group-item">
+                        <h3><a href="uploadedFiles/reviews/${review.fileName}"
+                                target="_blank">${review.originalFileName}</a></h3>
+                    </li>
+                </ul>
+            </div>
+            <div show.bind="!selectedSubmission.reviews || !selectedSubmission.reviews.length">
+                <h2>You don't have any reviews yet.</h2>
+            </div>
+        </div>
     </div>
 </template>

@@ -66,7 +66,12 @@ var Abstractchema = new Schema({
   agendaId: { type: Schema.Types.ObjectId }, 
   track: { type: String },
   status: { type: String, default: 'Submitted'},
-  reviewers: [Schema.Types.ObjectId ]
+  reviewers: [Schema.Types.ObjectId ],
+  reviews: [{
+    fileName: { type: String },
+    originalFileName:  { type: String },
+    dateCreated: { type: Date, default: Date.now }
+  }]
 });
 
 module.exports = Mongoose.model('Abstract', Abstractchema);

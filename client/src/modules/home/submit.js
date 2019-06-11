@@ -31,11 +31,11 @@ export class Submit {
             'Submitted', 'Under Review', 'Accepted', 'Rejected'
         ];
 
-        
+
     }
 
-    activate(){
-        if(sessionStorage.getItem('user')) this.loginSuccess();
+    activate() {
+        if (sessionStorage.getItem('user')) this.loginSuccess();
     }
 
     _setupValidation() {
@@ -137,7 +137,7 @@ export class Submit {
         }
     }
 
-    async refresh(){
+    async refresh() {
         await this.services.getAbstracts();
         await this.services.getPeople();
     }
@@ -192,7 +192,7 @@ export class Submit {
     async addReviewerToAbstract(person) {
         if (this.abstract.reviewers.indexOf(person._id) === -1) {
             this.abstract.reviewers.push(person._id);
-            if(this.abstract.reviewers.length > 0) this.abstract.status = "Under Review";
+            if (this.abstract.reviewers.length > 0) this.abstract.status = "Under Review";
             let response = await this.services.saveAbstractReviewer(this.abstract);
             this.abstract = response[0];
             if (person.abstracts.indexOf(this.abstract._id === -1)) {
@@ -208,7 +208,7 @@ export class Submit {
             return value._id != person._id;
         });
         this.abstract.reviewers = filteredReviewers;
-        if(this.abstract.reviewers.length === 0) this.abstract.status = "Submitted";
+        if (this.abstract.reviewers.length === 0) this.abstract.status = "Submitted";
         let responseOne = await this.services.saveAbstractReviewer(this.abstract);
         this.abstract = responseOne[0];
         var filteredAbstracts = person.abstracts.filter(function (value, index, arr) {
@@ -228,12 +228,12 @@ export class Submit {
         this.showTable = true;
     }
 
-    downloadInstExcel(){
+    downloadInstExcel() {
         let csvContent = "data:text/csv;charset=utf-8;,Faculty,Email,Title,Status\r\n";
         this.dataTable.baseArray.forEach(item => {
-            let facInfo = item.personId ? item.personId.firstName + " " + item.personId.lastName + "," + item.personId.email: ""; 
-            csvContent +=  facInfo  + "," + item.title + "," + item.status;
-            csvContent +=  "\r\n";
+            let facInfo = item.personId ? item.personId.firstName + " " + item.personId.lastName + "," + item.personId.email : "";
+            csvContent += facInfo + "," + item.title + "," + item.status;
+            csvContent += "\r\n";
         })
         var encodedUri = encodeURI(csvContent);
         var link = document.createElement("a");
@@ -244,8 +244,8 @@ export class Submit {
         link.click();
     }
 
-    nameCustomFilter(value, item, context){
-        if(item.personId){
+    nameCustomFilter(value, item, context) {
+        if (item.personId) {
             let firstNameFilter = item.personId.firstName.toUpperCase().indexOf(value.toUpperCase()) > -1;
             let lastNameFilter = item.personId.lastName.toUpperCase().indexOf(value.toUpperCase()) > -1;
             return firstNameFilter || lastNameFilter;
@@ -253,15 +253,30 @@ export class Submit {
         return false;
     }
 
-    emailCustomFilter(value, item, context){
+
+    async uploadReview() {
+        let response = await this.services.saveReview(this.abstract, this.filesToUpload);
+        if (!response.error) {
+            toastr['success']('The review was uploaded successfully.');
+            this.filesToUpload = new Array();
+            this.files = new Array();
+        }
+
+    }
+
+    showReviews(submission){
+        this.selectedSubmission = submission;
+    }
+
+    emailCustomFilter(value, item, context) {
         return item.personId && item.personId.email.toUpperCase().indexOf(value.toUpperCase()) > -1;
     }
 
-    titleCustomFilter(value, item, context){
+    titleCustomFilter(value, item, context) {
         return item.title.toUpperCase().indexOf(value.toUpperCase()) > -1;
     }
 
-    fileCustomFilter(value, item, context){
+    fileCustomFilter(value, item, context) {
         return item.file && item.file.originalFileName.toUpperCase().indexOf(value.toUpperCase()) > -1;
     }
 
@@ -269,7 +284,7 @@ export class Submit {
         this.sortProperty = 'person';
         this.sortDirection = sortDirection;
         return sortArray.sort((a, b) => {
-            if (a['personId']  && b['personId']  && a['personId']['lastName'] && b['personId']['lastName']) {
+            if (a['personId'] && b['personId'] && a['personId']['lastName'] && b['personId']['lastName']) {
                 var result = (a['personId']['lastName'] < b['personId']['lastName']) ? -1 : (a['personId']['lastName'] > b['personId']['lastName']) ? 1 : 0;
             } else {
                 var result = -1;
@@ -282,7 +297,7 @@ export class Submit {
         this.sortProperty = 'person';
         this.sortDirection = sortDirection;
         return sortArray.sort((a, b) => {
-            if (a['personId']  && b['personId']  && a['personId']['email'] && b['personId']['email']) {
+            if (a['personId'] && b['personId'] && a['personId']['email'] && b['personId']['email']) {
                 var result = (a['personId']['email'] < b['personId']['email']) ? -1 : (a['personId']['email'] > b['personId']['email']) ? 1 : 0;
             } else {
                 var result = -1;
@@ -290,7 +305,6 @@ export class Submit {
             return result * sortDirection;
         });
     }
-
 
     customTitleSorter(sortProperty, sortDirection, sortArray, context) {
         return sortArray.sort((a, b) => {

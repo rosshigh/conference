@@ -29,7 +29,27 @@
                     click.trigger="saveEditAbstract()">Submit</button>
                 <button class="btn btn-primary" style="margin-top:25px" click.trigger="cancelEdit()">Cancel</button>
             </form>
-
+            <div class="card" style="margin-top:10px;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="btn btn-primary" >
+                                Browse for files&hellip; <input type="file" style="display: none;"
+                                    change.delegate="changeFiles()" files.bind="files">
+                            </label>
+                            <span id="files"></span>
+                        </div>
+                        <div class="col">
+                            <ul>
+                                <li repeat.for="file of filesToUpload" class="list-group-item">
+                                    ${file.name}<span click.delegate="removeFile($index)" class="pull-right"><i
+                                            class="fa fa-trash" aria-hidden="true"></i></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button click.trigger="uploadReview()" class="btn btn-primary" style="margin-top:5px;">Save Review</button>
+                </div>
+            </div>
         </div>
         <div class="col-5">
             <h5>You don't have to click submit to save changes to the abstract reviewers</h5>

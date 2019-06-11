@@ -268,4 +268,47 @@ module.exports = function (app) {
       }
     });
   });
+
+  var reviewTech = multer.diskStorage({
+    destination: function (req, file, cb) {
+
+      var path = config.uploads + '/reviews';
+
+      mkdirp(path, function (err) {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          cb(null, path);
+        }
+      });
+    },
+    filename: function (req, file, cb) {
+      cb(null, req.params.id + file.originalname.substring(file.originalname.indexOf('.')));
+    }
+  });
+
+  var uploadReviews = multer({ storage: reviewTech });
+
+  router.post('/api/abstract/review/:id', uploadReviews.any(), function (req, res, next) {
+    logger.log('info', 'Upload Review ', 'verbose');
+    Abstract.findById(req.params.id, function (err, abstract) {
+      if (err) {
+        return next(err);  
+      } else {
+        if(!abstract.reviews) abstract.reviews = [];       
+        abstract.reviews.push( {
+          originalFileName: req.files[0].originalname,
+          fileName: req.files[0].filename,
+          dateCreated: new Date()
+        });
+        abstract.save(function (err, abstract) {
+          if (err) {
+            return next(err);
+          } else {
+            res.status(200).json(abstract);
+          }
+        });
+      }
+    });
+  });
 };

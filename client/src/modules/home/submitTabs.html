@@ -20,6 +20,10 @@
             <a class="nav-link" show.bind="adminRole" id="reviewers-tab" data-toggle="tab" href="#reviewers"
                 role="tab" aria-controls="reviewers" aria-selected="true">Reviewers</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" show.bind="adminRole" id="submitReview-tab" data-toggle="tab" href="#submitReview"
+                role="tab" aria-controls="submitReview" aria-selected="true">Submit Review</a>
+        </li>
     </ul>
     <p></p>
     <div class="tab-content" id="myTabContent">
@@ -41,6 +45,9 @@
         </div>
         <div class="tab-pane fade" id="reviewers" role="tabpanel" aria-labelledby="home-tab">
             <compose view="./reviewersTable.html"></compose>
+        </div>
+        <div class="tab-pane fade" id="submitReview" role="tabpanel" aria-labelledby="home-tab">
+            <compose view="./submitReview.html"></compose>
         </div>
     </div>
 </template>

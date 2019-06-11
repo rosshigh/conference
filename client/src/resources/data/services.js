@@ -31,6 +31,14 @@ export class Services {
         }
      }
 
+     async saveReview(abstract, files){
+         console.log('there')
+        let response = await this.data.uploadFiles(files, 'abstract/review/' + abstract._id, 'put');
+        if(!response.error){
+            return uploadResponse;
+        }
+     }
+
      async getPersonAbstracts(id){
          let response = await this.data.get('abstract/person/' + id);
          if(!response.error){
