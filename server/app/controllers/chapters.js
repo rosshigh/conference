@@ -141,6 +141,24 @@ module.exports = function (app) {
     })
   });
 
+  router.put('/api/people/password/:id',  function(req, res, next){
+    logger.log('info','Update Person password [%s]', req.params.id,'verbose');
+    Person.findById(req.params.id, function(err, result){
+      if (err) {
+         return next(err);
+      } else {       
+        result.password = req.body.password;
+        result.save(function(err, person){
+          if (err) {
+             return next(err);
+          } else {           
+            res.status(200).json(person);
+          }
+        });
+      }
+    })
+  });
+
   //Abstract
   router.get('/api/abstract', function (req, res, next) {
 

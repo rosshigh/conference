@@ -17,6 +17,11 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="status">Status *</label>
+                    <input value.bind="abstract.status" type="text" class="form-control" id="status"
+                        aria-describedby="statusHelp" placeholder="Status">
+                </div>
+                <div class="form-group">
                     <label for="description">Description *</label>
                     <textarea value.bind="abstract.description" type="text" class="form-control" id="description"
                         aria-describedby="descriptionHelp" placeholder="Description" rows="10"></textarea>
