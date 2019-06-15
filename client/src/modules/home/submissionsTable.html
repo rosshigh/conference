@@ -102,8 +102,8 @@
                                 <td click.trigger="edit(abstract)">${abstract.title}</td>
                                 <td click.trigger="edit(abstract)">${abstract.track}</td>
                                 <td click.trigger="edit(abstract)">${abstract.status}</td>
-                                <td><a href="uploadedFiles/reviews/${abstract.reviews.fileName}" target="_blank"
-                                }>${abstract.reviews.originalFileName}</a></td>
+                                <td><a href="uploadedFiles/reviews/${abstract.reviews[0].fileName}" target="_blank"
+                                }>${abstract.reviews[0].originalFileName}</a></td>
                                 <td><a href="uploadedFiles/abstracts/${abstract.file.fileName}" target="_blank"
                                         }>${abstract.file.originalFileName}</a></td>
                             </tr>
