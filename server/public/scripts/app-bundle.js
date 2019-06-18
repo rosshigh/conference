@@ -158,6 +158,9 @@ define('modules/home/agenda',["exports", "aurelia-framework", "../../resources/d
                 return this.services.getAgenda();
 
               case 2:
+                this.services.agendaArray = this.services.agendaArray.sort(function (a, b) {
+                  return a.timeSlot < b.timeSlot ? -1 : 1;
+                });
                 this.services.agendaArray.forEach(function (item) {
                   if (item.agendaDate.indexOf('Sunday') > -1) {
                     if (_this.sundayFirstItem) {
@@ -176,7 +179,7 @@ define('modules/home/agenda',["exports", "aurelia-framework", "../../resources/d
                 this.sundayRowSpan = this.sundayArray.length + 1;
                 this.mondayRowSpan = this.mondayArray.length + 1;
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }

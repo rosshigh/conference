@@ -12,6 +12,11 @@ export class Agenda {
 
     async activate(){
         await this.services.getAgenda();
+
+        this.services.agendaArray =  this.services.agendaArray.sort((a,b) => {
+          return (a.timeSlot < b.timeSlot ? -1 : 1);
+      });
+
         this.services.agendaArray.forEach(item => {
             if(item.agendaDate.indexOf('Sunday') > -1){
                 if(this.sundayFirstItem){
