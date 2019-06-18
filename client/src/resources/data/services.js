@@ -58,7 +58,7 @@ export class Services {
      }
 
      async getAgenda(){
-         let response = await this.data.get('agenda');
+         let response = await this.data.get('agenda?order=timeSlot');
          if(!response.error){
              this.agendaArray = response;
          } else {

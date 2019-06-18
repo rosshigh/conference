@@ -1817,7 +1817,7 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
-                return this.data.get('agenda');
+                return this.data.get('agenda?order=timeSlot');
 
               case 2:
                 response = _context7.sent;
