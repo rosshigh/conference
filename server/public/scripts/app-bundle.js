@@ -32,6 +32,24 @@ define('app',["exports"], function (_exports) {
         },
         title: 'SAP Next-Gen Chapter Conference 2019'
       }, {
+        route: 'files',
+        moduleId: './modules/home/files',
+        name: 'Files',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'uploadFiles',
+        moduleId: './modules/home/uploadFiles',
+        name: 'UploadFiles',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
         route: 'register',
         moduleId: './modules/home/register',
         name: 'Register',
@@ -210,6 +228,85 @@ define('modules/home/contact',["exports"], function (_exports) {
   _exports.Contact = Contact;
 });;
 define('text!modules/home/contact.html',[],function(){return "<template>\r\n    <div class=\"container\" style=\"padding-top:100px;\">\r\n        <div class=\"card\" style=\"width: 18rem;\">\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">Contact Information</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Email: cti@uwm.edu</h6>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Phone: 414-229-3992</h6>\r\n            </div>\r\n          </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/home/file.html',[],function(){return "";});;
+define('modules/home/files',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Files = void 0;
+
+  var _dec, _class;
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Files = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Files(services) {
+      this.services = services;
+      this.files = [];
+      this.categories = [];
+    }
+
+    var _proto = Files.prototype;
+
+    _proto.activate =
+    /*#__PURE__*/
+    function () {
+      var _activate = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.services.getFiles();
+
+              case 2:
+                this.sortFiles();
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function activate() {
+        return _activate.apply(this, arguments);
+      }
+
+      return activate;
+    }();
+
+    _proto.sortFiles = function sortFiles() {
+      var _this = this;
+
+      this.categories.push({
+        files: [],
+        category: this.services.filesArray[0].category
+      });
+      this.services.filesArray.forEach(function (item) {
+        if (item.category !== _this.categories[_this.categories.length - 1].category) {
+          _this.categories.push({
+            files: [],
+            category: item.category
+          });
+        }
+
+        _this.categories[_this.categories.length - 1].files.push(item);
+      });
+    };
+
+    return Files;
+  }()) || _class);
+  _exports.Files = Files;
+});;
+define('text!modules/home/files.html',[],function(){return "<template>\n    <div class=\"container\" style=\"padding-top:100px;\">\n       <ul>\n          <li repeat.for=\"category of categories\" ref.bind=\"$index\" style=\"margin-top:15px;\">\n            <h2>${category.category}</h2>\n            <ul>\n              <li repeat.for=\"file of category.files\">\n                <a href=\"uploadedFiles/files/${file.file.fileName}\" target=\"_blank\">${file.title}</a>\n              </li>\n            </ul>\n          </li>\n       </ul>\n    </div>\n</template>\n";});;
 define('text!modules/home/guidelines.html',[],function(){return "<template>\r\n        <h3>Submission Guidelines</h3>\r\n        <p>\r\n            The <strong>SAP Next-Gen Chapter Conference 2019</strong> invites you to submit an extended\r\n            abstract proposal to be considered for presentation on Monday July 15, 2019. All extended\r\n            abstracts will be peer reviewed, and online proceedings will be published.\r\n        </p>\r\n\r\n        <h5>DEADLINES:</h5>\r\n        <ul>\r\n            <li>May 15, 2019: Extended Abstract Submission in Word Format </li>\r\n            <li>June 12, 2019: Notification of Selected Presentations</li>\r\n            <li>July 1, 2019: Final Presentation Materials Due</li>\r\n        </ul>\r\n\r\n        <p><strong>To submit an abstract, register as an author using the Register button.</strong></p>\r\n\r\n        <h4>Focus for Faculty Presentations</h4>\r\n        <p>One of the goals of the faculty led presentations to share innovations with colleagues with a\r\n            focus on <strong>actionable takeaways</strong>. Presentations should focus on the problem or\r\n            opportunity; the innovation to solve the problem or realize the opportunity; examples of\r\n            practical application of the innovation; and suggestions for faculty adoption.\r\n            You are invited to submit an extended abstract proposal for a presentation within any of the\r\n            following tracks:</p>\r\n        <ol>\r\n            <li>Innovations in Teaching - With SAP technology – Flipped classroom is so 2009. What’s new\r\n                in innovative teaching for 2019!</li>\r\n            <li>High Impact Practices - Practical tips to energize your teaching for student success\r\n            </li>\r\n            <li>HANAfy Everything - How you have successfully upgraded all of your SAP related\r\n                curriculum to leverage SAP HANA</li>\r\n            <li>Incorporating Latest Technology Developments into Curriculum - How you have successfully\r\n                incorporated new technologies such as (but not restricted to) Blockchain, AI, ML, AR, VR\r\n                into your curriculum</li>\r\n            <li>Research or Teaching - Balancing the demands of tenure track with curriculum\r\n                development, a perspective from recently tenured faculty</li>\r\n        </ol>\r\n\r\n        <p>After a peer review of the submissions, selected contributions will be presented orally and\r\n            then be posted as an extended abstract with no copyright to ensure that the authors may\r\n            further develop their research ideas for journal submission.\r\n            Requirements</p>\r\n        <p>Please submit a 1-2 page extended abstract of your proposed presentation that includes the\r\n            following details:</p>\r\n        <ul>\r\n            <li>Cover page with Title, speaker names, emails and affiliations indicating who the\r\n                corresponding author is along with intended track and One paragraph profile / bio for\r\n                each speaker</li>\r\n            <li>Extended abstract to include Title, Abstract overview of content, Keywords, content, and\r\n                references</li>\r\n            <li>An Abstract Template can be found here: <a href=\"/Initial_Submission_Extended_Abstract_Template.docx\">Initial_Submission_Extended_Abstract_Template</a></li>\r\n            <ul>\r\n                <li>Presenters should plan for approximately 20-30 min long speaking slots. If your\r\n                    proposed presentation needs more time, you should indicate this upon submission of\r\n                    the abstract.</li>\r\n                <li>Submissions should be uploaded to the conference website as a Word\r\n                    file </li>\r\n                <li>Presentations will be Monday, July 15th , 2019, Milwaukee, Wisconsin, USA</li>\r\n            </ul>\r\n\r\n        </ul>\r\n\r\n    \r\n        <p><strong>You can return to this site, login and track the progress of your\r\n                submission.</strong></p>\r\n\r\n\r\n        <p>Questions? Contact the academic program chair at yantonucci@widener.edu or the conference\r\n            co-chairs <a href=\"emailto:hightowe@uwm.edu\">hightowe@uwm.edu</a> or <a\r\n                href=\"emailto:twilder@csuchico.edu\">twilder@csuchico.edu</a> </p>\r\n</template>";});;
 define('modules/home/home',["exports"], function (_exports) {
   "use strict";
@@ -1178,6 +1275,104 @@ define('modules/home/submit',["exports", "aurelia-framework", "../../resources/u
 define('text!modules/home/submit.html',[],function(){return "<template>\r\n    <div style=\"padding-top:100px;padding-left:50px;padding-right:50px;\">\r\n        <div class=\"card\">\r\n            <div class=\"card-body\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-5 offset-1\">\r\n                        <div if.bind=\"!isAuthenticated && !showRegisterPanel\">\r\n                            <h5>Register to submit an abstract.</h5>\r\n                        </div>\r\n                        <form if.bind=\"!isAuthenticated && !showRegisterPanel\" class=\"form-inline\">\r\n                            <div class=\"form-group mb-2\">\r\n                                <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"loginemail\"\r\n                                    placeholder=\"Email\"></input>\r\n                            </div>\r\n                            <div class=\"form-group mx-sm-3 mb-2\">\r\n                                <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"loginpassword\"\r\n                                    placeholder=\"Password\"></input>\r\n                            </div>\r\n                            <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\r\n                            <button class=\"btn btn-primary mb-2\" style=\"margin-left:5px;\"\r\n                                click.delegate='showRegister()'>Register</button>\r\n                        </form>\r\n                        <label if.bind=\"loginError\" style=\"color:black;margin-right:5px;\">${loginError}</label>\r\n                        <div show.bind=\"showRegisterPanel\">\r\n                            <h2>Register as an Author</h2>\r\n                            <form>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"firstName\">First name *</label>\r\n                                    <input value.bind=\"firstName\" type=\"text\" class=\"form-control\" id=\"firstName\"\r\n                                        aria-describedby=\"firstNameHelp\" placeholder=\"First Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"lastName\">Last name *</label>\r\n                                    <input value.bind=\"lastName\" type=\"text\" class=\"form-control\" id=\"lastName\"\r\n                                        aria-describedby=\"lastNameHelp\" placeholder=\"Last Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"university\">University/Company *</label>\r\n                                    <input value.bind=\"university\" type=\"text\" class=\"form-control\" id=\"university\"\r\n                                        aria-describedby=\"universityHelp\" placeholder=\"University\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"email\">Email *</label>\r\n                                    <input value.bind=\"email\" type=\"email\" class=\"form-control\" id=\"email\"\r\n                                        aria-describedby=\"emailHelp\" placeholder=\"Email\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password\">Password *</label>\r\n                                    <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\"\r\n                                        aria-describedby=\"passwordHelp\" placeholder=\"Password\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password_repeat\">Repeat password *</label>\r\n                                    <input value.bind=\"password_repeat\" type=\"password\" class=\"form-control\"\r\n                                        id=\"password_repeat\" aria-describedby=\"passwordrepeatHelp\"\r\n                                        placeholder=\"Repeat Password\">\r\n                                </div>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"save()\">Register</button>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"showRegister()\">Cancel</button>\r\n                            </form>\r\n                        </div>\r\n                    </div>\r\n                    <div if.bind=\"!isAuthenticated\" class=\"col-5\">\r\n                        <compose view=\"./guidelines.html\"></compose>\r\n                    </div>\r\n                </div>\r\n                <div show.bind=\"isAuthenticated\">\r\n                    <compose view=\"./submitTabs.html\"></compose>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</template>";});;
 define('text!modules/home/submitReview.html',[],function(){return "<template>\r\n    <h1>Here</h1>\r\n</template>";});;
 define('text!modules/home/submitTabs.html',[],function(){return "<template>\r\n    <ul class=\"nav nav-pills\">\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link active\" id=\"submitAbstract-tab\" data-toggle=\"tab\" href=\"#submitAbstract\" role=\"tab\"\r\n                aria-controls=\"submitAbstract\" aria-selected=\"true\">Submit an Abstract</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"guidelines-tab\" data-toggle=\"tab\" href=\"#guidelines\" role=\"tab\"\r\n                aria-controls=\"guidelines\" aria-selected=\"true\">Guidelines</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"mysubmissions-tab\" data-toggle=\"tab\" href=\"#mysubmissions\" role=\"tab\"\r\n                aria-controls=\"mysubmissions\" aria-selected=\"true\">My Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submissions-tab\" data-toggle=\"tab\"\r\n                href=\"#submissions\" role=\"tab\" aria-controls=\"submissions\" aria-selected=\"true\">Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"reviewers-tab\" data-toggle=\"tab\" href=\"#reviewers\"\r\n                role=\"tab\" aria-controls=\"reviewers\" aria-selected=\"true\">Reviewers</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submitReview-tab\" data-toggle=\"tab\" href=\"#submitReview\"\r\n                role=\"tab\" aria-controls=\"submitReview\" aria-selected=\"true\">Submit Review</a>\r\n        </li>\r\n    </ul>\r\n    <p></p>\r\n    <div class=\"tab-content\" id=\"myTabContent\">\r\n        <div class=\"tab-pane fade show active\" id=\"submitAbstract\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-5\">\r\n                <compose view=\"./registerPanel.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"guidelines\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-7\">\r\n                <compose view=\"./guidelines.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"mysubmissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./mySubmissions.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submissionsTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"reviewers\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./reviewersTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submitReview\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submitReview.html\"></compose>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('modules/home/uploadFiles',["exports", "aurelia-framework", "../../resources/data/services", "toastr"], function (_exports, _aureliaFramework, _services, toastr) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.UploadFiles = void 0;
+  toastr = _interopRequireWildcard(toastr);
+
+  var _dec, _class;
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var UploadFiles = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function UploadFiles(services) {
+      this.services = services;
+      this.filesToUpload = new Array();
+    }
+
+    var _proto = UploadFiles.prototype;
+
+    _proto.uploadFile =
+    /*#__PURE__*/
+    function () {
+      var _uploadFile = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(this.category && this.title)) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.services.saveFile(this.category, this.title, this.filesToUpload);
+
+              case 3:
+                response = _context.sent;
+
+                if (!response.error) {
+                  toastr['success']('The file was uploaded successfully.');
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function uploadFile() {
+        return _uploadFile.apply(this, arguments);
+      }
+
+      return uploadFile;
+    }() // async submit() {
+    //   if (this.validation.validate(1)) {
+    //       let abstract = {
+    //           title: this.title,
+    //           description: this.description,
+    //           personId: this.userObj._id,
+    //           track: this.track
+    //       }
+    //       let response = await this.services.saveAbstract(abstract, this.filesToUpload);
+    //       if (!response.error) {
+    //           toastr['success']('The abstract was uploaded successfully.');
+    //           this.getPersonAbstracts();
+    //           this.title = "";
+    //           this.description = "";
+    //           this.track = "";
+    //           this.filesToUpload = new Array();
+    //           this.files = new Array();
+    //       }
+    //   }
+    // }
+    ;
+
+    _proto.changeFiles = function changeFiles() {
+      this.filesToUpload = new Array();
+      this.filesToUpload.push(this.files[0]);
+    };
+
+    return UploadFiles;
+  }()) || _class);
+  _exports.UploadFiles = UploadFiles;
+});;
+define('text!modules/home/uploadFiles.html',[],function(){return "<template>\n  <div class=\"container\" style=\"padding-top:100px;\">\n    <div class=\"form-group\">\n      <label for=\"status\">Category</label>\n      <input value.bind=\"category\" type=\"text\" class=\"form-control\" id=\"status\" aria-describedby=\"statusHelp\"\n        placeholder=\"Category\">\n    </div>\n    <div class=\"form-group\">\n        <label for=\"status\">Title</label>\n        <input value.bind=\"title\" type=\"text\" class=\"form-control\" id=\"title\" aria-describedby=\"statusHelp\"\n          placeholder=\"Title\">\n      </div>\n    <div class=\"card\" style=\"margin-top:10px;\">\n      <div class=\"card-body\">\n        <div class=\"row\">\n          <div class=\"col-4\">\n            <label class=\"btn btn-primary\">\n              Browse for files&hellip; <input type=\"file\" style=\"display: none;\" change.delegate=\"changeFiles()\"\n                files.bind=\"files\">\n            </label>\n            <span id=\"files\"></span>\n          </div>\n          <div class=\"col\">\n            <ul>\n              <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\n                ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i class=\"fa fa-trash\"\n                    aria-hidden=\"true\"></i></span></li>\n            </ul>\n          </div>\n        </div>\n        <button click.trigger=\"uploadFile()\" class=\"btn btn-primary\" style=\"margin-top:5px;\">Upload File</button>\n      </div>\n    </div>\n  </div>\n</template>\n";});;
 define('text!modules/home/userSubmit.html',[],function(){return "";});;
 define('text!resources/css/styles.css',[],function(){return "body, html {\r\n    height: 2500px;\r\n    font: 400 15px/1.8 \"Lato\", sans-serif;\r\n  }\r\n\r\n  .toolbar {\r\n    position:fixed;\r\n    z-index:1000;\r\n    width:100%;\r\n    left:0;\r\n    background-color:ghostwhite;\r\n  }\r\n\r\n  .smallMarginRight{\r\n    margin-right: 5px;\r\n  }\r\n\r\n  .sortable {\r\n    cursor: pointer;   \r\n  }\r\n\r\n  .has-error {\r\n      color:red;\r\n  }\r\n\r\n  .underline {\r\n    text-decoration: underline;\r\n    }\r\n\r\n.caption {\r\n    position: absolute;\r\n    left: 0;\r\n    top: 25%;\r\n    width: 100%;\r\n    text-align: center;\r\n    color: #000;\r\n}\r\n\r\n.caption span.border {\r\n    background-color: #111;\r\n    color: #fff;\r\n    padding: 18px;\r\n    font-size: 25px;\r\n    letter-spacing: 10px;\r\n}\r\n\r\n  \r\n.parallax1 {\r\n    /* The image used */\r\n    background-image: url(\"/img/parallax1.jpg\");\r\n\r\n    /* Set a specific height */\r\n   height: 500px;\r\n\r\n    /* Create the parallax scrolling effect */\r\n    background-attachment: fixed;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: cover;\r\n}\r\n\r\n  \r\n.parallax2 {\r\n    /* The image used */\r\n    background-image: url(\"/img/parallax1.jpg\");\r\n\r\n    /* Set a specific height */\r\n   height: 200px;\r\n\r\n    /* Create the parallax scrolling effect */\r\n    background-attachment: fixed;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: cover;\r\n}\r\n\r\n.agenda {  }\r\n\r\n/* Dates */\r\n.agenda .agenda-date { width: 170px; }\r\n.agenda .agenda-date .dayofmonth {\r\n  width: 40px;\r\n  font-size: 36px;\r\n  line-height: 36px;\r\n  float: left;\r\n  text-align: right;\r\n  margin-right: 10px; \r\n}\r\n.agenda .agenda-date .shortdate {\r\n  font-size: 0.75em; \r\n}\r\n\r\n\r\n/* Times */\r\n.agenda .agenda-time { width: 140px; } \r\n\r\n\r\n/* Events */\r\n.agenda .agenda-events {  } \r\n.agenda .agenda-events .agenda-event {  } \r\n\r\n@media (max-width: 767px) {\r\n    \r\n}";});;
 define('resources/data/auth',["exports", "aurelia-framework", "aurelia-event-aggregator", "./dataServices"], function (_exports, _aureliaFramework, _aureliaEventAggregator, _dataServices) {
@@ -1317,7 +1512,8 @@ define('resources/data/dataServices',["exports", "aurelia-framework", "aurelia-h
       this.DOCUMENTS_FILE_UPLOAD = 'documents/file';
       this.http = http;
       this.http.configure(function (x) {
-        x.withBaseUrl("http://c3po.ucc.uwm.edu/api/"); // x.withBaseUrl("http://localhost/api/");
+        // x.withBaseUrl("http://c3po.ucc.uwm.edu/api/");
+        x.withBaseUrl("http://localhost/api/");
       });
     }
 
@@ -1703,21 +1899,20 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log('there');
-                _context4.next = 3;
+                _context4.next = 2;
                 return this.data.uploadFiles(files, 'abstract/review/' + abstract._id, 'put');
 
-              case 3:
+              case 2:
                 response = _context4.sent;
 
                 if (response.error) {
-                  _context4.next = 6;
+                  _context4.next = 5;
                   break;
                 }
 
                 return _context4.abrupt("return", uploadResponse);
 
-              case 6:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -1732,22 +1927,99 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
       return saveReview;
     }();
 
-    _proto.getPersonAbstracts =
+    _proto.saveFile =
     /*#__PURE__*/
     function () {
-      var _getPersonAbstracts = _asyncToGenerator(
+      var _saveFile = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee5(id) {
+      regeneratorRuntime.mark(function _callee5(category, title, files) {
         var response;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return this.data.get('abstract/person/' + id);
+                return this.data.uploadFiles(files, 'files/' + category + "/" + title, 'post');
 
               case 2:
                 response = _context5.sent;
+
+                if (response.error) {
+                  _context5.next = 5;
+                  break;
+                }
+
+                return _context5.abrupt("return", uploadResponse);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function saveFile(_x8, _x9, _x10) {
+        return _saveFile.apply(this, arguments);
+      }
+
+      return saveFile;
+    }();
+
+    _proto.getFiles =
+    /*#__PURE__*/
+    function () {
+      var _getFiles = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee6() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return this.data.get('files');
+
+              case 2:
+                response = _context6.sent;
+
+                if (!response.error) {
+                  this.filesArray = response;
+                } else {
+                  this.filesArray = [];
+                }
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function getFiles() {
+        return _getFiles.apply(this, arguments);
+      }
+
+      return getFiles;
+    }();
+
+    _proto.getPersonAbstracts =
+    /*#__PURE__*/
+    function () {
+      var _getPersonAbstracts = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee7(id) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return this.data.get('abstract/person/' + id);
+
+              case 2:
+                response = _context7.sent;
 
                 if (!response.error) {
                   this.abstractArray = response;
@@ -1757,13 +2029,13 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context5.stop();
+                return _context7.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee7, this);
       }));
 
-      function getPersonAbstracts(_x8) {
+      function getPersonAbstracts(_x11) {
         return _getPersonAbstracts.apply(this, arguments);
       }
 
@@ -1775,17 +2047,17 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getAbstracts = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6() {
+      regeneratorRuntime.mark(function _callee8() {
         var response;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context6.next = 2;
+                _context8.next = 2;
                 return this.data.get('abstract');
 
               case 2:
-                response = _context6.sent;
+                response = _context8.sent;
 
                 if (!response.error) {
                   this.allAbstractArray = response;
@@ -1795,10 +2067,10 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context6.stop();
+                return _context8.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee8, this);
       }));
 
       function getAbstracts() {
@@ -1813,17 +2085,17 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getAgenda = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee7() {
+      regeneratorRuntime.mark(function _callee9() {
         var response;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                _context7.next = 2;
+                _context9.next = 2;
                 return this.data.get('agenda?order=timeSlot');
 
               case 2:
-                response = _context7.sent;
+                response = _context9.sent;
 
                 if (!response.error) {
                   this.agendaArray = response;
@@ -1833,10 +2105,10 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context7.stop();
+                return _context9.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee9, this);
       }));
 
       function getAgenda() {
@@ -1851,17 +2123,17 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getPeople = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee8() {
+      regeneratorRuntime.mark(function _callee10() {
         var response;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                _context8.next = 2;
+                _context10.next = 2;
                 return this.data.get('people');
 
               case 2:
-                response = _context8.sent;
+                response = _context10.sent;
 
                 if (!response.error) {
                   this.peopleArray = response;
@@ -1871,10 +2143,10 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
 
               case 4:
               case "end":
-                return _context8.stop();
+                return _context10.stop();
             }
           }
-        }, _callee8, this);
+        }, _callee10, this);
       }));
 
       function getPeople() {
@@ -1889,28 +2161,28 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _savePerson = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee9(person) {
+      regeneratorRuntime.mark(function _callee11(person) {
         var response;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
-                _context9.next = 2;
+                _context11.next = 2;
                 return this.data.saveObject(person, 'people', 'put');
 
               case 2:
-                response = _context9.sent;
-                return _context9.abrupt("return", response);
+                response = _context11.sent;
+                return _context11.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context9.stop();
+                return _context11.stop();
             }
           }
-        }, _callee9, this);
+        }, _callee11, this);
       }));
 
-      function savePerson(_x9) {
+      function savePerson(_x12) {
         return _savePerson.apply(this, arguments);
       }
 
@@ -1922,28 +2194,28 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _saveAbstractReviewer = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee10(abstract) {
+      regeneratorRuntime.mark(function _callee12(abstract) {
         var response;
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        return regeneratorRuntime.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
-                _context10.next = 2;
+                _context12.next = 2;
                 return this.data.saveObject(abstract, 'abstract', 'put');
 
               case 2:
-                response = _context10.sent;
-                return _context10.abrupt("return", response);
+                response = _context12.sent;
+                return _context12.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context10.stop();
+                return _context12.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee12, this);
       }));
 
-      function saveAbstractReviewer(_x10) {
+      function saveAbstractReviewer(_x13) {
         return _saveAbstractReviewer.apply(this, arguments);
       }
 
@@ -1955,37 +2227,37 @@ define('resources/data/services',["exports", "aurelia-framework", "./dataService
     function () {
       var _getAbstract = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee11(id) {
+      regeneratorRuntime.mark(function _callee13(id) {
         var response;
-        return regeneratorRuntime.wrap(function _callee11$(_context11) {
+        return regeneratorRuntime.wrap(function _callee13$(_context13) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context13.prev = _context13.next) {
               case 0:
-                _context11.next = 2;
+                _context13.next = 2;
                 return this.data.get('abstract/' + id);
 
               case 2:
-                response = _context11.sent;
+                response = _context13.sent;
 
                 if (response.error) {
-                  _context11.next = 7;
+                  _context13.next = 7;
                   break;
                 }
 
-                return _context11.abrupt("return", response);
+                return _context13.abrupt("return", response);
 
               case 7:
-                return _context11.abrupt("return", null);
+                return _context13.abrupt("return", null);
 
               case 8:
               case "end":
-                return _context11.stop();
+                return _context13.stop();
             }
           }
-        }, _callee11, this);
+        }, _callee13, this);
       }));
 
-      function getAbstract(_x11) {
+      function getAbstract(_x14) {
         return _getAbstract.apply(this, arguments);
       }
 
@@ -2114,7 +2386,7 @@ define('resources/elements/nav-bar',["exports", "aurelia-framework", "aurelia-ro
   }(), _temp)) || _class);
   _exports.NavBar = NavBar;
 });;
-define('text!resources/elements/nav-bar.html',[],function(){return "<template>\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark toolbar\"> \n    <img class=\"navbar-brand\" style=\"height:50px;\" src=\"img/sap_ua3.png\">\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\"\n      aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item active\">\n          <a class=\"nav-link\" style=\"color:white;\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/agenda\">Agenda</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"https://www.eventbrite.com/e/sap-next-gen-chapter-conference-tickets-58804908063\"\n            target=\"_blank\">Attendee Registration</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/submit\">Presentation Submissions</a> \n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/logistics\">Logistics</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            href=\"https://events.sap.com/us/sap-university-alliances-summer-workshops-2019/en/home\"\n            target=\"_blank\">SAP UA Bootcamps</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://www.visitmilwaukee.org/\">Milwaukee</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"wall.html\">Social Media</a>\n        </li>\n      </ul>\n    </div>\n    <div>\n      <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n        <ul class=\"navbar-nav\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link\" href=\"#/contact\">Contact</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    <!-- <form if.bind=\"!isAuthenticated\" class=\"form-inline my-2 my-lg-0\">\n        <label if.bind=\"loginError\" style=\"color:white;margin-right:5px;\">${loginError}</label>\n      <div class=\"form-group mb-2\">\n        <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"email\" placeholder=\"Email\"></input>\n      </div>\n      <div class=\"form-group mx-sm-3 mb-2\">\n        <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\"></input>\n      </div>\n      <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\n    </form>\n    <button if.bind=\"isAuthenticated\" class=\"btn btn-primary mb-2\" click.delegate='logout()'>Logout</button> -->\n    </div>\n  </nav>\n</template>\n";});;
+define('text!resources/elements/nav-bar.html',[],function(){return "<template>\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark toolbar\"> \n    <img class=\"navbar-brand\" style=\"height:50px;\" src=\"img/sap_ua3.png\">\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\"\n      aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item active\">\n          <a class=\"nav-link\" style=\"color:white;\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/agenda\">Agenda</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"https://www.eventbrite.com/e/sap-next-gen-chapter-conference-tickets-58804908063\"\n            target=\"_blank\">Attendee Registration</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/files\">Files</a> \n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/logistics\">Logistics</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            href=\"https://events.sap.com/us/sap-university-alliances-summer-workshops-2019/en/home\"\n            target=\"_blank\">SAP UA Bootcamps</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://www.visitmilwaukee.org/\">Milwaukee</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"wall.html\">Social Media</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://milwaukee.qualtrics.com/jfe/form/SV_8IDZpZxHVEmihoN\">Survey</a>\n        </li>\n      </ul>\n    </div>\n    <div>\n      <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n        <ul class=\"navbar-nav\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link\" href=\"#/contact\">Contact</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    <!-- <form if.bind=\"!isAuthenticated\" class=\"form-inline my-2 my-lg-0\">\n        <label if.bind=\"loginError\" style=\"color:white;margin-right:5px;\">${loginError}</label>\n      <div class=\"form-group mb-2\">\n        <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"email\" placeholder=\"Email\"></input>\n      </div>\n      <div class=\"form-group mx-sm-3 mb-2\">\n        <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\"></input>\n      </div>\n      <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\n    </form>\n    <button if.bind=\"isAuthenticated\" class=\"btn btn-primary mb-2\" click.delegate='logout()'>Logout</button> -->\n    </div>\n  </nav>\n</template>\n";});;
 define('resources/elements/table-navigation-bar',["exports", "aurelia-framework"], function (_exports, _aureliaFramework) {
   "use strict";
 

@@ -4,6 +4,7 @@ var express = require('express'),
   Model = mongoose.model('Agenda'),
   Person = mongoose.model('Person'),
   Abstract = mongoose.model('Abstract'),
+  File = mongoose.model('File'),
   logger = require('../../config/logger'),
   multer = require('multer'),
   mkdirp = require('mkdirp'),
@@ -141,17 +142,17 @@ module.exports = function (app) {
     })
   });
 
-  router.put('/api/people/password/:id',  function(req, res, next){
-    logger.log('info','Update Person password [%s]', req.params.id,'verbose');
-    Person.findById(req.params.id, function(err, result){
+  router.put('/api/people/password/:id', function (req, res, next) {
+    logger.log('info', 'Update Person password [%s]', req.params.id, 'verbose');
+    Person.findById(req.params.id, function (err, result) {
       if (err) {
-         return next(err);
-      } else {       
+        return next(err);
+      } else {
         result.password = req.body.password;
-        result.save(function(err, person){
+        result.save(function (err, person) {
           if (err) {
-             return next(err);
-          } else {           
+            return next(err);
+          } else {
             res.status(200).json(person);
           }
         });
@@ -177,10 +178,10 @@ module.exports = function (app) {
 
   router.get('/api/abstract/:id', function (req, res, next) {
     logger.log('info', 'Get abstract ' + req.params.id, "verbose");
-    var query = Abstract.find({_id: req.params.id})
+    var query = Abstract.find({ _id: req.params.id })
       .populate({ path: 'personId', model: 'Person' })
       .populate({ path: 'reviewers', model: 'Person' })
-      query.exec(function (err, object) {
+    query.exec(function (err, object) {
       if (err) {
         return next(err);
       } else {
@@ -311,10 +312,10 @@ module.exports = function (app) {
     logger.log('info', 'Upload Review ', 'verbose');
     Abstract.findById(req.params.id, function (err, abstract) {
       if (err) {
-        return next(err);  
+        return next(err);
       } else {
-        if(!abstract.reviews) abstract.reviews = [];       
-        abstract.reviews.push( {
+        if (!abstract.reviews) abstract.reviews = [];
+        abstract.reviews.push({
           originalFileName: req.files[0].originalname,
           fileName: req.files[0].filename,
           dateCreated: new Date()
@@ -326,6 +327,60 @@ module.exports = function (app) {
             res.status(200).json(abstract);
           }
         });
+      }
+    });
+  });
+
+  router.get('/api/files', function (req, res, next) {
+    logger.log('info', 'Get files', "verbose");
+
+    var query = File.find();
+    query.sort('category');
+    query.exec(function (err, object) {
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(object);
+      }
+    });
+  });
+
+
+  var fileTech = multer.diskStorage({
+    destination: function (req, file, cb) {
+
+      var path = config.uploads + '/files';
+
+      mkdirp(path, function (err) {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          cb(null, path);
+        }
+      });
+    },
+    filename: function (req, file, cb) {
+      cb(null, req.params.title + file.originalname.substring(file.originalname.indexOf('.')));
+    }
+  });
+
+  var uploadFile = multer({ storage: fileTech });
+
+  router.post('/api/files/:category/:title', uploadFile.any(), function (req, res, next) {
+    logger.log('info', 'Upload File ', 'verbose');
+    var file = new File();
+    file.category = req.params.category;
+    file.title = req.params.title;
+    file.file = {
+      originalFileName: req.files[0].originalname,
+      fileName: req.files[0].filename,
+      dateCreated: new Date()
+    };
+    file.save(function (err, object) {
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json(object);
       }
     });
   });

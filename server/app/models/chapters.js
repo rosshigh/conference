@@ -2,6 +2,19 @@ var Mongoose = require('mongoose'),
   Schema = Mongoose.Schema,
   Bcrypt = require('bcryptjs');
 
+
+  var FileSchema = new Schema({
+    category: { type: String },
+    title: { type: String },
+    file: { 
+      fileName: { type: String },
+      originalFileName:  { type: String },
+      dateCreated: { type: Date, default: Date.now }
+    }
+  });
+
+  module.exports = Mongoose.model('File', FileSchema);
+
 var AgendaSchema = new Schema({
     name: { type: String },
     agendaDate: { type: Date },

@@ -32,11 +32,27 @@ export class Services {
      }
 
      async saveReview(abstract, files){
-         console.log('there')
+        
         let response = await this.data.uploadFiles(files, 'abstract/review/' + abstract._id, 'put');
         if(!response.error){
             return uploadResponse;
         }
+     }
+
+     async saveFile(category, title, files){
+      let response = await this.data.uploadFiles(files, 'files/' + category + "/" + title, 'post');
+      if(!response.error){
+          return uploadResponse;
+      }
+     }
+
+     async getFiles(){
+      let response = await this.data.get('files');
+      if(!response.error){
+          this.filesArray = response;
+      } else {
+         this.filesArray = [];
+      }
      }
 
      async getPersonAbstracts(id){

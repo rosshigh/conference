@@ -17,6 +17,20 @@ export class App {
         title: 'SAP Next-Gen Chapter Conference 2019'
       },
       {
+        route: 'files',
+        moduleId: './modules/home/files',
+        name: 'Files',
+        settings: { auth: false, roles: [] },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      },
+      {
+        route: 'uploadFiles',
+        moduleId: './modules/home/uploadFiles',
+        name: 'UploadFiles',
+        settings: { auth: false, roles: [] },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      },
+      {
         route: 'register',
         moduleId: './modules/home/register',
         name: 'Register',
