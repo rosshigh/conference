@@ -228,7 +228,6 @@ define('modules/home/contact',["exports"], function (_exports) {
   _exports.Contact = Contact;
 });;
 define('text!modules/home/contact.html',[],function(){return "<template>\r\n    <div class=\"container\" style=\"padding-top:100px;\">\r\n        <div class=\"card\" style=\"width: 18rem;\">\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">Contact Information</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Email: cti@uwm.edu</h6>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Phone: 414-229-3992</h6>\r\n            </div>\r\n          </div>\r\n    </div>\r\n</template>";});;
-define('text!modules/home/file.html',[],function(){return "";});;
 define('modules/home/files',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
   "use strict";
 
@@ -1512,8 +1511,7 @@ define('resources/data/dataServices',["exports", "aurelia-framework", "aurelia-h
       this.DOCUMENTS_FILE_UPLOAD = 'documents/file';
       this.http = http;
       this.http.configure(function (x) {
-        // x.withBaseUrl("http://c3po.ucc.uwm.edu/api/");
-        x.withBaseUrl("http://localhost/api/");
+        x.withBaseUrl("http://c3po.ucc.uwm.edu/api/"); // x.withBaseUrl("http://localhost/api/");
       });
     }
 
