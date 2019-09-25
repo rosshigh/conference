@@ -14,86 +14,32 @@ define('app',["exports"], function (_exports) {
     _proto.configureRouter = function configureRouter(config, router) {
       this.router = router;
       config.map([{
-        route: ['', 'landing'],
-        moduleId: './modules/home/landing',
-        name: 'Landing',
+        route: ['', 'homePage'],
+        moduleId: './modules/site/homePage',
+        name: 'Home Page',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Academic User Group'
+      }, {
+        route: 'conf2019',
+        moduleId: './modules/conf2019/home',
+        name: 'Conference 2019',
         settings: {
           auth: false,
           roles: []
         },
         title: 'SAP Next-Gen Chapter Conference 2019'
       }, {
-        route: 'home',
-        moduleId: './modules/home/home',
-        name: 'Home',
+        route: 'conf2020',
+        moduleId: './modules/conf2020/home',
+        name: 'Conference 2020',
         settings: {
           auth: false,
           roles: []
         },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      }, {
-        route: 'files',
-        moduleId: './modules/home/files',
-        name: 'Files',
-        settings: {
-          auth: false,
-          roles: []
-        },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      }, {
-        route: 'uploadFiles',
-        moduleId: './modules/home/uploadFiles',
-        name: 'UploadFiles',
-        settings: {
-          auth: false,
-          roles: []
-        },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      }, {
-        route: 'register',
-        moduleId: './modules/home/register',
-        name: 'Register',
-        settings: {
-          auth: false,
-          roles: []
-        },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      }, {
-        route: 'logistics',
-        moduleId: './modules/home/logistics',
-        name: 'Logistics',
-        settings: {
-          auth: false,
-          roles: []
-        },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      }, {
-        route: 'agenda',
-        moduleId: './modules/home/agenda',
-        name: 'Agenda',
-        settings: {
-          auth: false,
-          roles: []
-        },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      }, {
-        route: 'submit',
-        moduleId: './modules/home/submit',
-        name: 'Submission',
-        settings: {
-          auth: false,
-          roles: []
-        },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      }, {
-        route: 'contact',
-        moduleId: './modules/home/contact',
-        name: 'Contact',
-        settings: {
-          auth: false,
-          roles: []
-        },
-        title: 'SAP Next-Gen Chapter Conference 2019'
+        title: 'SAP University Alliance Conference 2020'
       }]);
     };
 
@@ -102,7 +48,7 @@ define('app',["exports"], function (_exports) {
 
   _exports.App = App;
 });;
-define('text!app.html',[],function(){return "<template>\n  <require from=\"resources/css/styles.css\"></require>\n  <require from=\"toastr/build/toastr.min.css\"></require>\n  <nav-bar></nav-bar>\n  <div class=\"page-host\">\n    <router-view></router-view>\n  </div>\n</template>";});;
+define('text!app.html',[],function(){return "<template>\n  <require from=\"resources/css/styles.css\"></require>\n  <require from=\"toastr/build/toastr.min.css\"></require>\n  <div class=\"page-host\">\n    <router-view></router-view>\n  </div>\n</template>\n";});;
 define('environment',["exports"], function (_exports) {
   "use strict";
 
@@ -136,6 +82,2807 @@ define('main',["exports", "./environment"], function (_exports, _environment) {
     });
   }
 });;
+define('modules/conf2019/agenda',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Agenda = void 0;
+
+  var _dec, _class;
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Agenda = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Agenda(services) {
+      this.services = services;
+      this.sundayArray = [];
+      this.mondayArray = [];
+    }
+
+    var _proto = Agenda.prototype;
+
+    _proto.activate =
+    /*#__PURE__*/
+    function () {
+      var _activate = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var _this = this;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.services.getAgenda();
+
+              case 2:
+                this.services.agendaArray = this.services.agendaArray.sort(function (a, b) {
+                  return a.timeSlot < b.timeSlot ? -1 : 1;
+                });
+                this.services.agendaArray.forEach(function (item) {
+                  if (item.agendaDate.indexOf('Sunday') > -1) {
+                    if (_this.sundayFirstItem) {
+                      _this.sundayArray.push(item);
+                    } else {
+                      _this.sundayFirstItem = item;
+                    }
+                  } else {
+                    if (_this.mondayFirstItem) {
+                      _this.mondayArray.push(item);
+                    } else {
+                      _this.mondayFirstItem = item;
+                    }
+                  }
+                });
+                this.sundayRowSpan = this.sundayArray.length + 1;
+                this.mondayRowSpan = this.mondayArray.length + 1;
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function activate() {
+        return _activate.apply(this, arguments);
+      }
+
+      return activate;
+    }();
+
+    return Agenda;
+  }()) || _class);
+  _exports.Agenda = Agenda;
+});;
+define('text!modules/conf2019/agenda.html',[],function(){return "<template>\r\n    <div class=\"container\" style=\"padding-top:100px;\">\r\n        <h2>Agenda</h2>\r\n\r\n\r\n        <h3>Sunday - July 14 – DAY 1</h3>\r\n        <div class=\"agenda\">\r\n            <div class=\"table-responsive\">\r\n                <table class=\"table table-condensed table-bordered\">\r\n                    <thead>\r\n                        <tr>\r\n                            <th>Date</th>\r\n                            <th>Time</th>\r\n                            <th>Event</th>\r\n                            <th>Description</th>\r\n                        </tr>\r\n                    </thead>\r\n                    <tbody>\r\n                        <tr>\r\n                            <td class=\"agenda-date\" class=\"active\" rowspan=\"${sundayRowSpan}\">\r\n                                <div class=\"dayofmonth\">14</div>\r\n                                <div class=\"dayofweek\">Sunday</div>\r\n                                <div class=\"shortdate text-muted\">July, 2019</div>\r\n                            </td>\r\n                            <td class=\"agenda-time\">\r\n                                    ${sundayFirstItem.time}\r\n                                </td>\r\n                            <td class=\"agenda-events\">\r\n                                <div class=\"agenda-event\" innerhtml.bind=\"sundayFirstItem.name\">\r\n                                </div>\r\n                            </td>\r\n                            <td class=\"agenda-events\">\r\n                                <div class=\"agenda-event\" innerhtml.bind=\"sundayFirstItem.description\">\r\n                                </div>\r\n                            </td>\r\n                        </tr>\r\n                        <tr repeat.for=\"item of sundayArray\">\r\n                            <td class=\"agenda-time\">\r\n                                ${item.time}\r\n                            </td>\r\n                            <td class=\"agenda-events\">\r\n                                <div class=\"agenda-event\" innerhtml.bind=\"item.name\">\r\n                                </div>\r\n                            </td>\r\n                            <td class=\"agenda-events\">\r\n                                <div class=\"agenda-event\" innerhtml.bind=\"item.description\">\r\n                                </div>\r\n                            </td>\r\n                        </tr>\r\n                    </tbody>\r\n                </table>\r\n            </div>\r\n            <p class=\"lead\">\r\n                    \r\n                </p>\r\n                <h3>Monday - July 15 – DAY 2</h3>\r\n            <div class=\"table-responsive\">\r\n                    <table class=\"table table-condensed table-bordered\">\r\n                        <thead>\r\n                            <tr>\r\n                                <th>Date</th>\r\n                                <th>Time</th>\r\n                                <th>Event</th>\r\n                                <th>Description</th>\r\n                            </tr>\r\n                        </thead>\r\n                        <tbody>\r\n                            <tr>\r\n                                <td class=\"agenda-date\" class=\"active\" rowspan=\"${mondayRowSpan}\">\r\n                                    <div class=\"dayofmonth\">15</div>\r\n                                    <div class=\"dayofweek\">Monday</div>\r\n                                    <div class=\"shortdate text-muted\">July, 2019</div>\r\n                                </td>\r\n                                <td class=\"agenda-time\">\r\n                                        ${mondayFirstItem.time}\r\n                                    </td>\r\n                                <td class=\"agenda-events\">\r\n                                    <div class=\"agenda-event\" innerhtml.bind=\"mondayFirstItem.name\">\r\n                                    </div>\r\n                                </td>\r\n                                <td class=\"agenda-events\">\r\n                                    <div class=\"agenda-event\" innerhtml.bind=\"mondayFirstItem.description\">\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <tr repeat.for=\"item of mondayArray\">\r\n                                <td class=\"agenda-time\">\r\n                                    ${item.time}\r\n                                </td>\r\n                                <td class=\"agenda-events\">\r\n                                    <div class=\"agenda-event\" innerhtml.bind=\"item.name\">\r\n                                    </div>\r\n                                </td>\r\n                                <td class=\"agenda-events\">\r\n                                    <div class=\"agenda-event\" innerhtml.bind=\"item.description\">\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                        </tbody>\r\n                    </table>\r\n                </div>\r\n           \r\n        </div>\r\n</template>";});;
+define('modules/conf2019/contact',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Contact = void 0;
+
+  var Contact = function Contact() {};
+
+  _exports.Contact = Contact;
+});;
+define('text!modules/conf2019/contact.html',[],function(){return "<template>\r\n    <div class=\"container\" style=\"padding-top:100px;\">\r\n        <div class=\"card\" style=\"width: 18rem;\">\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">Contact Information</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Email: cti@uwm.edu</h6>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Phone: 414-229-3992</h6>\r\n            </div>\r\n          </div>\r\n    </div>\r\n</template>";});;
+define('modules/conf2019/files',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Files = void 0;
+
+  var _dec, _class;
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Files = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Files(services) {
+      this.services = services;
+      this.files = [];
+      this.categories = [];
+    }
+
+    var _proto = Files.prototype;
+
+    _proto.activate =
+    /*#__PURE__*/
+    function () {
+      var _activate = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.services.getFiles();
+
+              case 2:
+                this.sortFiles();
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function activate() {
+        return _activate.apply(this, arguments);
+      }
+
+      return activate;
+    }();
+
+    _proto.sortFiles = function sortFiles() {
+      var _this = this;
+
+      this.categories.push({
+        files: [],
+        category: this.services.filesArray[0].category
+      });
+      this.services.filesArray.forEach(function (item) {
+        if (item.category !== _this.categories[_this.categories.length - 1].category) {
+          _this.categories.push({
+            files: [],
+            category: item.category
+          });
+        }
+
+        _this.categories[_this.categories.length - 1].files.push(item);
+      });
+    };
+
+    return Files;
+  }()) || _class);
+  _exports.Files = Files;
+});;
+define('text!modules/conf2019/files.html',[],function(){return "<template>\n    <div class=\"container\" style=\"padding-top:100px;\">\n       <ul>\n          <li repeat.for=\"category of categories\" ref.bind=\"$index\" style=\"margin-top:15px;\">\n            <h2>${category.category}</h2>\n            <ul>\n              <li repeat.for=\"file of category.files\">\n                <a href=\"uploadedFiles/files/${file.file.fileName}\" target=\"_blank\">${file.title}</a>\n              </li>\n            </ul>\n          </li>\n       </ul>\n    </div>\n</template>\n";});;
+define('text!modules/conf2019/guidelines.html',[],function(){return "<template>\r\n        <h3>Submission Guidelines</h3>\r\n        <p>\r\n            The <strong>SAP Next-Gen Chapter Conference 2019</strong> invites you to submit an extended\r\n            abstract proposal to be considered for presentation on Monday July 15, 2019. All extended\r\n            abstracts will be peer reviewed, and online proceedings will be published.\r\n        </p>\r\n\r\n        <h5>DEADLINES:</h5>\r\n        <ul>\r\n            <li>May 15, 2019: Extended Abstract Submission in Word Format </li>\r\n            <li>June 12, 2019: Notification of Selected Presentations</li>\r\n            <li>July 1, 2019: Final Presentation Materials Due</li>\r\n        </ul>\r\n\r\n        <p><strong>To submit an abstract, register as an author using the Register button.</strong></p>\r\n\r\n        <h4>Focus for Faculty Presentations</h4>\r\n        <p>One of the goals of the faculty led presentations to share innovations with colleagues with a\r\n            focus on <strong>actionable takeaways</strong>. Presentations should focus on the problem or\r\n            opportunity; the innovation to solve the problem or realize the opportunity; examples of\r\n            practical application of the innovation; and suggestions for faculty adoption.\r\n            You are invited to submit an extended abstract proposal for a presentation within any of the\r\n            following tracks:</p>\r\n        <ol>\r\n            <li>Innovations in Teaching - With SAP technology – Flipped classroom is so 2009. What’s new\r\n                in innovative teaching for 2019!</li>\r\n            <li>High Impact Practices - Practical tips to energize your teaching for student success\r\n            </li>\r\n            <li>HANAfy Everything - How you have successfully upgraded all of your SAP related\r\n                curriculum to leverage SAP HANA</li>\r\n            <li>Incorporating Latest Technology Developments into Curriculum - How you have successfully\r\n                incorporated new technologies such as (but not restricted to) Blockchain, AI, ML, AR, VR\r\n                into your curriculum</li>\r\n            <li>Research or Teaching - Balancing the demands of tenure track with curriculum\r\n                development, a perspective from recently tenured faculty</li>\r\n        </ol>\r\n\r\n        <p>After a peer review of the submissions, selected contributions will be presented orally and\r\n            then be posted as an extended abstract with no copyright to ensure that the authors may\r\n            further develop their research ideas for journal submission.\r\n            Requirements</p>\r\n        <p>Please submit a 1-2 page extended abstract of your proposed presentation that includes the\r\n            following details:</p>\r\n        <ul>\r\n            <li>Cover page with Title, speaker names, emails and affiliations indicating who the\r\n                corresponding author is along with intended track and One paragraph profile / bio for\r\n                each speaker</li>\r\n            <li>Extended abstract to include Title, Abstract overview of content, Keywords, content, and\r\n                references</li>\r\n            <li>An Abstract Template can be found here: <a href=\"/Initial_Submission_Extended_Abstract_Template.docx\">Initial_Submission_Extended_Abstract_Template</a></li>\r\n            <ul>\r\n                <li>Presenters should plan for approximately 20-30 min long speaking slots. If your\r\n                    proposed presentation needs more time, you should indicate this upon submission of\r\n                    the abstract.</li>\r\n                <li>Submissions should be uploaded to the conference website as a Word\r\n                    file </li>\r\n                <li>Presentations will be Monday, July 15th , 2019, Milwaukee, Wisconsin, USA</li>\r\n            </ul>\r\n\r\n        </ul>\r\n\r\n    \r\n        <p><strong>You can return to this site, login and track the progress of your\r\n                submission.</strong></p>\r\n\r\n\r\n        <p>Questions? Contact the academic program chair at yantonucci@widener.edu or the conference\r\n            co-chairs <a href=\"emailto:hightowe@uwm.edu\">hightowe@uwm.edu</a> or <a\r\n                href=\"emailto:twilder@csuchico.edu\">twilder@csuchico.edu</a> </p>\r\n</template>";});;
+define('modules/conf2019/home',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Conf2019Home = void 0;
+
+  var Conf2019Home =
+  /*#__PURE__*/
+  function () {
+    function Conf2019Home() {}
+
+    var _proto = Conf2019Home.prototype;
+
+    _proto.configureRouter = function configureRouter(config, router) {
+      this.router = router;
+      config.map([{
+        route: ['', 'landing'],
+        moduleId: './landing',
+        name: 'Landing',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'home',
+        moduleId: './home',
+        name: 'Home',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'files',
+        moduleId: './files',
+        name: 'Files',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'uploadFiles',
+        moduleId: './uploadFiles',
+        name: 'UploadFiles',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'register',
+        moduleId: './register',
+        name: 'Register',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'logistics',
+        moduleId: './logistics',
+        name: 'Logistics',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'agenda',
+        moduleId: './agenda',
+        name: 'Agenda',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'submit',
+        moduleId: './submit',
+        name: 'Submission',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'contact',
+        moduleId: './contact',
+        name: 'Contact',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }]);
+    };
+
+    return Conf2019Home;
+  }();
+
+  _exports.Conf2019Home = Conf2019Home;
+});;
+define('text!modules/conf2019/home.html',[],function(){return "<template>\n <compose view=\"./navBar.html\"></compose>\n  <router-view></router-view>\n</template>\n";});;
+define('modules/conf2019/landing',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Landing = void 0;
+
+  var Landing = function Landing() {};
+
+  _exports.Landing = Landing;
+});;
+define('text!modules/conf2019/landing.html',[],function(){return "<template>\r\n    <div class=\"parallax1\">\r\n        <div class=\"caption\">\r\n            <span class=\"border\">SAP Next-Gen Chapter Conference 2019</span>\r\n        </div>\r\n    </div>\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"col-8 offset-2 text-center\" style=\"margin-top:25px;\">\r\n                <h3>Co-hosted by the University Competence Centers and SAP Next-Gen Chapters\r\n                    at the University of Wisconsin-Milwaukee and California State University, Chico</h3>\r\n                <p> </p>\r\n                <h3>July 14 - 15, 2019</h3>\r\n                at University of Wisconsin-Milwaukee, Lubar School of Business\r\n                <p></p>\r\n                <p>Professors from SAP University Alliances / SAP Next-Gen member institutions are invited\r\n                    to attend the\r\n                    SAP Next-Gen Chapter Conference and SAP University Alliances Boot Camps July 14 – 19,\r\n                    2019 at\r\n                    University of Wisconsin-Milwaukee, Lubar School of Business.</p>\r\n                <p>The events are organized and co-hosted by the University Competence Centers and SAP\r\n                    Next-Gen Chapters\r\n                    at University of Wisconsin-Milwaukee and California State University, Chico. To cover\r\n                    costs\r\n                    associated with the conference, UW-Milwaukee charges a fee for registering and\r\n                    attending.</p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"parallax2\"></div>\r\n\r\n    <div class=\"container\">\r\n        <div class=\"row text-center\">\r\n            <div class=\"col-4 offset-4\">\r\n                <h2 style=\"margin-top:50px;\">Featured Speakers</h2>\r\n                <img src=\"/img/ron.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Ron Gilson\">\r\n                <h2><a href=\"/RonGilsonBioV4.pdf\">Ron Gilson</a></h2>\r\n                <h5>VP and CIO - Johnsonville, LLC</h5>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-6 offset-3\" style=\"margin-bottom:25px;\">\r\n                        <h6>Ron Gilson is Vice President and CIO of Johnsonville, LLC where he is a member of the senior executive team.  In his current role he has global responsibility for Information Technology.  Ron joined Johnsonville as a programmer/analyst in 1991, became coach of the Enterprise Applications Team in 1994 and CIO in 1998. </h6>\r\n                </div>\r\n            </div>\r\n                \r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"parallax2\"></div>\r\n\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"text-center\" style=\"margin-top:25px;\">\r\n                <h2>Conference Organizing Committee</h2>\r\n                <div class=\"row\">\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/Antonucci.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                            alt=\"Yvonne Antonucci\">\r\n                        <H2>Yvonne Antonucci</H2>\r\n                        <h5>Professor of Business Analytics and Business Process Innovation</h5>\r\n                        <h5>Widener University</h5>\r\n                        <h5>School of Business Administration</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/twilder.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                            alt=\"Tom Wilder\">\r\n                        <H2>Tom Wilder</H2>\r\n                        <h5>Lecturer in Business Information Systems</h5>\r\n                        <h5>Director SAP UCC at Chico</h5>\r\n                        <h5>California State University - Chico</h5>\r\n                        <h5>College of Business Administration</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/nitin.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Nitn Kalen\">\r\n                        <H2>Nitin Kale</H2>\r\n                        <h5>Associate Professor of Information Technology and Industrial and Systems Engineering\r\n                            Practice</h5>\r\n                        <h5>University of Southern California</h5>\r\n                        <h5>Viterbi School of Engineering</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/nancy.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                            alt=\"Nancy Jones\">\r\n                        <H2>Nancy Jones</H2>\r\n                        <h5>Lecturer in Accountancy</h5>\r\n                        <h5>San Diego State University</h5>\r\n                        <h5>Charles W. Lamden School of Accountancy</h5>\r\n                    </div>\r\n                </div>\r\n                <div class=\"row\">\r\n                        <div class=\"col\">\r\n                                <img src=\"/img/ross.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                                    alt=\"Ross Hightower\">\r\n                                <H2>Ross Hightower</H2>\r\n                                <h5>Senior Lecturer in Information Technology Management</h5>\r\n                                <h5>Director SAP UCC at UWM</h5>\r\n                                <h5>University of Wiconsin - Milwaukee</h5>\r\n                                <h5>Lubar School of Business</h5>\r\n                            </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/simha.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Simha Magan\">\r\n                        <H2>Simha Magal</H2>\r\n                        <h5>Clinical Professor, SAP Mentor</h5>\r\n                        <h5>Georgia State University</h5>\r\n                        <h5>J. Mack Robinson of Business</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/jeff.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Jeff Word\">\r\n                        <H2>Jeff Word</H2>\r\n                        <h5>Head of ASUG University, Spirit Guide</h5>\r\n                        <h5>ASUG University</h5>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('modules/conf2019/logistics',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Logistics = void 0;
+
+  var Logistics =
+  /*#__PURE__*/
+  function () {
+    function Logistics() {
+      this.showImage = [];
+      this.showImage.push("http://localhost/img/parallax1.jpg");
+      this.showImage.push("http://localhost/img/uwm.jpg");
+      this.showThisImage = this.showImage[0];
+      this.index = 1;
+    }
+
+    var _proto = Logistics.prototype;
+
+    _proto.activate = function activate() {
+      var _this = this;
+
+      setInterval(function () {
+        _this.showThisImage = _this.showImage[_this.index];
+
+        if (_this.index == _this.showImage.length - 1) {
+          _this.index = 0;
+        } else {
+          _this.index++;
+        }
+      }, 5000);
+    };
+
+    return Logistics;
+  }();
+
+  _exports.Logistics = Logistics;
+});;
+define('text!modules/conf2019/logistics.html',[],function(){return "<template>\r\n    <div class=\"container\" style=\"padding-top:100px;\">\r\n\r\n                <h1>University of Wisconsin-Milwaukee</h1>\r\n\r\n                <h3>Venue</h3>\r\n                Lubar School of Business</br>\r\n                3202 N. Maryland Avenue</br>\r\n                Milwaukee, WI 53211\r\n                <p> </p>\r\n                <h3>Contact</h3>\r\n                Ross Hightower, Senior Lecturer and UCC Director </br>\r\n                Phone: 414-229-4556 </br>\r\n                Emergency Phone: (414) 229-3992</br>\r\n                Email: hightowe@uwm.edu\r\n                <p> </p>\r\n                <h3>Directions</h3>\r\n                For maps of and directions to the UWM campus, please see <a href=\"http://www4.uwm.edu/map/\"\r\n                    target=\"_blank\">http://www4.uwm.edu/map/</a>\r\n                <p> </p>\r\n                <h3>Parking</h3>\r\n                Parking is available in the Student Union garage and is $1.50 /hour, with a $12 daily maximum. </br>\r\n                The garage is located at 2200 E. Kenwood Blvd.\r\n                <p> </p>\r\n                <h3><a href=\"https://www.visitmilwaukee.org/uwm/\" target=\"_blank\">Recommended Hotels</a></h3>\r\n           \r\n            <!-- <div class=\"col\">\r\n                <div class=\"text-center\" style=\"padding-top:100px;\">\r\n                    <img src.bind=\"showThisImage\" height=\"500\" alt=\"First slide\">\r\n                </div>\r\n            </div> -->\r\n        <!-- </div> -->\r\n\r\n\r\n    </div>\r\n</template>";});;
+define('modules/conf2019/milwaukee',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Milwaukee = void 0;
+
+  var Milwaukee = function Milwaukee() {};
+
+  _exports.Milwaukee = Milwaukee;
+});;
+define('text!modules/conf2019/milwaukee.html',[],function(){return "<template>\r\n    \r\n</template>";});;
+define('text!modules/conf2019/mySubmissions.html',[],function(){return "<template>\r\n    <div class=\"row\">\r\n        <div class=\"col-6\">\r\n            <div show.bind=\"services.abstractArray.length\">\r\n                <h2>Your Submissions</h2>\r\n                <ul class=\"list-group\">\r\n                    <li click.trigger=\"showReviews(submission)\" repeat.for=\"submission of services.abstractArray\"\r\n                        class=\"list-group-item\">\r\n                        <h3>${submission.title}</h3>\r\n                        <h6>Status: <strong>${submission.status}</strong></h6>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            <div show.bind=\"!services.abstractArray.length\">\r\n                <h2>You haven't submitted an abstract yet.</h2>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-6\">\r\n            <div show.bind=\"selectedSubmission.reviews && selectedSubmission.reviews.length\">\r\n                <h2>Your Reviews</h2>\r\n                <ul class=\"list-group\">\r\n                    <li repeat.for=\"review of selectedSubmission.reviews\" class=\"list-group-item\">\r\n                        <h3><a href=\"uploadedFiles/reviews/${review.fileName}\"\r\n                                target=\"_blank\">${review.originalFileName}</a></h3>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            <div show.bind=\"!selectedSubmission.reviews || !selectedSubmission.reviews.length\">\r\n                <h2>You don't have any reviews yet.</h2>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('modules/conf2019/nav-bar',["exports", "aurelia-framework", "aurelia-router", "../data/auth", "../../resources/data/services", "toastr", "jquery"], function (_exports, _aureliaFramework, _aureliaRouter, _auth, _services, toastr, _jquery) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.NavBar = void 0;
+  toastr = _interopRequireWildcard(toastr);
+  _jquery = _interopRequireDefault(_jquery);
+
+  var _dec, _class, _temp;
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var NavBar = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _auth.Auth, _services.Services), _dec(_class = (_temp =
+  /*#__PURE__*/
+  function () {
+    function NavBar(router, auth, services) {
+      this.isAuthenticated = false;
+      this.subscription = {};
+      this.router = router;
+      this.auth = auth;
+      this.services = services;
+      this.isAuthenticated = this.auth.isAuthenticated();
+      this.userObj = JSON.parse(sessionStorage.getItem('user'));
+    }
+
+    var _proto = NavBar.prototype;
+
+    _proto.attached = function attached() {};
+
+    _proto.login =
+    /*#__PURE__*/
+    function () {
+      var _login = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.auth.login(this.email, this.password);
+
+              case 2:
+                response = _context.sent;
+
+                if (!response.error) {
+                  this.loginError = "";
+                  this.loginSuccess();
+                  this.isAuthenticated = this.auth.isAuthenticated();
+                } else {
+                  this.loginError = "Invalid credentials.";
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function login() {
+        return _login.apply(this, arguments);
+      }
+
+      return login;
+    }();
+
+    _proto.logout = function logout() {
+      if (this.userObj) this.auth.logout(this.userObj.email);
+      this.userObj = new Object();
+      this.isAuthenticated = this.auth.isAuthenticated();
+      this.router.navigate("landing");
+    };
+
+    _proto.loginSuccess =
+    /*#__PURE__*/
+    function () {
+      var _loginSuccess = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.userObj = JSON.parse(sessionStorage.getItem('user'));
+
+                if (this.userObj) {
+                  sessionStorage.setItem('role', this.userObj.role);
+                  this.router.navigate("home");
+                }
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function loginSuccess() {
+        return _loginSuccess.apply(this, arguments);
+      }
+
+      return loginSuccess;
+    }();
+
+    return NavBar;
+  }(), _temp)) || _class);
+  _exports.NavBar = NavBar;
+});;
+define('text!modules/conf2019/nav-bar.html',[],function(){return "<template>\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark toolbar\"> \n    <img class=\"navbar-brand\" style=\"height:50px;\" src=\"img/sap_ua3.png\">\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\"\n      aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item active\">\n          <a class=\"nav-link\" style=\"color:white;\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/agenda\">Agenda</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"https://www.eventbrite.com/e/sap-next-gen-chapter-conference-tickets-58804908063\"\n            target=\"_blank\">Attendee Registration</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/files\">Files</a> \n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/logistics\">Logistics</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            href=\"https://events.sap.com/us/sap-university-alliances-summer-workshops-2019/en/home\"\n            target=\"_blank\">SAP UA Bootcamps</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://www.visitmilwaukee.org/\">Milwaukee</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"wall.html\">Social Media</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://milwaukee.qualtrics.com/jfe/form/SV_8IDZpZxHVEmihoN\">Survey</a>\n        </li>\n      </ul>\n    </div>\n    <div>\n      <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n        <ul class=\"navbar-nav\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link\" href=\"#/contact\">Contact</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    <!-- <form if.bind=\"!isAuthenticated\" class=\"form-inline my-2 my-lg-0\">\n        <label if.bind=\"loginError\" style=\"color:white;margin-right:5px;\">${loginError}</label>\n      <div class=\"form-group mb-2\">\n        <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"email\" placeholder=\"Email\"></input>\n      </div>\n      <div class=\"form-group mx-sm-3 mb-2\">\n        <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\"></input>\n      </div>\n      <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\n    </form>\n    <button if.bind=\"isAuthenticated\" class=\"btn btn-primary mb-2\" click.delegate='logout()'>Logout</button> -->\n    </div>\n  </nav>\n</template>\n";});;
+define('text!modules/conf2019/navBar.html',[],function(){return "<template>\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark toolbar\"> \n        <img class=\"navbar-brand\" style=\"height:50px;\" src=\"img/sap_ua3.png\">\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\"\n          aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n          <span class=\"navbar-toggler-icon\"></span>\n        </button>\n        <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n          <ul class=\"navbar-nav\">\n            <li class=\"nav-item active\">\n              <a class=\"nav-link\" style=\"color:white;\" href=\"#/conf2019\">Home <span class=\"sr-only\">(current)</span></a>\n            </li>\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"#/conf2019/agenda\">Agenda</a>\n            </li>\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"https://www.eventbrite.com/e/sap-next-gen-chapter-conference-tickets-58804908063\"\n                target=\"_blank\">Attendee Registration</a>\n            </li> -->\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"#/conf2019/files\">Files</a> \n            </li>\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"#/conf2019/logistics\">Logistics</a>\n            </li>\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\"\n                href=\"https://events.sap.com/us/sap-university-alliances-summer-workshops-2019/en/home\"\n                target=\"_blank\">SAP UA Bootcamps</a>\n            </li> -->\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" target=\"_blank\" href=\"https://www.visitmilwaukee.org/\">Milwaukee</a>\n            </li>\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" target=\"_blank\" href=\"wall.html\">Social Media</a>\n            </li> -->\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" target=\"_blank\" href=\"https://milwaukee.qualtrics.com/jfe/form/SV_8IDZpZxHVEmihoN\">Survey</a>\n            </li> -->\n          </ul>\n        </div>\n        <div>\n          <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n            <ul class=\"navbar-nav\">\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#/contact\">Contact</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <!-- <form if.bind=\"!isAuthenticated\" class=\"form-inline my-2 my-lg-0\">\n            <label if.bind=\"loginError\" style=\"color:white;margin-right:5px;\">${loginError}</label>\n          <div class=\"form-group mb-2\">\n            <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"email\" placeholder=\"Email\"></input>\n          </div>\n          <div class=\"form-group mx-sm-3 mb-2\">\n            <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\"></input>\n          </div>\n          <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\n        </form>\n        <button if.bind=\"isAuthenticated\" class=\"btn btn-primary mb-2\" click.delegate='logout()'>Logout</button> -->\n        </div>\n      </nav>\n</template>\n";});;
+define('modules/conf2019/register',["exports", "aurelia-framework", "../../resources/utils/validation", "../../resources/data/services", "aurelia-router", "jquery", "toastr"], function (_exports, _aureliaFramework, _validation, _services, _aureliaRouter, _jquery, toastr) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Register = void 0;
+  _validation = _interopRequireDefault(_validation);
+  _jquery = _interopRequireDefault(_jquery);
+  toastr = _interopRequireWildcard(toastr);
+
+  var _dec, _class;
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Register = (_dec = (0, _aureliaFramework.inject)(_validation.default, _services.Services, _aureliaRouter.Router), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Register(validation, services, router) {
+      this.validation = validation;
+      this.services = services;
+      this.router = router;
+      this.validation.initialize(this);
+      toastr.options.extendedTimeOut = "1000";
+      toastr.options.timeOut = "1500";
+    }
+
+    var _proto = Register.prototype;
+
+    _proto.activate = function activate() {
+      this._setupValidation();
+    };
+
+    _proto._setupValidation = function _setupValidation() {
+      this.validation.addRule(1, "firstName", [{
+        "rule": "required",
+        "message": "First Name is required",
+        "value": "firstName"
+      }]);
+      this.validation.addRule(1, "lastName", [{
+        "rule": "required",
+        "message": "Last Name is required",
+        "value": "lastName"
+      }]);
+      this.validation.addRule(1, "email", [{
+        "rule": "required",
+        "message": "Email is required",
+        "value": "email"
+      }, {
+        "rule": "custom",
+        "message": "Enter a valid email address",
+        "valFunction": function valFunction(context) {
+          return context.email.indexOf('@') > -1;
+        }
+      }]);
+      this.validation.addRule(1, "university", [{
+        "rule": "required",
+        "message": "Institution is required",
+        "value": "university"
+      }]);
+      this.validation.addRule(1, "password", [{
+        "rule": "required",
+        "message": "Password is required",
+        "value": "password"
+      }]);
+      this.validation.addRule(1, "password_repeat", [{
+        "rule": "custom",
+        "message": "Passwords must match",
+        "valFunction": function valFunction(context) {
+          return context.password === context.password_repeat;
+        }
+      }], true);
+    };
+
+    _proto.save =
+    /*#__PURE__*/
+    function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var person, response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.validation.validate(1)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                person = {
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  email: this.email,
+                  university: this.university,
+                  password: this.password
+                };
+                _context.next = 4;
+                return this.services.saveRegister(person);
+
+              case 4:
+                response = _context.sent;
+
+                if (response) {
+                  toastr['success']('Your registration was saved.');
+                  this.router.navigate("home");
+                } else {
+                  toastr['error']('There was an error saving the registration.');
+                }
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function save() {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }();
+
+    return Register;
+  }()) || _class);
+  _exports.Register = Register;
+});;
+define('text!modules/conf2019/register.html',[],function(){return "<template>\r\n    <div class=\"container\">\r\n        <div class=\"card\" style=\"margin-top:100px;\">\r\n            <div class=\"card-body\">\r\n                <form>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"firstName\">First name *</label>\r\n                        <input value.bind=\"firstName\" type=\"text\" class=\"form-control\" id=\"firstName\"\r\n                            aria-describedby=\"firstNameHelp\" placeholder=\"First Name\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"lastName\">Last name *</label>\r\n                        <input value.bind=\"lastName\" type=\"text\" class=\"form-control\" id=\"lastName\"\r\n                            aria-describedby=\"lastNameHelp\" placeholder=\"Last Name\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"university\">University/Company *</label>\r\n                        <input value.bind=\"university\" type=\"text\" class=\"form-control\" id=\"university\"\r\n                            aria-describedby=\"universityHelp\" placeholder=\"University\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"email\">Email *</label>\r\n                        <input value.bind=\"email\" type=\"email\" class=\"form-control\" id=\"email\"\r\n                            aria-describedby=\"emailHelp\" placeholder=\"Email\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"password\">Password *</label>\r\n                        <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\"\r\n                            aria-describedby=\"passwordHelp\" placeholder=\"Password\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"password_repeat\">Repeat password *</label>\r\n                        <input value.bind=\"password_repeat\" type=\"password\" class=\"form-control\" id=\"password_repeat\"\r\n                            aria-describedby=\"passwordrepeatHelp\" placeholder=\"Repeat Password\">\r\n                    </div>\r\n                    <button class=\"btn btn-primary\" click.trigger=\"save()\">Submit</button>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/conf2019/registerPanel.html',[],function(){return "<template>\r\n    <form>\r\n        <h3>${userObj.firstName} ${userObj.lastName}</h3>\r\n        <h3>${userObj.university}</h3>\r\n        <div class=\"form-group\">\r\n            <label for=\"title\">Title *</label>\r\n            <input value.bind=\"title\" type=\"text\" class=\"form-control\" id=\"title\" aria-describedby=\"titleHelp\"\r\n                placeholder=\"Title\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"description\">Track *</label>\r\n            <select value.bind=\"track\" class=\"form-control\" id=\"track\">\r\n                <option value=\"\">Select a track</option>\r\n                <option value=\"${type}\" repeat.for=\"type of tracks\">${type}</optionp>\r\n            </select>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"description\">Description *</label>\r\n            <textarea value.bind=\"description\" type=\"text\" class=\"form-control\" id=\"description\"\r\n                aria-describedby=\"descriptionHelp\" placeholder=\"Description\" rows=\"10\"></textarea>\r\n        </div>\r\n        <div class=\"row\">\r\n            <div class=\"col-4\">\r\n                <label class=\"btn btn-primary\">\r\n                    Browse for files&hellip; <input type=\"file\" style=\"display: none;\" change.delegate=\"changeFiles()\"\r\n                        files.bind=\"files\">\r\n                </label>\r\n                <span id=\"files\"></span>\r\n            </div>\r\n            <div class=\"col\">\r\n                <ul>\r\n                    <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\r\n                        ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i class=\"fa fa-trash\"\r\n                                aria-hidden=\"true\"></i></span></li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n        <button class=\"btn btn-primary\" style=\"margin-top:25px\" click.trigger=\"submit()\">Submit</button>\r\n    </form>\r\n</template>";});;
+define('text!modules/conf2019/reviewersTable.html',[],function(){return "<template>\r\n    <div class=\"panel panel-info\">\r\n        <div class=\"panel-body\">\r\n            <div class=\"row\">\r\n                <div class=\"col-5\">\r\n                    <h3>Registered People</h3>\r\n                    <ul class=\"list-group\">\r\n                        <li class=\"list-group-item\" click.trigger=\"addReviewer(person)\" repeat.for=\"person of services.peopleArray | reviewers:0\">${person.firstName} ${person.lastName}<br>${person.university}\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <h3>Reviewers</h3>\r\n                    <ul class=\"list-group\">\r\n                        <li class=\"list-group-item\" click.trigger=\"removeReviewer(person)\" repeat.for=\"person of services.peopleArray | reviewers:1\">${person.firstName} ${person.lastName}<br>${person.university}\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/conf2019/submissionsTable.html',[],function(){return "<template>\r\n    <div show.bind=\"showTable\">\r\n        <div class=\"row\">\r\n            <div class='col-lg-10 col-lg-offset-1 bottomMargin'>\r\n                <div id=\"no-more-tables\">\r\n\r\n                    <table class=\"table table-striped table-hover cf\">\r\n                        <thead class=\"cf\">\r\n                            <tr colspan='6'>\r\n                                <compose view=\"../../resources/elements/table-navigation-bar.html\"></compose>\r\n                            </tr>\r\n                            <tr>\r\n                                <td colspan='6'>\r\n                                    <span click.delegate=\"refresh()\" class=\"smallMarginRight\" bootstrap-tooltip\r\n                                        data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"\"\r\n                                        data-original-title=\"Refresh\"><i class=\"fa fa-refresh\"\r\n                                            aria-hidden=\"true\"></i></span>\r\n                                    <span click.delegate=\"downloadInstExcel()\" class=\"smallMarginRight\"\r\n                                        bootstrap-tooltip data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"\"\r\n                                        data-original-title=\"Export to Excel\"><i class=\"fa fa-download\"\r\n                                            aria-hidden=\"true\"></i></span>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customNameSorter, propertyName: 'name'})\">Faculty\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customEmailSorter, propertyName: 'email'})\">Email\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customTitleSorter, propertyName: 'title'})\">Title\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customTrackSorter, propertyName: 'track'})\">Track\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customStatusSorter, propertyName: 'title'})\">Status\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>File</th>\r\n                            </tr>\r\n                        </thead>\r\n                        <tbody>\r\n                            <tr>\r\n                                <th>\r\n                                    <input value.bind=\"nameFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(nameFilterValue, { type: 'custom',  filter: nameCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                                <th>\r\n                                    <input value.bind=\"emailFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(emailFilterValue, { type: 'custom',  filter: emailCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                                <th>\r\n                                    <input value.bind=\"titleFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(titleFilterValue, { type: 'custom',  filter: titleCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                                <th>\r\n                                    <select value.bind=\"trackFilter\"\r\n                                        input.delegate=\"dataTable.filterList($event, { type: 'value',  filter: 'trackFilter', lookupArray: '', lookupProperty: '', collectionProperty: 'track', displayProperty: 'memberType', matchProperty:'', compare:'match'} )\"\r\n                                        class=\"form-control\">\r\n                                        <option value=\"\"></option>\r\n                                        <option repeat.for=\"track of tracks\" value=\"${track}\">\r\n                                            ${track}</option>\r\n                                    </select>\r\n                                </th>\r\n                                <th>\r\n                                    <select value.bind=\"statusFilter\"\r\n                                        input.delegate=\"dataTable.filterList($event, { type: 'value',  filter: 'statusFilter', lookupArray: '', lookupProperty: '', collectionProperty: 'status', displayProperty: 'status', matchProperty:'', compare:'match'} )\"\r\n                                        class=\"form-control\">\r\n                                        <option value=\"\"></option> \r\n                                        <option repeat.for=\"stat of status\" value=\"${stat}\">\r\n                                            ${stat}</option>\r\n                                    </select>\r\n                                </th>\r\n                                <th>\r\n                                    <input value.bind=\"fileFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(fileFilterValue, { type: 'custom',  filter: fileCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                            </tr>\r\n                            <tr  repeat.for=\"abstract of dataTable.displayArray\">\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.personId.firstName} ${abstract.personId.lastName}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.personId.email}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.title}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.track}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.status}</td>\r\n                                <td><a href=\"uploadedFiles/reviews/${abstract.reviews[0].fileName}\" target=\"_blank\"\r\n                                }>${abstract.reviews[0].originalFileName}</a></td>\r\n                                <td><a href=\"uploadedFiles/abstracts/${abstract.file.fileName}\" target=\"_blank\"\r\n                                        }>${abstract.file.originalFileName}</a></td>\r\n                            </tr>\r\n                        </tbody>\r\n                    </table>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div show.bind=\"!showTable\">\r\n        <compose view=\"./abstractEdit.html\"></compose>\r\n    </div>\r\n</template>";});;
+define('modules/conf2019/submit',["exports", "aurelia-framework", "../../resources/utils/validation", "../../resources/data/services", "aurelia-router", "../../resources/data/auth", "../../resources/utils/dataTable", "jquery", "toastr"], function (_exports, _aureliaFramework, _validation, _services, _aureliaRouter, _auth, _dataTable, _jquery, toastr) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Submit = void 0;
+  _validation = _interopRequireDefault(_validation);
+  _jquery = _interopRequireDefault(_jquery);
+  toastr = _interopRequireWildcard(toastr);
+
+  var _dec, _class;
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Submit = (_dec = (0, _aureliaFramework.inject)(_validation.default, _services.Services, _aureliaRouter.Router, _auth.Auth, _dataTable.DataTable), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Submit(validation, services, router, auth, dataTable) {
+      this.validation = validation;
+      this.services = services;
+      this.router = router;
+      this.auth = auth;
+      this.dataTable = dataTable;
+      this.dataTable.initialize(this);
+      this.validation.initialize(this);
+      toastr.options.extendedTimeOut = "1000";
+      toastr.options.timeOut = "1500";
+      this.userObj = JSON.parse(sessionStorage.getItem('user'));
+      this.filesToUpload = new Array();
+
+      this._setupValidation();
+
+      this.showTable = true;
+      this.tracks = ["Innovations in Teaching", "High Impact Practices", "Incorporating Latest Developments in Curriculum", "Research in Teaching", "HANAify Everything"];
+      this.status = ['Submitted', 'Under Review', 'Accepted', 'Rejected'];
+    }
+
+    var _proto = Submit.prototype;
+
+    _proto.activate = function activate() {
+      if (sessionStorage.getItem('user')) this.loginSuccess();
+    };
+
+    _proto._setupValidation = function _setupValidation() {
+      this.validation.addRule(1, "title", [{
+        "rule": "required",
+        "message": "Title is required",
+        "value": "title"
+      }]);
+      this.validation.addRule(1, "description", [{
+        "rule": "required",
+        "message": "Description is required",
+        "value": "description"
+      }]);
+      this.validation.addRule(1, "track", [{
+        "rule": "custom",
+        "message": "Track is required",
+        "valFunction": function valFunction(context) {
+          return context.track != "";
+        }
+      }], true);
+      this.validation.addRule(1, "files", [{
+        "rule": "custom",
+        "message": "You must select a file",
+        "valFunction": function valFunction(context) {
+          return context.filesToUpload.length > 0;
+        }
+      }], true);
+      this.validation.addRule(2, "firstName", [{
+        "rule": "required",
+        "message": "First Name is required",
+        "value": "firstName"
+      }]);
+      this.validation.addRule(2, "lastName", [{
+        "rule": "required",
+        "message": "Last Name is required",
+        "value": "lastName"
+      }]);
+      this.validation.addRule(2, "email", [{
+        "rule": "required",
+        "message": "Email is required",
+        "value": "email"
+      }, {
+        "rule": "custom",
+        "message": "Enter a valid email address",
+        "valFunction": function valFunction(context) {
+          return context.email.indexOf('@') > -1;
+        }
+      }]);
+      this.validation.addRule(2, "university", [{
+        "rule": "required",
+        "message": "Institution is required",
+        "value": "university"
+      }]);
+      this.validation.addRule(2, "password", [{
+        "rule": "required",
+        "message": "Password is required",
+        "value": "password"
+      }]);
+      this.validation.addRule(2, "password_repeat", [{
+        "rule": "custom",
+        "message": "Passwords must match",
+        "valFunction": function valFunction(context) {
+          return context.password === context.password_repeat;
+        }
+      }], true);
+    };
+
+    _proto.showRegister = function showRegister() {
+      this.showRegisterPanel = !this.showRegisterPanel;
+    };
+
+    _proto.save =
+    /*#__PURE__*/
+    function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var person, response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.validation.validate(2)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                person = {
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  email: this.email,
+                  university: this.university,
+                  password: this.password
+                };
+                _context.next = 4;
+                return this.services.saveRegister(person);
+
+              case 4:
+                response = _context.sent;
+
+                if (response) {
+                  sessionStorage.setItem('user', JSON.stringify(response));
+                  this.loginSuccess();
+                  this.isAuthenticated = true;
+                  this.showRegisterPanel = false;
+                  toastr['success']('Your registration was saved.');
+                } else {
+                  toastr['error']('There was an error saving the registration.');
+                }
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function save() {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }();
+
+    _proto.submit =
+    /*#__PURE__*/
+    function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        var abstract, response;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!this.validation.validate(1)) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                abstract = {
+                  title: this.title,
+                  description: this.description,
+                  personId: this.userObj._id,
+                  track: this.track
+                };
+                _context2.next = 4;
+                return this.services.saveAbstract(abstract, this.filesToUpload);
+
+              case 4:
+                response = _context2.sent;
+
+                if (!response.error) {
+                  toastr['success']('The abstract was uploaded successfully.');
+                  this.getPersonAbstracts();
+                  this.title = "";
+                  this.description = "";
+                  this.track = "";
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }();
+
+    _proto.changeFiles = function changeFiles() {
+      this.filesToUpload = new Array();
+      this.filesToUpload.push(this.files[0]);
+    };
+
+    _proto.login =
+    /*#__PURE__*/
+    function () {
+      var _login = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.auth.login(this.email, this.password);
+
+              case 2:
+                response = _context3.sent;
+
+                if (!response.error) {
+                  this.loginError = "";
+                  this.loginSuccess();
+                } else {
+                  this.loginError = "Invalid credentials. Contact ucc@uwm.edu to have your password reset.";
+                }
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function login() {
+        return _login.apply(this, arguments);
+      }
+
+      return login;
+    }();
+
+    _proto.refresh =
+    /*#__PURE__*/
+    function () {
+      var _refresh = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4() {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.services.getAbstracts();
+
+              case 2:
+                _context4.next = 4;
+                return this.services.getPeople();
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function refresh() {
+        return _refresh.apply(this, arguments);
+      }
+
+      return refresh;
+    }();
+
+    _proto.loginSuccess =
+    /*#__PURE__*/
+    function () {
+      var _loginSuccess = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee5() {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                this.isAuthenticated = this.auth.isAuthenticated();
+                this.userObj = JSON.parse(sessionStorage.getItem('user'));
+
+                if (!this.userObj) {
+                  _context5.next = 12;
+                  break;
+                }
+
+                this.adminRole = this.userObj.role.indexOf('admin') > -1;
+                sessionStorage.setItem('role', this.userObj.role);
+
+                if (!this.adminRole) {
+                  _context5.next = 11;
+                  break;
+                }
+
+                _context5.next = 8;
+                return this.services.getAbstracts();
+
+              case 8:
+                _context5.next = 10;
+                return this.services.getPeople();
+
+              case 10:
+                this.dataTable.updateArray(this.services.allAbstractArray);
+
+              case 11:
+                this.getPersonAbstracts();
+
+              case 12:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function loginSuccess() {
+        return _loginSuccess.apply(this, arguments);
+      }
+
+      return loginSuccess;
+    }();
+
+    _proto.getPersonAbstracts =
+    /*#__PURE__*/
+    function () {
+      var _getPersonAbstracts = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee6() {
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return this.services.getPersonAbstracts(this.userObj._id);
+
+              case 2:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function getPersonAbstracts() {
+        return _getPersonAbstracts.apply(this, arguments);
+      }
+
+      return getPersonAbstracts;
+    }();
+
+    _proto.addReviewer =
+    /*#__PURE__*/
+    function () {
+      var _addReviewer = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee7(person) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                person.role = person.role + ':reviewer';
+                _context7.next = 3;
+                return this.services.savePerson(person);
+
+              case 3:
+                response = _context7.sent;
+
+                if (!response) {
+                  _context7.next = 10;
+                  break;
+                }
+
+                toastr['success']('Your registration was saved.');
+                _context7.next = 8;
+                return this.services.getPeople();
+
+              case 8:
+                _context7.next = 11;
+                break;
+
+              case 10:
+                toastr['error']('There was an error saving the registration.');
+
+              case 11:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function addReviewer(_x) {
+        return _addReviewer.apply(this, arguments);
+      }
+
+      return addReviewer;
+    }();
+
+    _proto.removeReviewer =
+    /*#__PURE__*/
+    function () {
+      var _removeReviewer = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee8(person) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                person.role = person.role.split(':reviewer').join();
+                _context8.next = 3;
+                return this.services.savePerson(person);
+
+              case 3:
+                response = _context8.sent;
+
+                if (!response) {
+                  _context8.next = 10;
+                  break;
+                }
+
+                toastr['success']('Your registration was saved.');
+                _context8.next = 8;
+                return this.services.getPeople();
+
+              case 8:
+                _context8.next = 11;
+                break;
+
+              case 10:
+                toastr['error']('There was an error saving the registration.');
+
+              case 11:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this);
+      }));
+
+      function removeReviewer(_x2) {
+        return _removeReviewer.apply(this, arguments);
+      }
+
+      return removeReviewer;
+    }();
+
+    _proto.edit =
+    /*#__PURE__*/
+    function () {
+      var _edit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee9(abstract) {
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _context9.next = 2;
+                return this.services.getAbstract(abstract._id);
+
+              case 2:
+                this.abstract = _context9.sent;
+                this.showTable = false;
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function edit(_x3) {
+        return _edit.apply(this, arguments);
+      }
+
+      return edit;
+    }();
+
+    _proto.addReviewerToAbstract =
+    /*#__PURE__*/
+    function () {
+      var _addReviewerToAbstract = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee10(person) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                if (!(this.abstract.reviewers.indexOf(person._id) === -1)) {
+                  _context10.next = 11;
+                  break;
+                }
+
+                this.abstract.reviewers.push(person._id);
+                if (this.abstract.reviewers.length > 0) this.abstract.status = "Under Review";
+                _context10.next = 5;
+                return this.services.saveAbstractReviewer(this.abstract);
+
+              case 5:
+                response = _context10.sent;
+                this.abstract = response[0];
+
+                if (!person.abstracts.indexOf(this.abstract._id === -1)) {
+                  _context10.next = 11;
+                  break;
+                }
+
+                person.abstracts.push(this.abstract._id);
+                _context10.next = 11;
+                return this.services.savePerson(person);
+
+              case 11:
+                _context10.next = 13;
+                return this.refresh();
+
+              case 13:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function addReviewerToAbstract(_x4) {
+        return _addReviewerToAbstract.apply(this, arguments);
+      }
+
+      return addReviewerToAbstract;
+    }();
+
+    _proto.removeReviewerFromAbstract =
+    /*#__PURE__*/
+    function () {
+      var _removeReviewerFromAbstract = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee11(person) {
+        var filteredReviewers, responseOne, filteredAbstracts;
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                filteredReviewers = this.abstract.reviewers.filter(function (value, index, arr) {
+                  return value._id != person._id;
+                });
+                this.abstract.reviewers = filteredReviewers;
+                if (this.abstract.reviewers.length === 0) this.abstract.status = "Submitted";
+                _context11.next = 5;
+                return this.services.saveAbstractReviewer(this.abstract);
+
+              case 5:
+                responseOne = _context11.sent;
+                this.abstract = responseOne[0];
+                filteredAbstracts = person.abstracts.filter(function (value, index, arr) {
+                  return value._id != this.abstract._id;
+                });
+                person.abstracts = filteredAbstracts;
+                _context11.next = 11;
+                return this.services.savePerson(person);
+
+              case 11:
+                this.refresh();
+
+              case 12:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function removeReviewerFromAbstract(_x5) {
+        return _removeReviewerFromAbstract.apply(this, arguments);
+      }
+
+      return removeReviewerFromAbstract;
+    }();
+
+    _proto.saveEditAbstract = function saveEditAbstract() {
+      this.services.saveAbstractReviewer(this.abstract);
+      this.showTable = true;
+    };
+
+    _proto.cancelEdit = function cancelEdit() {
+      this.showTable = true;
+    };
+
+    _proto.downloadInstExcel = function downloadInstExcel() {
+      var csvContent = "data:text/csv;charset=utf-8;,Faculty,Email,Title,Status\r\n";
+      this.dataTable.baseArray.forEach(function (item) {
+        var facInfo = item.personId ? item.personId.firstName + " " + item.personId.lastName + "," + item.personId.email : "";
+        csvContent += facInfo + "," + item.title + "," + item.status;
+        csvContent += "\r\n";
+      });
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "submissions.csv");
+      document.body.appendChild(link); // Required for FF
+
+      link.click();
+    };
+
+    _proto.nameCustomFilter = function nameCustomFilter(value, item, context) {
+      if (item.personId) {
+        var firstNameFilter = item.personId.firstName.toUpperCase().indexOf(value.toUpperCase()) > -1;
+        var lastNameFilter = item.personId.lastName.toUpperCase().indexOf(value.toUpperCase()) > -1;
+        return firstNameFilter || lastNameFilter;
+      }
+
+      return false;
+    };
+
+    _proto.uploadReview =
+    /*#__PURE__*/
+    function () {
+      var _uploadReview = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee12() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                _context12.next = 2;
+                return this.services.saveReview(this.abstract, this.filesToUpload);
+
+              case 2:
+                response = _context12.sent;
+
+                if (!response.error) {
+                  toastr['success']('The review was uploaded successfully.');
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this);
+      }));
+
+      function uploadReview() {
+        return _uploadReview.apply(this, arguments);
+      }
+
+      return uploadReview;
+    }();
+
+    _proto.showReviews = function showReviews(submission) {
+      this.selectedSubmission = submission;
+    };
+
+    _proto.emailCustomFilter = function emailCustomFilter(value, item, context) {
+      return item.personId && item.personId.email.toUpperCase().indexOf(value.toUpperCase()) > -1;
+    };
+
+    _proto.titleCustomFilter = function titleCustomFilter(value, item, context) {
+      return item.title.toUpperCase().indexOf(value.toUpperCase()) > -1;
+    };
+
+    _proto.fileCustomFilter = function fileCustomFilter(value, item, context) {
+      return item.file && item.file.originalFileName.toUpperCase().indexOf(value.toUpperCase()) > -1;
+    };
+
+    _proto.customNameSorter = function customNameSorter(sortProperty, sortDirection, sortArray, context) {
+      this.sortProperty = 'person';
+      this.sortDirection = sortDirection;
+      return sortArray.sort(function (a, b) {
+        if (a['personId'] && b['personId'] && a['personId']['lastName'] && b['personId']['lastName']) {
+          var result = a['personId']['lastName'] < b['personId']['lastName'] ? -1 : a['personId']['lastName'] > b['personId']['lastName'] ? 1 : 0;
+        } else {
+          var result = -1;
+        }
+
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customEmailSorter = function customEmailSorter(sortProperty, sortDirection, sortArray, context) {
+      this.sortProperty = 'person';
+      this.sortDirection = sortDirection;
+      return sortArray.sort(function (a, b) {
+        if (a['personId'] && b['personId'] && a['personId']['email'] && b['personId']['email']) {
+          var result = a['personId']['email'] < b['personId']['email'] ? -1 : a['personId']['email'] > b['personId']['email'] ? 1 : 0;
+        } else {
+          var result = -1;
+        }
+
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customTitleSorter = function customTitleSorter(sortProperty, sortDirection, sortArray, context) {
+      return sortArray.sort(function (a, b) {
+        var result = a[sortProperty] < b[sortProperty] ? -1 : a[sortProperty] > b[sortProperty] ? 1 : 0;
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customTrackSorter = function customTrackSorter(sortProperty, sortDirection, sortArray, context) {
+      return sortArray.sort(function (a, b) {
+        var result = a[sortProperty] < b[sortProperty] ? -1 : a[sortProperty] > b[sortProperty] ? 1 : 0;
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customStatusSorter = function customStatusSorter(sortProperty, sortDirection, sortArray, context) {
+      return sortArray.sort(function (a, b) {
+        var result = a[sortProperty] < b[sortProperty] ? -1 : a[sortProperty] > b[sortProperty] ? 1 : 0;
+        return result * sortDirection;
+      });
+    };
+
+    return Submit;
+  }()) || _class);
+  _exports.Submit = Submit;
+});;
+define('text!modules/conf2019/submit.html',[],function(){return "<template>\r\n    <div style=\"padding-top:100px;padding-left:50px;padding-right:50px;\">\r\n        <div class=\"card\">\r\n            <div class=\"card-body\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-5 offset-1\">\r\n                        <div if.bind=\"!isAuthenticated && !showRegisterPanel\">\r\n                            <h5>Register to submit an abstract.</h5>\r\n                        </div>\r\n                        <form if.bind=\"!isAuthenticated && !showRegisterPanel\" class=\"form-inline\">\r\n                            <div class=\"form-group mb-2\">\r\n                                <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"loginemail\"\r\n                                    placeholder=\"Email\"></input>\r\n                            </div>\r\n                            <div class=\"form-group mx-sm-3 mb-2\">\r\n                                <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"loginpassword\"\r\n                                    placeholder=\"Password\"></input>\r\n                            </div>\r\n                            <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\r\n                            <button class=\"btn btn-primary mb-2\" style=\"margin-left:5px;\"\r\n                                click.delegate='showRegister()'>Register</button>\r\n                        </form>\r\n                        <label if.bind=\"loginError\" style=\"color:black;margin-right:5px;\">${loginError}</label>\r\n                        <div show.bind=\"showRegisterPanel\">\r\n                            <h2>Register as an Author</h2>\r\n                            <form>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"firstName\">First name *</label>\r\n                                    <input value.bind=\"firstName\" type=\"text\" class=\"form-control\" id=\"firstName\"\r\n                                        aria-describedby=\"firstNameHelp\" placeholder=\"First Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"lastName\">Last name *</label>\r\n                                    <input value.bind=\"lastName\" type=\"text\" class=\"form-control\" id=\"lastName\"\r\n                                        aria-describedby=\"lastNameHelp\" placeholder=\"Last Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"university\">University/Company *</label>\r\n                                    <input value.bind=\"university\" type=\"text\" class=\"form-control\" id=\"university\"\r\n                                        aria-describedby=\"universityHelp\" placeholder=\"University\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"email\">Email *</label>\r\n                                    <input value.bind=\"email\" type=\"email\" class=\"form-control\" id=\"email\"\r\n                                        aria-describedby=\"emailHelp\" placeholder=\"Email\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password\">Password *</label>\r\n                                    <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\"\r\n                                        aria-describedby=\"passwordHelp\" placeholder=\"Password\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password_repeat\">Repeat password *</label>\r\n                                    <input value.bind=\"password_repeat\" type=\"password\" class=\"form-control\"\r\n                                        id=\"password_repeat\" aria-describedby=\"passwordrepeatHelp\"\r\n                                        placeholder=\"Repeat Password\">\r\n                                </div>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"save()\">Register</button>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"showRegister()\">Cancel</button>\r\n                            </form>\r\n                        </div>\r\n                    </div>\r\n                    <div if.bind=\"!isAuthenticated\" class=\"col-5\">\r\n                        <compose view=\"./guidelines.html\"></compose>\r\n                    </div>\r\n                </div>\r\n                <div show.bind=\"isAuthenticated\">\r\n                    <compose view=\"./submitTabs.html\"></compose>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/conf2019/submitReview.html',[],function(){return "<template>\r\n    <h1>Here</h1>\r\n</template>";});;
+define('text!modules/conf2019/submitTabs.html',[],function(){return "<template>\r\n    <ul class=\"nav nav-pills\">\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link active\" id=\"submitAbstract-tab\" data-toggle=\"tab\" href=\"#submitAbstract\" role=\"tab\"\r\n                aria-controls=\"submitAbstract\" aria-selected=\"true\">Submit an Abstract</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"guidelines-tab\" data-toggle=\"tab\" href=\"#guidelines\" role=\"tab\"\r\n                aria-controls=\"guidelines\" aria-selected=\"true\">Guidelines</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"mysubmissions-tab\" data-toggle=\"tab\" href=\"#mysubmissions\" role=\"tab\"\r\n                aria-controls=\"mysubmissions\" aria-selected=\"true\">My Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submissions-tab\" data-toggle=\"tab\"\r\n                href=\"#submissions\" role=\"tab\" aria-controls=\"submissions\" aria-selected=\"true\">Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"reviewers-tab\" data-toggle=\"tab\" href=\"#reviewers\"\r\n                role=\"tab\" aria-controls=\"reviewers\" aria-selected=\"true\">Reviewers</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submitReview-tab\" data-toggle=\"tab\" href=\"#submitReview\"\r\n                role=\"tab\" aria-controls=\"submitReview\" aria-selected=\"true\">Submit Review</a>\r\n        </li>\r\n    </ul>\r\n    <p></p>\r\n    <div class=\"tab-content\" id=\"myTabContent\">\r\n        <div class=\"tab-pane fade show active\" id=\"submitAbstract\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-5\">\r\n                <compose view=\"./registerPanel.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"guidelines\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-7\">\r\n                <compose view=\"./guidelines.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"mysubmissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./mySubmissions.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submissionsTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"reviewers\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./reviewersTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submitReview\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submitReview.html\"></compose>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('modules/conf2019/uploadFiles',["exports", "aurelia-framework", "../../resources/data/services", "toastr"], function (_exports, _aureliaFramework, _services, toastr) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.UploadFiles = void 0;
+  toastr = _interopRequireWildcard(toastr);
+
+  var _dec, _class;
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var UploadFiles = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function UploadFiles(services) {
+      this.services = services;
+      this.filesToUpload = new Array();
+    }
+
+    var _proto = UploadFiles.prototype;
+
+    _proto.uploadFile =
+    /*#__PURE__*/
+    function () {
+      var _uploadFile = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(this.category && this.title)) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.services.saveFile(this.category, this.title, this.filesToUpload);
+
+              case 3:
+                response = _context.sent;
+
+                if (!response.error) {
+                  toastr['success']('The file was uploaded successfully.');
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function uploadFile() {
+        return _uploadFile.apply(this, arguments);
+      }
+
+      return uploadFile;
+    }() // async submit() {
+    //   if (this.validation.validate(1)) {
+    //       let abstract = {
+    //           title: this.title,
+    //           description: this.description,
+    //           personId: this.userObj._id,
+    //           track: this.track
+    //       }
+    //       let response = await this.services.saveAbstract(abstract, this.filesToUpload);
+    //       if (!response.error) {
+    //           toastr['success']('The abstract was uploaded successfully.');
+    //           this.getPersonAbstracts();
+    //           this.title = "";
+    //           this.description = "";
+    //           this.track = "";
+    //           this.filesToUpload = new Array();
+    //           this.files = new Array();
+    //       }
+    //   }
+    // }
+    ;
+
+    _proto.changeFiles = function changeFiles() {
+      this.filesToUpload = new Array();
+      this.filesToUpload.push(this.files[0]);
+    };
+
+    return UploadFiles;
+  }()) || _class);
+  _exports.UploadFiles = UploadFiles;
+});;
+define('text!modules/conf2019/uploadFiles.html',[],function(){return "<template>\n  <div class=\"container\" style=\"padding-top:100px;\">\n    <div class=\"form-group\">\n      <label for=\"status\">Category</label>\n      <input value.bind=\"category\" type=\"text\" class=\"form-control\" id=\"status\" aria-describedby=\"statusHelp\"\n        placeholder=\"Category\">\n    </div>\n    <div class=\"form-group\">\n        <label for=\"status\">Title</label>\n        <input value.bind=\"title\" type=\"text\" class=\"form-control\" id=\"title\" aria-describedby=\"statusHelp\"\n          placeholder=\"Title\">\n      </div>\n    <div class=\"card\" style=\"margin-top:10px;\">\n      <div class=\"card-body\">\n        <div class=\"row\">\n          <div class=\"col-4\">\n            <label class=\"btn btn-primary\">\n              Browse for files&hellip; <input type=\"file\" style=\"display: none;\" change.delegate=\"changeFiles()\"\n                files.bind=\"files\">\n            </label>\n            <span id=\"files\"></span>\n          </div>\n          <div class=\"col\">\n            <ul>\n              <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\n                ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i class=\"fa fa-trash\"\n                    aria-hidden=\"true\"></i></span></li>\n            </ul>\n          </div>\n        </div>\n        <button click.trigger=\"uploadFile()\" class=\"btn btn-primary\" style=\"margin-top:5px;\">Upload File</button>\n      </div>\n    </div>\n  </div>\n</template>\n";});;
+define('text!modules/conf2019/userSubmit.html',[],function(){return "";});;
+define('modules/conf2020/agenda',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Agenda = void 0;
+
+  var _dec, _class;
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Agenda = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Agenda(services) {
+      this.services = services;
+      this.sundayArray = [];
+      this.mondayArray = [];
+    }
+
+    var _proto = Agenda.prototype;
+
+    _proto.activate =
+    /*#__PURE__*/
+    function () {
+      var _activate = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var _this = this;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.services.getAgenda();
+
+              case 2:
+                this.services.agendaArray = this.services.agendaArray.sort(function (a, b) {
+                  return a.timeSlot < b.timeSlot ? -1 : 1;
+                });
+                this.services.agendaArray.forEach(function (item) {
+                  if (item.agendaDate.indexOf('Sunday') > -1) {
+                    if (_this.sundayFirstItem) {
+                      _this.sundayArray.push(item);
+                    } else {
+                      _this.sundayFirstItem = item;
+                    }
+                  } else {
+                    if (_this.mondayFirstItem) {
+                      _this.mondayArray.push(item);
+                    } else {
+                      _this.mondayFirstItem = item;
+                    }
+                  }
+                });
+                this.sundayRowSpan = this.sundayArray.length + 1;
+                this.mondayRowSpan = this.mondayArray.length + 1;
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function activate() {
+        return _activate.apply(this, arguments);
+      }
+
+      return activate;
+    }();
+
+    return Agenda;
+  }()) || _class);
+  _exports.Agenda = Agenda;
+});;
+define('text!modules/conf2020/agenda.html',[],function(){return "<template>\n    <div class=\"container\" style=\"padding-top:100px;\">\n      <h2>Coming Soon!</h2>\n        <!-- <h2>Agenda</h2>\n\n\n        <h3>Sunday - July 14 – DAY 1</h3>\n        <div class=\"agenda\">\n            <div class=\"table-responsive\">\n                <table class=\"table table-condensed table-bordered\">\n                    <thead>\n                        <tr>\n                            <th>Date</th>\n                            <th>Time</th>\n                            <th>Event</th>\n                            <th>Description</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr>\n                            <td class=\"agenda-date\" class=\"active\" rowspan=\"${sundayRowSpan}\">\n                                <div class=\"dayofmonth\">14</div>\n                                <div class=\"dayofweek\">Sunday</div>\n                                <div class=\"shortdate text-muted\">July, 2019</div>\n                            </td>\n                            <td class=\"agenda-time\">\n                                    ${sundayFirstItem.time}\n                                </td>\n                            <td class=\"agenda-events\">\n                                <div class=\"agenda-event\" innerhtml.bind=\"sundayFirstItem.name\">\n                                </div>\n                            </td>\n                            <td class=\"agenda-events\">\n                                <div class=\"agenda-event\" innerhtml.bind=\"sundayFirstItem.description\">\n                                </div>\n                            </td>\n                        </tr>\n                        <tr repeat.for=\"item of sundayArray\">\n                            <td class=\"agenda-time\">\n                                ${item.time}\n                            </td>\n                            <td class=\"agenda-events\">\n                                <div class=\"agenda-event\" innerhtml.bind=\"item.name\">\n                                </div>\n                            </td>\n                            <td class=\"agenda-events\">\n                                <div class=\"agenda-event\" innerhtml.bind=\"item.description\">\n                                </div>\n                            </td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n            <p class=\"lead\">\n                    \n                </p>\n                <h3>Monday - July 15 – DAY 2</h3>\n            <div class=\"table-responsive\">\n                    <table class=\"table table-condensed table-bordered\">\n                        <thead>\n                            <tr>\n                                <th>Date</th>\n                                <th>Time</th>\n                                <th>Event</th>\n                                <th>Description</th>\n                            </tr>\n                        </thead>\n                        <tbody>\n                            <tr>\n                                <td class=\"agenda-date\" class=\"active\" rowspan=\"${mondayRowSpan}\">\n                                    <div class=\"dayofmonth\">15</div>\n                                    <div class=\"dayofweek\">Monday</div>\n                                    <div class=\"shortdate text-muted\">July, 2019</div>\n                                </td>\n                                <td class=\"agenda-time\">\n                                        ${mondayFirstItem.time}\n                                    </td>\n                                <td class=\"agenda-events\">\n                                    <div class=\"agenda-event\" innerhtml.bind=\"mondayFirstItem.name\">\n                                    </div>\n                                </td>\n                                <td class=\"agenda-events\">\n                                    <div class=\"agenda-event\" innerhtml.bind=\"mondayFirstItem.description\">\n                                    </div>\n                                </td>\n                            </tr>\n                            <tr repeat.for=\"item of mondayArray\">\n                                <td class=\"agenda-time\">\n                                    ${item.time}\n                                </td>\n                                <td class=\"agenda-events\">\n                                    <div class=\"agenda-event\" innerhtml.bind=\"item.name\">\n                                    </div>\n                                </td>\n                                <td class=\"agenda-events\">\n                                    <div class=\"agenda-event\" innerhtml.bind=\"item.description\">\n                                    </div>\n                                </td>\n                            </tr>\n                        </tbody>\n                    </table>\n                </div>\n            -->\n        </div>\n</template>\n";});;
+define('modules/conf2020/contact',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Contact = void 0;
+
+  var Contact = function Contact() {};
+
+  _exports.Contact = Contact;
+});;
+define('text!modules/conf2020/contact.html',[],function(){return "<template>\r\n    <div class=\"container\" style=\"padding-top:100px;\">\r\n        <div class=\"card\" style=\"width: 18rem;\">\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">Contact Information</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Email: cti@uwm.edu</h6>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">Phone: 414-229-3992</h6>\r\n            </div>\r\n          </div>\r\n    </div>\r\n</template>";});;
+define('modules/conf2020/files',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Files = void 0;
+
+  var _dec, _class;
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Files = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Files(services) {
+      this.services = services;
+      this.files = [];
+      this.categories = [];
+    }
+
+    var _proto = Files.prototype;
+
+    _proto.activate =
+    /*#__PURE__*/
+    function () {
+      var _activate = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.services.getFiles();
+
+              case 2:
+                this.sortFiles();
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function activate() {
+        return _activate.apply(this, arguments);
+      }
+
+      return activate;
+    }();
+
+    _proto.sortFiles = function sortFiles() {
+      var _this = this;
+
+      this.categories.push({
+        files: [],
+        category: this.services.filesArray[0].category
+      });
+      this.services.filesArray.forEach(function (item) {
+        if (item.category !== _this.categories[_this.categories.length - 1].category) {
+          _this.categories.push({
+            files: [],
+            category: item.category
+          });
+        }
+
+        _this.categories[_this.categories.length - 1].files.push(item);
+      });
+    };
+
+    return Files;
+  }()) || _class);
+  _exports.Files = Files;
+});;
+define('text!modules/conf2020/files.html',[],function(){return "<template>\n    <div class=\"container\" style=\"padding-top:100px;\">\n       <ul>\n          <li repeat.for=\"category of categories\" ref.bind=\"$index\" style=\"margin-top:15px;\">\n            <h2>${category.category}</h2>\n            <ul>\n              <li repeat.for=\"file of category.files\">\n                <a href=\"uploadedFiles/files/${file.file.fileName}\" target=\"_blank\">${file.title}</a>\n              </li>\n            </ul>\n          </li>\n       </ul>\n    </div>\n</template>\n";});;
+define('text!modules/conf2020/guidelines.html',[],function(){return "<template>\r\n        <h3>Submission Guidelines</h3>\r\n        <p>\r\n            The <strong>SAP Next-Gen Chapter Conference 2019</strong> invites you to submit an extended\r\n            abstract proposal to be considered for presentation on Monday July 15, 2019. All extended\r\n            abstracts will be peer reviewed, and online proceedings will be published.\r\n        </p>\r\n\r\n        <h5>DEADLINES:</h5>\r\n        <ul>\r\n            <li>May 15, 2019: Extended Abstract Submission in Word Format </li>\r\n            <li>June 12, 2019: Notification of Selected Presentations</li>\r\n            <li>July 1, 2019: Final Presentation Materials Due</li>\r\n        </ul>\r\n\r\n        <p><strong>To submit an abstract, register as an author using the Register button.</strong></p>\r\n\r\n        <h4>Focus for Faculty Presentations</h4>\r\n        <p>One of the goals of the faculty led presentations to share innovations with colleagues with a\r\n            focus on <strong>actionable takeaways</strong>. Presentations should focus on the problem or\r\n            opportunity; the innovation to solve the problem or realize the opportunity; examples of\r\n            practical application of the innovation; and suggestions for faculty adoption.\r\n            You are invited to submit an extended abstract proposal for a presentation within any of the\r\n            following tracks:</p>\r\n        <ol>\r\n            <li>Innovations in Teaching - With SAP technology – Flipped classroom is so 2009. What’s new\r\n                in innovative teaching for 2019!</li>\r\n            <li>High Impact Practices - Practical tips to energize your teaching for student success\r\n            </li>\r\n            <li>HANAfy Everything - How you have successfully upgraded all of your SAP related\r\n                curriculum to leverage SAP HANA</li>\r\n            <li>Incorporating Latest Technology Developments into Curriculum - How you have successfully\r\n                incorporated new technologies such as (but not restricted to) Blockchain, AI, ML, AR, VR\r\n                into your curriculum</li>\r\n            <li>Research or Teaching - Balancing the demands of tenure track with curriculum\r\n                development, a perspective from recently tenured faculty</li>\r\n        </ol>\r\n\r\n        <p>After a peer review of the submissions, selected contributions will be presented orally and\r\n            then be posted as an extended abstract with no copyright to ensure that the authors may\r\n            further develop their research ideas for journal submission.\r\n            Requirements</p>\r\n        <p>Please submit a 1-2 page extended abstract of your proposed presentation that includes the\r\n            following details:</p>\r\n        <ul>\r\n            <li>Cover page with Title, speaker names, emails and affiliations indicating who the\r\n                corresponding author is along with intended track and One paragraph profile / bio for\r\n                each speaker</li>\r\n            <li>Extended abstract to include Title, Abstract overview of content, Keywords, content, and\r\n                references</li>\r\n            <li>An Abstract Template can be found here: <a href=\"/Initial_Submission_Extended_Abstract_Template.docx\">Initial_Submission_Extended_Abstract_Template</a></li>\r\n            <ul>\r\n                <li>Presenters should plan for approximately 20-30 min long speaking slots. If your\r\n                    proposed presentation needs more time, you should indicate this upon submission of\r\n                    the abstract.</li>\r\n                <li>Submissions should be uploaded to the conference website as a Word\r\n                    file </li>\r\n                <li>Presentations will be Monday, July 15th , 2019, Milwaukee, Wisconsin, USA</li>\r\n            </ul>\r\n\r\n        </ul>\r\n\r\n    \r\n        <p><strong>You can return to this site, login and track the progress of your\r\n                submission.</strong></p>\r\n\r\n\r\n        <p>Questions? Contact the academic program chair at yantonucci@widener.edu or the conference\r\n            co-chairs <a href=\"emailto:hightowe@uwm.edu\">hightowe@uwm.edu</a> or <a\r\n                href=\"emailto:twilder@csuchico.edu\">twilder@csuchico.edu</a> </p>\r\n</template>";});;
+define('modules/conf2020/home',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Conf2020Home = void 0;
+
+  var Conf2020Home =
+  /*#__PURE__*/
+  function () {
+    function Conf2020Home() {}
+
+    var _proto = Conf2020Home.prototype;
+
+    _proto.configureRouter = function configureRouter(config, router) {
+      this.router = router;
+      config.map([{
+        route: ['', 'landing'],
+        moduleId: './landing',
+        name: 'Landing',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'home',
+        moduleId: './home',
+        name: 'Home',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'sponsorships',
+        moduleId: './sponsorships',
+        name: 'Sponsorships',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'files',
+        moduleId: './files',
+        name: 'Files',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'uploadFiles',
+        moduleId: './uploadFiles',
+        name: 'UploadFiles',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'register',
+        moduleId: './register',
+        name: 'Register',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'logistics',
+        moduleId: './logistics',
+        name: 'Logistics',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'agenda',
+        moduleId: './agenda',
+        name: 'Agenda',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'submit',
+        moduleId: './submit',
+        name: 'Submission',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }, {
+        route: 'contact',
+        moduleId: './contact',
+        name: 'Contact',
+        settings: {
+          auth: false,
+          roles: []
+        },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      }]);
+    };
+
+    return Conf2020Home;
+  }();
+
+  _exports.Conf2020Home = Conf2020Home;
+});;
+define('text!modules/conf2020/home.html',[],function(){return "<template>\n <compose view=\"./navBar.html\"></compose>\n  <router-view></router-view>\n</template>\n";});;
+define('modules/conf2020/landing',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Landing = void 0;
+
+  var Landing = function Landing() {};
+
+  _exports.Landing = Landing;
+});;
+define('text!modules/conf2020/landing.html',[],function(){return "<template>\n    <div class=\"parallax1\">\n        <div class=\"caption\">\n            <span class=\"border\">SAP Academic Alliance Conference - North America 2020</span>\n        </div>\n    </div>\n    <div class=\"container\">\n        <div class=\"row\">\n            <div class=\"col-8 offset-2 text-center\" style=\"margin-top:25px;\">\n                <h3>Co-hosted by the University Competence Centers and SAP Next-Gen Chapters\n                    at the University of Wisconsin-Milwaukee</h3>\n                <p> </p>\n                <h3>July 20 - 21, 2020</h3>\n                at University of Wisconsin-Milwaukee, Lubar School of Business\n                <p></p>\n                <p>Professors from SAP University Alliances / SAP Next-Gen member institutions are invited\n                    to attend the\n                    SAP University Alliance Conference on July 20 - 21,\n                    2020 and SAP University Alliances Boot Camps on July 22 - 24, 2020 at\n                    University of Wisconsin-Milwaukee, Lubar School of Business.</p>\n                <p>The events are organized and co-hosted by the University Competence Centers and SAP\n                    Next-Gen Chapters\n                    at University of Wisconsin-Milwaukee. To cover\n                    costs\n                    associated with the conference, UW-Milwaukee charges a fee for registering and\n                    attending.</p>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"parallax2\"></div>\n\n    <div class=\"container\">\n        <!-- <div class=\"row text-center\">\n            <div class=\"col-4 offset-4\">\n                <h2 style=\"margin-top:50px;\">Featured Speakers</h2>\n                <img src=\"/img/ron.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Ron Gilson\">\n                <h2><a href=\"/RonGilsonBioV4.pdf\">Ron Gilson</a></h2>\n                <h5>VP and CIO - Johnsonville, LLC</h5>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-6 offset-3\" style=\"margin-bottom:25px;\">\n                        <h6>Ron Gilson is Vice President and CIO of Johnsonville, LLC where he is a member of the senior executive team.  In his current role he has global responsibility for Information Technology.  Ron joined Johnsonville as a programmer/analyst in 1991, became coach of the Enterprise Applications Team in 1994 and CIO in 1998. </h6>\n                </div>\n            </div>\n                \n            </div> -->\n\n        </div>\n    </div>\n\n    <div class=\"parallax2\"></div>\n\n    <!-- <div class=\"container\">\n        <div class=\"row\">\n            <div class=\"text-center\" style=\"margin-top:25px;\">\n                <h2>Conference Organizing Committee</h2>\n                <div class=\"row\">\n                    <div class=\"col\">\n                        <img src=\"/img/Antonucci.jpg\" height=\"200\" class=\"rounded-circle\"\n                            alt=\"Yvonne Antonucci\">\n                        <H2>Yvonne Antonucci</H2>\n                        <h5>Professor of Business Analytics and Business Process Innovation</h5>\n                        <h5>Widener University</h5>\n                        <h5>School of Business Administration</h5>\n                    </div>\n                    <div class=\"col\">\n                        <img src=\"/img/twilder.jpg\" height=\"200\" class=\"rounded-circle\"\n                            alt=\"Tom Wilder\">\n                        <H2>Tom Wilder</H2>\n                        <h5>Lecturer in Business Information Systems</h5>\n                        <h5>Director SAP UCC at Chico</h5>\n                        <h5>California State University - Chico</h5>\n                        <h5>College of Business Administration</h5>\n                    </div>\n                    <div class=\"col\">\n                        <img src=\"/img/nitin.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Nitn Kalen\">\n                        <H2>Nitin Kale</H2>\n                        <h5>Associate Professor of Information Technology and Industrial and Systems Engineering\n                            Practice</h5>\n                        <h5>University of Southern California</h5>\n                        <h5>Viterbi School of Engineering</h5>\n                    </div>\n                    <div class=\"col\">\n                        <img src=\"/img/nancy.jpg\" height=\"200\" class=\"rounded-circle\"\n                            alt=\"Nancy Jones\">\n                        <H2>Nancy Jones</H2>\n                        <h5>Lecturer in Accountancy</h5>\n                        <h5>San Diego State University</h5>\n                        <h5>Charles W. Lamden School of Accountancy</h5>\n                    </div>\n                </div>\n                <div class=\"row\">\n                        <div class=\"col\">\n                                <img src=\"/img/ross.jpg\" height=\"200\" class=\"rounded-circle\"\n                                    alt=\"Ross Hightower\">\n                                <H2>Ross Hightower</H2>\n                                <h5>Senior Lecturer in Information Technology Management</h5>\n                                <h5>Director SAP UCC at UWM</h5>\n                                <h5>University of Wiconsin - Milwaukee</h5>\n                                <h5>Lubar School of Business</h5>\n                            </div>\n                    <div class=\"col\">\n                        <img src=\"/img/simha.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Simha Magan\">\n                        <H2>Simha Magal</H2>\n                        <h5>Clinical Professor, SAP Mentor</h5>\n                        <h5>Georgia State University</h5>\n                        <h5>J. Mack Robinson of Business</h5>\n                    </div>\n                    <div class=\"col\">\n                        <img src=\"/img/jeff.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Jeff Word\">\n                        <H2>Jeff Word</H2>\n                        <h5>Head of ASUG University, Spirit Guide</h5>\n                        <h5>ASUG University</h5>\n\n                    </div>\n                </div>\n\n\n            </div>\n        </div>\n    </div> -->\n</template>\n";});;
+define('modules/conf2020/logistics',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Logistics = void 0;
+
+  var Logistics =
+  /*#__PURE__*/
+  function () {
+    function Logistics() {
+      this.showImage = [];
+      this.showImage.push("http://localhost/img/parallax1.jpg");
+      this.showImage.push("http://localhost/img/uwm.jpg");
+      this.showThisImage = this.showImage[0];
+      this.index = 1;
+    }
+
+    var _proto = Logistics.prototype;
+
+    _proto.activate = function activate() {
+      var _this = this;
+
+      setInterval(function () {
+        _this.showThisImage = _this.showImage[_this.index];
+
+        if (_this.index == _this.showImage.length - 1) {
+          _this.index = 0;
+        } else {
+          _this.index++;
+        }
+      }, 5000);
+    };
+
+    return Logistics;
+  }();
+
+  _exports.Logistics = Logistics;
+});;
+define('text!modules/conf2020/logistics.html',[],function(){return "<template>\r\n    <div class=\"container\" style=\"padding-top:100px;\">\r\n\r\n                <h1>University of Wisconsin-Milwaukee</h1>\r\n\r\n                <h3>Venue</h3>\r\n                Lubar School of Business</br>\r\n                3202 N. Maryland Avenue</br>\r\n                Milwaukee, WI 53211\r\n                <p> </p>\r\n                <h3>Contact</h3>\r\n                Ross Hightower, Senior Lecturer and UCC Director </br>\r\n                Phone: 414-229-4556 </br>\r\n                Emergency Phone: (414) 229-3992</br>\r\n                Email: hightowe@uwm.edu\r\n                <p> </p>\r\n                <h3>Directions</h3>\r\n                For maps of and directions to the UWM campus, please see <a href=\"http://www4.uwm.edu/map/\"\r\n                    target=\"_blank\">http://www4.uwm.edu/map/</a>\r\n                <p> </p>\r\n                <h3>Parking</h3>\r\n                Parking is available in the Student Union garage and is $1.50 /hour, with a $12 daily maximum. </br>\r\n                The garage is located at 2200 E. Kenwood Blvd.\r\n                <p> </p>\r\n                <h3><a href=\"https://www.visitmilwaukee.org/uwm/\" target=\"_blank\">Recommended Hotels</a></h3>\r\n           \r\n            <!-- <div class=\"col\">\r\n                <div class=\"text-center\" style=\"padding-top:100px;\">\r\n                    <img src.bind=\"showThisImage\" height=\"500\" alt=\"First slide\">\r\n                </div>\r\n            </div> -->\r\n        <!-- </div> -->\r\n\r\n\r\n    </div>\r\n</template>";});;
+define('modules/conf2020/milwaukee',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Milwaukee = void 0;
+
+  var Milwaukee = function Milwaukee() {};
+
+  _exports.Milwaukee = Milwaukee;
+});;
+define('text!modules/conf2020/milwaukee.html',[],function(){return "<template>\r\n    \r\n</template>";});;
+define('text!modules/conf2020/mySubmissions.html',[],function(){return "<template>\r\n    <div class=\"row\">\r\n        <div class=\"col-6\">\r\n            <div show.bind=\"services.abstractArray.length\">\r\n                <h2>Your Submissions</h2>\r\n                <ul class=\"list-group\">\r\n                    <li click.trigger=\"showReviews(submission)\" repeat.for=\"submission of services.abstractArray\"\r\n                        class=\"list-group-item\">\r\n                        <h3>${submission.title}</h3>\r\n                        <h6>Status: <strong>${submission.status}</strong></h6>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            <div show.bind=\"!services.abstractArray.length\">\r\n                <h2>You haven't submitted an abstract yet.</h2>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-6\">\r\n            <div show.bind=\"selectedSubmission.reviews && selectedSubmission.reviews.length\">\r\n                <h2>Your Reviews</h2>\r\n                <ul class=\"list-group\">\r\n                    <li repeat.for=\"review of selectedSubmission.reviews\" class=\"list-group-item\">\r\n                        <h3><a href=\"uploadedFiles/reviews/${review.fileName}\"\r\n                                target=\"_blank\">${review.originalFileName}</a></h3>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            <div show.bind=\"!selectedSubmission.reviews || !selectedSubmission.reviews.length\">\r\n                <h2>You don't have any reviews yet.</h2>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/conf2020/navBar.html',[],function(){return "<template>\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark toolbar\"> \n        <img class=\"navbar-brand\" style=\"height:50px;\" src=\"img/sap_ua3.png\">\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\"\n          aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n          <span class=\"navbar-toggler-icon\"></span>\n        </button>\n        <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n          <ul class=\"navbar-nav\">\n            <li class=\"nav-item active\">\n              <a class=\"nav-link\" style=\"color:white;\" href=\"#/conf2020\">Home <span class=\"sr-only\">(current)</span></a>\n            </li>\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"#/conf2020/agenda\">Agenda</a>\n            </li> -->\n            <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#/conf2020/sponsorships\">Sponsorships</a>\n              </li>\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"https://www.eventbrite.com/e/sap-next-gen-chapter-conference-tickets-58804908063\"\n                target=\"_blank\">Attendee Registration</a>\n            </li> -->\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"#/conf2020/files\">Files</a> \n            </li> -->\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" href=\"#/conf2020/logistics\">Logistics</a>\n            </li>\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\"\n                href=\"https://events.sap.com/us/sap-university-alliances-summer-workshops-2020/en/home\"\n                target=\"_blank\">SAP UA Bootcamps</a>\n            </li> -->\n            <li class=\"nav-item\">\n              <a class=\"nav-link\" target=\"_blank\" href=\"https://www.visitmilwaukee.org/\">Milwaukee</a>\n            </li>\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" target=\"_blank\" href=\"wall.html\">Social Media</a>\n            </li> -->\n            <!-- <li class=\"nav-item\">\n              <a class=\"nav-link\" target=\"_blank\" href=\"https://milwaukee.qualtrics.com/jfe/form/SV_8IDZpZxHVEmihoN\">Survey</a>\n            </li> -->\n          </ul>\n        </div>\n        <div>\n          <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n            <ul class=\"navbar-nav\">\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#/conf2020/contact\">Contact</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <!-- <form if.bind=\"!isAuthenticated\" class=\"form-inline my-2 my-lg-0\">\n            <label if.bind=\"loginError\" style=\"color:white;margin-right:5px;\">${loginError}</label>\n          <div class=\"form-group mb-2\">\n            <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"email\" placeholder=\"Email\"></input>\n          </div>\n          <div class=\"form-group mx-sm-3 mb-2\">\n            <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\"></input>\n          </div>\n          <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\n        </form>\n        <button if.bind=\"isAuthenticated\" class=\"btn btn-primary mb-2\" click.delegate='logout()'>Logout</button> -->\n        </div>\n      </nav>\n</template>\n";});;
+define('modules/conf2020/register',["exports", "aurelia-framework", "../../resources/utils/validation", "../../resources/data/services", "aurelia-router", "jquery", "toastr"], function (_exports, _aureliaFramework, _validation, _services, _aureliaRouter, _jquery, toastr) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Register = void 0;
+  _validation = _interopRequireDefault(_validation);
+  _jquery = _interopRequireDefault(_jquery);
+  toastr = _interopRequireWildcard(toastr);
+
+  var _dec, _class;
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Register = (_dec = (0, _aureliaFramework.inject)(_validation.default, _services.Services, _aureliaRouter.Router), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Register(validation, services, router) {
+      this.validation = validation;
+      this.services = services;
+      this.router = router;
+      this.validation.initialize(this);
+      toastr.options.extendedTimeOut = "1000";
+      toastr.options.timeOut = "1500";
+    }
+
+    var _proto = Register.prototype;
+
+    _proto.activate = function activate() {
+      this._setupValidation();
+    };
+
+    _proto._setupValidation = function _setupValidation() {
+      this.validation.addRule(1, "firstName", [{
+        "rule": "required",
+        "message": "First Name is required",
+        "value": "firstName"
+      }]);
+      this.validation.addRule(1, "lastName", [{
+        "rule": "required",
+        "message": "Last Name is required",
+        "value": "lastName"
+      }]);
+      this.validation.addRule(1, "email", [{
+        "rule": "required",
+        "message": "Email is required",
+        "value": "email"
+      }, {
+        "rule": "custom",
+        "message": "Enter a valid email address",
+        "valFunction": function valFunction(context) {
+          return context.email.indexOf('@') > -1;
+        }
+      }]);
+      this.validation.addRule(1, "university", [{
+        "rule": "required",
+        "message": "Institution is required",
+        "value": "university"
+      }]);
+      this.validation.addRule(1, "password", [{
+        "rule": "required",
+        "message": "Password is required",
+        "value": "password"
+      }]);
+      this.validation.addRule(1, "password_repeat", [{
+        "rule": "custom",
+        "message": "Passwords must match",
+        "valFunction": function valFunction(context) {
+          return context.password === context.password_repeat;
+        }
+      }], true);
+    };
+
+    _proto.save =
+    /*#__PURE__*/
+    function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var person, response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.validation.validate(1)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                person = {
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  email: this.email,
+                  university: this.university,
+                  password: this.password
+                };
+                _context.next = 4;
+                return this.services.saveRegister(person);
+
+              case 4:
+                response = _context.sent;
+
+                if (response) {
+                  toastr['success']('Your registration was saved.');
+                  this.router.navigate("home");
+                } else {
+                  toastr['error']('There was an error saving the registration.');
+                }
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function save() {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }();
+
+    return Register;
+  }()) || _class);
+  _exports.Register = Register;
+});;
+define('text!modules/conf2020/register.html',[],function(){return "<template>\r\n    <div class=\"container\">\r\n        <div class=\"card\" style=\"margin-top:100px;\">\r\n            <div class=\"card-body\">\r\n                <form>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"firstName\">First name *</label>\r\n                        <input value.bind=\"firstName\" type=\"text\" class=\"form-control\" id=\"firstName\"\r\n                            aria-describedby=\"firstNameHelp\" placeholder=\"First Name\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"lastName\">Last name *</label>\r\n                        <input value.bind=\"lastName\" type=\"text\" class=\"form-control\" id=\"lastName\"\r\n                            aria-describedby=\"lastNameHelp\" placeholder=\"Last Name\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"university\">University/Company *</label>\r\n                        <input value.bind=\"university\" type=\"text\" class=\"form-control\" id=\"university\"\r\n                            aria-describedby=\"universityHelp\" placeholder=\"University\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"email\">Email *</label>\r\n                        <input value.bind=\"email\" type=\"email\" class=\"form-control\" id=\"email\"\r\n                            aria-describedby=\"emailHelp\" placeholder=\"Email\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"password\">Password *</label>\r\n                        <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\"\r\n                            aria-describedby=\"passwordHelp\" placeholder=\"Password\">\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <label for=\"password_repeat\">Repeat password *</label>\r\n                        <input value.bind=\"password_repeat\" type=\"password\" class=\"form-control\" id=\"password_repeat\"\r\n                            aria-describedby=\"passwordrepeatHelp\" placeholder=\"Repeat Password\">\r\n                    </div>\r\n                    <button class=\"btn btn-primary\" click.trigger=\"save()\">Submit</button>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/conf2020/registerPanel.html',[],function(){return "<template>\r\n    <form>\r\n        <h3>${userObj.firstName} ${userObj.lastName}</h3>\r\n        <h3>${userObj.university}</h3>\r\n        <div class=\"form-group\">\r\n            <label for=\"title\">Title *</label>\r\n            <input value.bind=\"title\" type=\"text\" class=\"form-control\" id=\"title\" aria-describedby=\"titleHelp\"\r\n                placeholder=\"Title\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"description\">Track *</label>\r\n            <select value.bind=\"track\" class=\"form-control\" id=\"track\">\r\n                <option value=\"\">Select a track</option>\r\n                <option value=\"${type}\" repeat.for=\"type of tracks\">${type}</optionp>\r\n            </select>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"description\">Description *</label>\r\n            <textarea value.bind=\"description\" type=\"text\" class=\"form-control\" id=\"description\"\r\n                aria-describedby=\"descriptionHelp\" placeholder=\"Description\" rows=\"10\"></textarea>\r\n        </div>\r\n        <div class=\"row\">\r\n            <div class=\"col-4\">\r\n                <label class=\"btn btn-primary\">\r\n                    Browse for files&hellip; <input type=\"file\" style=\"display: none;\" change.delegate=\"changeFiles()\"\r\n                        files.bind=\"files\">\r\n                </label>\r\n                <span id=\"files\"></span>\r\n            </div>\r\n            <div class=\"col\">\r\n                <ul>\r\n                    <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\r\n                        ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i class=\"fa fa-trash\"\r\n                                aria-hidden=\"true\"></i></span></li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n        <button class=\"btn btn-primary\" style=\"margin-top:25px\" click.trigger=\"submit()\">Submit</button>\r\n    </form>\r\n</template>";});;
+define('text!modules/conf2020/reviewersTable.html',[],function(){return "<template>\r\n    <div class=\"panel panel-info\">\r\n        <div class=\"panel-body\">\r\n            <div class=\"row\">\r\n                <div class=\"col-5\">\r\n                    <h3>Registered People</h3>\r\n                    <ul class=\"list-group\">\r\n                        <li class=\"list-group-item\" click.trigger=\"addReviewer(person)\" repeat.for=\"person of services.peopleArray | reviewers:0\">${person.firstName} ${person.lastName}<br>${person.university}\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n                <div class=\"col-5\">\r\n                    <h3>Reviewers</h3>\r\n                    <ul class=\"list-group\">\r\n                        <li class=\"list-group-item\" click.trigger=\"removeReviewer(person)\" repeat.for=\"person of services.peopleArray | reviewers:1\">${person.firstName} ${person.lastName}<br>${person.university}\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('modules/conf2020/sponsorships',["exports"], function (_exports) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Sponsorships = void 0;
+
+  var Sponsorships = function Sponsorships() {};
+
+  _exports.Sponsorships = Sponsorships;
+});;
+define('text!modules/conf2020/sponsorships.html',[],function(){return "<template>\n  <div class=\"container\" style=\"padding-top:100px;\">\n    <h2>Coming Soon!</h2>\n  </div>\n</template>\n";});;
+define('text!modules/conf2020/submissionsTable.html',[],function(){return "<template>\r\n    <div show.bind=\"showTable\">\r\n        <div class=\"row\">\r\n            <div class='col-lg-10 col-lg-offset-1 bottomMargin'>\r\n                <div id=\"no-more-tables\">\r\n\r\n                    <table class=\"table table-striped table-hover cf\">\r\n                        <thead class=\"cf\">\r\n                            <tr colspan='6'>\r\n                                <compose view=\"../../resources/elements/table-navigation-bar.html\"></compose>\r\n                            </tr>\r\n                            <tr>\r\n                                <td colspan='6'>\r\n                                    <span click.delegate=\"refresh()\" class=\"smallMarginRight\" bootstrap-tooltip\r\n                                        data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"\"\r\n                                        data-original-title=\"Refresh\"><i class=\"fa fa-refresh\"\r\n                                            aria-hidden=\"true\"></i></span>\r\n                                    <span click.delegate=\"downloadInstExcel()\" class=\"smallMarginRight\"\r\n                                        bootstrap-tooltip data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"\"\r\n                                        data-original-title=\"Export to Excel\"><i class=\"fa fa-download\"\r\n                                            aria-hidden=\"true\"></i></span>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customNameSorter, propertyName: 'name'})\">Faculty\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customEmailSorter, propertyName: 'email'})\">Email\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customTitleSorter, propertyName: 'title'})\">Title\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customTrackSorter, propertyName: 'track'})\">Track\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>\r\n                                    <span class=\"sortable\"\r\n                                        click.trigger=\"dataTable.sortArray($event, {type: 'custom', sorter: customStatusSorter, propertyName: 'title'})\">Status\r\n                                    </span>\r\n                                    <i class=\"fa fa-sort\"></i>\r\n                                </th>\r\n                                <th>File</th>\r\n                            </tr>\r\n                        </thead>\r\n                        <tbody>\r\n                            <tr>\r\n                                <th>\r\n                                    <input value.bind=\"nameFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(nameFilterValue, { type: 'custom',  filter: nameCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                                <th>\r\n                                    <input value.bind=\"emailFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(emailFilterValue, { type: 'custom',  filter: emailCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                                <th>\r\n                                    <input value.bind=\"titleFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(titleFilterValue, { type: 'custom',  filter: titleCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                                <th>\r\n                                    <select value.bind=\"trackFilter\"\r\n                                        input.delegate=\"dataTable.filterList($event, { type: 'value',  filter: 'trackFilter', lookupArray: '', lookupProperty: '', collectionProperty: 'track', displayProperty: 'memberType', matchProperty:'', compare:'match'} )\"\r\n                                        class=\"form-control\">\r\n                                        <option value=\"\"></option>\r\n                                        <option repeat.for=\"track of tracks\" value=\"${track}\">\r\n                                            ${track}</option>\r\n                                    </select>\r\n                                </th>\r\n                                <th>\r\n                                    <select value.bind=\"statusFilter\"\r\n                                        input.delegate=\"dataTable.filterList($event, { type: 'value',  filter: 'statusFilter', lookupArray: '', lookupProperty: '', collectionProperty: 'status', displayProperty: 'status', matchProperty:'', compare:'match'} )\"\r\n                                        class=\"form-control\">\r\n                                        <option value=\"\"></option> \r\n                                        <option repeat.for=\"stat of status\" value=\"${stat}\">\r\n                                            ${stat}</option>\r\n                                    </select>\r\n                                </th>\r\n                                <th>\r\n                                    <input value.bind=\"fileFilterValue\"\r\n                                        input.delegate=\"dataTable.filterList(fileFilterValue, { type: 'custom',  filter: fileCustomFilter,  compare:'custom'} )\"\r\n                                        class=\"form-control\" />\r\n                                </th>\r\n                            </tr>\r\n                            <tr  repeat.for=\"abstract of dataTable.displayArray\">\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.personId.firstName} ${abstract.personId.lastName}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.personId.email}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.title}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.track}</td>\r\n                                <td click.trigger=\"edit(abstract)\">${abstract.status}</td>\r\n                                <td><a href=\"uploadedFiles/reviews/${abstract.reviews[0].fileName}\" target=\"_blank\"\r\n                                }>${abstract.reviews[0].originalFileName}</a></td>\r\n                                <td><a href=\"uploadedFiles/abstracts/${abstract.file.fileName}\" target=\"_blank\"\r\n                                        }>${abstract.file.originalFileName}</a></td>\r\n                            </tr>\r\n                        </tbody>\r\n                    </table>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div show.bind=\"!showTable\">\r\n        <compose view=\"./abstractEdit.html\"></compose>\r\n    </div>\r\n</template>";});;
+define('modules/conf2020/submit',["exports", "aurelia-framework", "../../resources/utils/validation", "../../resources/data/services", "aurelia-router", "../../resources/data/auth", "../../resources/utils/dataTable", "jquery", "toastr"], function (_exports, _aureliaFramework, _validation, _services, _aureliaRouter, _auth, _dataTable, _jquery, toastr) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.Submit = void 0;
+  _validation = _interopRequireDefault(_validation);
+  _jquery = _interopRequireDefault(_jquery);
+  toastr = _interopRequireWildcard(toastr);
+
+  var _dec, _class;
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var Submit = (_dec = (0, _aureliaFramework.inject)(_validation.default, _services.Services, _aureliaRouter.Router, _auth.Auth, _dataTable.DataTable), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function Submit(validation, services, router, auth, dataTable) {
+      this.validation = validation;
+      this.services = services;
+      this.router = router;
+      this.auth = auth;
+      this.dataTable = dataTable;
+      this.dataTable.initialize(this);
+      this.validation.initialize(this);
+      toastr.options.extendedTimeOut = "1000";
+      toastr.options.timeOut = "1500";
+      this.userObj = JSON.parse(sessionStorage.getItem('user'));
+      this.filesToUpload = new Array();
+
+      this._setupValidation();
+
+      this.showTable = true;
+      this.tracks = ["Innovations in Teaching", "High Impact Practices", "Incorporating Latest Developments in Curriculum", "Research in Teaching", "HANAify Everything"];
+      this.status = ['Submitted', 'Under Review', 'Accepted', 'Rejected'];
+    }
+
+    var _proto = Submit.prototype;
+
+    _proto.activate = function activate() {
+      if (sessionStorage.getItem('user')) this.loginSuccess();
+    };
+
+    _proto._setupValidation = function _setupValidation() {
+      this.validation.addRule(1, "title", [{
+        "rule": "required",
+        "message": "Title is required",
+        "value": "title"
+      }]);
+      this.validation.addRule(1, "description", [{
+        "rule": "required",
+        "message": "Description is required",
+        "value": "description"
+      }]);
+      this.validation.addRule(1, "track", [{
+        "rule": "custom",
+        "message": "Track is required",
+        "valFunction": function valFunction(context) {
+          return context.track != "";
+        }
+      }], true);
+      this.validation.addRule(1, "files", [{
+        "rule": "custom",
+        "message": "You must select a file",
+        "valFunction": function valFunction(context) {
+          return context.filesToUpload.length > 0;
+        }
+      }], true);
+      this.validation.addRule(2, "firstName", [{
+        "rule": "required",
+        "message": "First Name is required",
+        "value": "firstName"
+      }]);
+      this.validation.addRule(2, "lastName", [{
+        "rule": "required",
+        "message": "Last Name is required",
+        "value": "lastName"
+      }]);
+      this.validation.addRule(2, "email", [{
+        "rule": "required",
+        "message": "Email is required",
+        "value": "email"
+      }, {
+        "rule": "custom",
+        "message": "Enter a valid email address",
+        "valFunction": function valFunction(context) {
+          return context.email.indexOf('@') > -1;
+        }
+      }]);
+      this.validation.addRule(2, "university", [{
+        "rule": "required",
+        "message": "Institution is required",
+        "value": "university"
+      }]);
+      this.validation.addRule(2, "password", [{
+        "rule": "required",
+        "message": "Password is required",
+        "value": "password"
+      }]);
+      this.validation.addRule(2, "password_repeat", [{
+        "rule": "custom",
+        "message": "Passwords must match",
+        "valFunction": function valFunction(context) {
+          return context.password === context.password_repeat;
+        }
+      }], true);
+    };
+
+    _proto.showRegister = function showRegister() {
+      this.showRegisterPanel = !this.showRegisterPanel;
+    };
+
+    _proto.save =
+    /*#__PURE__*/
+    function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var person, response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.validation.validate(2)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                person = {
+                  firstName: this.firstName,
+                  lastName: this.lastName,
+                  email: this.email,
+                  university: this.university,
+                  password: this.password
+                };
+                _context.next = 4;
+                return this.services.saveRegister(person);
+
+              case 4:
+                response = _context.sent;
+
+                if (response) {
+                  sessionStorage.setItem('user', JSON.stringify(response));
+                  this.loginSuccess();
+                  this.isAuthenticated = true;
+                  this.showRegisterPanel = false;
+                  toastr['success']('Your registration was saved.');
+                } else {
+                  toastr['error']('There was an error saving the registration.');
+                }
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function save() {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }();
+
+    _proto.submit =
+    /*#__PURE__*/
+    function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        var abstract, response;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!this.validation.validate(1)) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                abstract = {
+                  title: this.title,
+                  description: this.description,
+                  personId: this.userObj._id,
+                  track: this.track
+                };
+                _context2.next = 4;
+                return this.services.saveAbstract(abstract, this.filesToUpload);
+
+              case 4:
+                response = _context2.sent;
+
+                if (!response.error) {
+                  toastr['success']('The abstract was uploaded successfully.');
+                  this.getPersonAbstracts();
+                  this.title = "";
+                  this.description = "";
+                  this.track = "";
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function submit() {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }();
+
+    _proto.changeFiles = function changeFiles() {
+      this.filesToUpload = new Array();
+      this.filesToUpload.push(this.files[0]);
+    };
+
+    _proto.login =
+    /*#__PURE__*/
+    function () {
+      var _login = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.auth.login(this.email, this.password);
+
+              case 2:
+                response = _context3.sent;
+
+                if (!response.error) {
+                  this.loginError = "";
+                  this.loginSuccess();
+                } else {
+                  this.loginError = "Invalid credentials. Contact ucc@uwm.edu to have your password reset.";
+                }
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function login() {
+        return _login.apply(this, arguments);
+      }
+
+      return login;
+    }();
+
+    _proto.refresh =
+    /*#__PURE__*/
+    function () {
+      var _refresh = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4() {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.services.getAbstracts();
+
+              case 2:
+                _context4.next = 4;
+                return this.services.getPeople();
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function refresh() {
+        return _refresh.apply(this, arguments);
+      }
+
+      return refresh;
+    }();
+
+    _proto.loginSuccess =
+    /*#__PURE__*/
+    function () {
+      var _loginSuccess = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee5() {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                this.isAuthenticated = this.auth.isAuthenticated();
+                this.userObj = JSON.parse(sessionStorage.getItem('user'));
+
+                if (!this.userObj) {
+                  _context5.next = 12;
+                  break;
+                }
+
+                this.adminRole = this.userObj.role.indexOf('admin') > -1;
+                sessionStorage.setItem('role', this.userObj.role);
+
+                if (!this.adminRole) {
+                  _context5.next = 11;
+                  break;
+                }
+
+                _context5.next = 8;
+                return this.services.getAbstracts();
+
+              case 8:
+                _context5.next = 10;
+                return this.services.getPeople();
+
+              case 10:
+                this.dataTable.updateArray(this.services.allAbstractArray);
+
+              case 11:
+                this.getPersonAbstracts();
+
+              case 12:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function loginSuccess() {
+        return _loginSuccess.apply(this, arguments);
+      }
+
+      return loginSuccess;
+    }();
+
+    _proto.getPersonAbstracts =
+    /*#__PURE__*/
+    function () {
+      var _getPersonAbstracts = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee6() {
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return this.services.getPersonAbstracts(this.userObj._id);
+
+              case 2:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function getPersonAbstracts() {
+        return _getPersonAbstracts.apply(this, arguments);
+      }
+
+      return getPersonAbstracts;
+    }();
+
+    _proto.addReviewer =
+    /*#__PURE__*/
+    function () {
+      var _addReviewer = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee7(person) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                person.role = person.role + ':reviewer';
+                _context7.next = 3;
+                return this.services.savePerson(person);
+
+              case 3:
+                response = _context7.sent;
+
+                if (!response) {
+                  _context7.next = 10;
+                  break;
+                }
+
+                toastr['success']('Your registration was saved.');
+                _context7.next = 8;
+                return this.services.getPeople();
+
+              case 8:
+                _context7.next = 11;
+                break;
+
+              case 10:
+                toastr['error']('There was an error saving the registration.');
+
+              case 11:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function addReviewer(_x) {
+        return _addReviewer.apply(this, arguments);
+      }
+
+      return addReviewer;
+    }();
+
+    _proto.removeReviewer =
+    /*#__PURE__*/
+    function () {
+      var _removeReviewer = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee8(person) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                person.role = person.role.split(':reviewer').join();
+                _context8.next = 3;
+                return this.services.savePerson(person);
+
+              case 3:
+                response = _context8.sent;
+
+                if (!response) {
+                  _context8.next = 10;
+                  break;
+                }
+
+                toastr['success']('Your registration was saved.');
+                _context8.next = 8;
+                return this.services.getPeople();
+
+              case 8:
+                _context8.next = 11;
+                break;
+
+              case 10:
+                toastr['error']('There was an error saving the registration.');
+
+              case 11:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this);
+      }));
+
+      function removeReviewer(_x2) {
+        return _removeReviewer.apply(this, arguments);
+      }
+
+      return removeReviewer;
+    }();
+
+    _proto.edit =
+    /*#__PURE__*/
+    function () {
+      var _edit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee9(abstract) {
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _context9.next = 2;
+                return this.services.getAbstract(abstract._id);
+
+              case 2:
+                this.abstract = _context9.sent;
+                this.showTable = false;
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function edit(_x3) {
+        return _edit.apply(this, arguments);
+      }
+
+      return edit;
+    }();
+
+    _proto.addReviewerToAbstract =
+    /*#__PURE__*/
+    function () {
+      var _addReviewerToAbstract = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee10(person) {
+        var response;
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                if (!(this.abstract.reviewers.indexOf(person._id) === -1)) {
+                  _context10.next = 11;
+                  break;
+                }
+
+                this.abstract.reviewers.push(person._id);
+                if (this.abstract.reviewers.length > 0) this.abstract.status = "Under Review";
+                _context10.next = 5;
+                return this.services.saveAbstractReviewer(this.abstract);
+
+              case 5:
+                response = _context10.sent;
+                this.abstract = response[0];
+
+                if (!person.abstracts.indexOf(this.abstract._id === -1)) {
+                  _context10.next = 11;
+                  break;
+                }
+
+                person.abstracts.push(this.abstract._id);
+                _context10.next = 11;
+                return this.services.savePerson(person);
+
+              case 11:
+                _context10.next = 13;
+                return this.refresh();
+
+              case 13:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function addReviewerToAbstract(_x4) {
+        return _addReviewerToAbstract.apply(this, arguments);
+      }
+
+      return addReviewerToAbstract;
+    }();
+
+    _proto.removeReviewerFromAbstract =
+    /*#__PURE__*/
+    function () {
+      var _removeReviewerFromAbstract = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee11(person) {
+        var filteredReviewers, responseOne, filteredAbstracts;
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                filteredReviewers = this.abstract.reviewers.filter(function (value, index, arr) {
+                  return value._id != person._id;
+                });
+                this.abstract.reviewers = filteredReviewers;
+                if (this.abstract.reviewers.length === 0) this.abstract.status = "Submitted";
+                _context11.next = 5;
+                return this.services.saveAbstractReviewer(this.abstract);
+
+              case 5:
+                responseOne = _context11.sent;
+                this.abstract = responseOne[0];
+                filteredAbstracts = person.abstracts.filter(function (value, index, arr) {
+                  return value._id != this.abstract._id;
+                });
+                person.abstracts = filteredAbstracts;
+                _context11.next = 11;
+                return this.services.savePerson(person);
+
+              case 11:
+                this.refresh();
+
+              case 12:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function removeReviewerFromAbstract(_x5) {
+        return _removeReviewerFromAbstract.apply(this, arguments);
+      }
+
+      return removeReviewerFromAbstract;
+    }();
+
+    _proto.saveEditAbstract = function saveEditAbstract() {
+      this.services.saveAbstractReviewer(this.abstract);
+      this.showTable = true;
+    };
+
+    _proto.cancelEdit = function cancelEdit() {
+      this.showTable = true;
+    };
+
+    _proto.downloadInstExcel = function downloadInstExcel() {
+      var csvContent = "data:text/csv;charset=utf-8;,Faculty,Email,Title,Status\r\n";
+      this.dataTable.baseArray.forEach(function (item) {
+        var facInfo = item.personId ? item.personId.firstName + " " + item.personId.lastName + "," + item.personId.email : "";
+        csvContent += facInfo + "," + item.title + "," + item.status;
+        csvContent += "\r\n";
+      });
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "submissions.csv");
+      document.body.appendChild(link); // Required for FF
+
+      link.click();
+    };
+
+    _proto.nameCustomFilter = function nameCustomFilter(value, item, context) {
+      if (item.personId) {
+        var firstNameFilter = item.personId.firstName.toUpperCase().indexOf(value.toUpperCase()) > -1;
+        var lastNameFilter = item.personId.lastName.toUpperCase().indexOf(value.toUpperCase()) > -1;
+        return firstNameFilter || lastNameFilter;
+      }
+
+      return false;
+    };
+
+    _proto.uploadReview =
+    /*#__PURE__*/
+    function () {
+      var _uploadReview = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee12() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                _context12.next = 2;
+                return this.services.saveReview(this.abstract, this.filesToUpload);
+
+              case 2:
+                response = _context12.sent;
+
+                if (!response.error) {
+                  toastr['success']('The review was uploaded successfully.');
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this);
+      }));
+
+      function uploadReview() {
+        return _uploadReview.apply(this, arguments);
+      }
+
+      return uploadReview;
+    }();
+
+    _proto.showReviews = function showReviews(submission) {
+      this.selectedSubmission = submission;
+    };
+
+    _proto.emailCustomFilter = function emailCustomFilter(value, item, context) {
+      return item.personId && item.personId.email.toUpperCase().indexOf(value.toUpperCase()) > -1;
+    };
+
+    _proto.titleCustomFilter = function titleCustomFilter(value, item, context) {
+      return item.title.toUpperCase().indexOf(value.toUpperCase()) > -1;
+    };
+
+    _proto.fileCustomFilter = function fileCustomFilter(value, item, context) {
+      return item.file && item.file.originalFileName.toUpperCase().indexOf(value.toUpperCase()) > -1;
+    };
+
+    _proto.customNameSorter = function customNameSorter(sortProperty, sortDirection, sortArray, context) {
+      this.sortProperty = 'person';
+      this.sortDirection = sortDirection;
+      return sortArray.sort(function (a, b) {
+        if (a['personId'] && b['personId'] && a['personId']['lastName'] && b['personId']['lastName']) {
+          var result = a['personId']['lastName'] < b['personId']['lastName'] ? -1 : a['personId']['lastName'] > b['personId']['lastName'] ? 1 : 0;
+        } else {
+          var result = -1;
+        }
+
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customEmailSorter = function customEmailSorter(sortProperty, sortDirection, sortArray, context) {
+      this.sortProperty = 'person';
+      this.sortDirection = sortDirection;
+      return sortArray.sort(function (a, b) {
+        if (a['personId'] && b['personId'] && a['personId']['email'] && b['personId']['email']) {
+          var result = a['personId']['email'] < b['personId']['email'] ? -1 : a['personId']['email'] > b['personId']['email'] ? 1 : 0;
+        } else {
+          var result = -1;
+        }
+
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customTitleSorter = function customTitleSorter(sortProperty, sortDirection, sortArray, context) {
+      return sortArray.sort(function (a, b) {
+        var result = a[sortProperty] < b[sortProperty] ? -1 : a[sortProperty] > b[sortProperty] ? 1 : 0;
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customTrackSorter = function customTrackSorter(sortProperty, sortDirection, sortArray, context) {
+      return sortArray.sort(function (a, b) {
+        var result = a[sortProperty] < b[sortProperty] ? -1 : a[sortProperty] > b[sortProperty] ? 1 : 0;
+        return result * sortDirection;
+      });
+    };
+
+    _proto.customStatusSorter = function customStatusSorter(sortProperty, sortDirection, sortArray, context) {
+      return sortArray.sort(function (a, b) {
+        var result = a[sortProperty] < b[sortProperty] ? -1 : a[sortProperty] > b[sortProperty] ? 1 : 0;
+        return result * sortDirection;
+      });
+    };
+
+    return Submit;
+  }()) || _class);
+  _exports.Submit = Submit;
+});;
+define('text!modules/conf2020/submit.html',[],function(){return "<template>\r\n    <div style=\"padding-top:100px;padding-left:50px;padding-right:50px;\">\r\n        <div class=\"card\">\r\n            <div class=\"card-body\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-5 offset-1\">\r\n                        <div if.bind=\"!isAuthenticated && !showRegisterPanel\">\r\n                            <h5>Register to submit an abstract.</h5>\r\n                        </div>\r\n                        <form if.bind=\"!isAuthenticated && !showRegisterPanel\" class=\"form-inline\">\r\n                            <div class=\"form-group mb-2\">\r\n                                <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"loginemail\"\r\n                                    placeholder=\"Email\"></input>\r\n                            </div>\r\n                            <div class=\"form-group mx-sm-3 mb-2\">\r\n                                <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"loginpassword\"\r\n                                    placeholder=\"Password\"></input>\r\n                            </div>\r\n                            <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\r\n                            <button class=\"btn btn-primary mb-2\" style=\"margin-left:5px;\"\r\n                                click.delegate='showRegister()'>Register</button>\r\n                        </form>\r\n                        <label if.bind=\"loginError\" style=\"color:black;margin-right:5px;\">${loginError}</label>\r\n                        <div show.bind=\"showRegisterPanel\">\r\n                            <h2>Register as an Author</h2>\r\n                            <form>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"firstName\">First name *</label>\r\n                                    <input value.bind=\"firstName\" type=\"text\" class=\"form-control\" id=\"firstName\"\r\n                                        aria-describedby=\"firstNameHelp\" placeholder=\"First Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"lastName\">Last name *</label>\r\n                                    <input value.bind=\"lastName\" type=\"text\" class=\"form-control\" id=\"lastName\"\r\n                                        aria-describedby=\"lastNameHelp\" placeholder=\"Last Name\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"university\">University/Company *</label>\r\n                                    <input value.bind=\"university\" type=\"text\" class=\"form-control\" id=\"university\"\r\n                                        aria-describedby=\"universityHelp\" placeholder=\"University\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"email\">Email *</label>\r\n                                    <input value.bind=\"email\" type=\"email\" class=\"form-control\" id=\"email\"\r\n                                        aria-describedby=\"emailHelp\" placeholder=\"Email\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password\">Password *</label>\r\n                                    <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\"\r\n                                        aria-describedby=\"passwordHelp\" placeholder=\"Password\">\r\n                                </div>\r\n                                <div class=\"form-group\">\r\n                                    <label for=\"password_repeat\">Repeat password *</label>\r\n                                    <input value.bind=\"password_repeat\" type=\"password\" class=\"form-control\"\r\n                                        id=\"password_repeat\" aria-describedby=\"passwordrepeatHelp\"\r\n                                        placeholder=\"Repeat Password\">\r\n                                </div>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"save()\">Register</button>\r\n                                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                                    click.trigger=\"showRegister()\">Cancel</button>\r\n                            </form>\r\n                        </div>\r\n                    </div>\r\n                    <div if.bind=\"!isAuthenticated\" class=\"col-5\">\r\n                        <compose view=\"./guidelines.html\"></compose>\r\n                    </div>\r\n                </div>\r\n                <div show.bind=\"isAuthenticated\">\r\n                    <compose view=\"./submitTabs.html\"></compose>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</template>";});;
+define('text!modules/conf2020/submitReview.html',[],function(){return "<template>\r\n    <h1>Here</h1>\r\n</template>";});;
+define('text!modules/conf2020/submitTabs.html',[],function(){return "<template>\r\n    <ul class=\"nav nav-pills\">\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link active\" id=\"submitAbstract-tab\" data-toggle=\"tab\" href=\"#submitAbstract\" role=\"tab\"\r\n                aria-controls=\"submitAbstract\" aria-selected=\"true\">Submit an Abstract</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"guidelines-tab\" data-toggle=\"tab\" href=\"#guidelines\" role=\"tab\"\r\n                aria-controls=\"guidelines\" aria-selected=\"true\">Guidelines</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" id=\"mysubmissions-tab\" data-toggle=\"tab\" href=\"#mysubmissions\" role=\"tab\"\r\n                aria-controls=\"mysubmissions\" aria-selected=\"true\">My Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submissions-tab\" data-toggle=\"tab\"\r\n                href=\"#submissions\" role=\"tab\" aria-controls=\"submissions\" aria-selected=\"true\">Submissions</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"reviewers-tab\" data-toggle=\"tab\" href=\"#reviewers\"\r\n                role=\"tab\" aria-controls=\"reviewers\" aria-selected=\"true\">Reviewers</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n            <a class=\"nav-link\" show.bind=\"adminRole\" id=\"submitReview-tab\" data-toggle=\"tab\" href=\"#submitReview\"\r\n                role=\"tab\" aria-controls=\"submitReview\" aria-selected=\"true\">Submit Review</a>\r\n        </li>\r\n    </ul>\r\n    <p></p>\r\n    <div class=\"tab-content\" id=\"myTabContent\">\r\n        <div class=\"tab-pane fade show active\" id=\"submitAbstract\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-5\">\r\n                <compose view=\"./registerPanel.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"guidelines\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <div class=\"col-7\">\r\n                <compose view=\"./guidelines.html\"></compose>\r\n            </div>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"mysubmissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./mySubmissions.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submissions\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submissionsTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"reviewers\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./reviewersTable.html\"></compose>\r\n        </div>\r\n        <div class=\"tab-pane fade\" id=\"submitReview\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\r\n            <compose view=\"./submitReview.html\"></compose>\r\n        </div>\r\n    </div>\r\n</template>";});;
+define('modules/conf2020/uploadFiles',["exports", "aurelia-framework", "../../resources/data/services", "toastr"], function (_exports, _aureliaFramework, _services, toastr) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.UploadFiles = void 0;
+  toastr = _interopRequireWildcard(toastr);
+
+  var _dec, _class;
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var UploadFiles = (_dec = (0, _aureliaFramework.inject)(_services.Services), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function UploadFiles(services) {
+      this.services = services;
+      this.filesToUpload = new Array();
+    }
+
+    var _proto = UploadFiles.prototype;
+
+    _proto.uploadFile =
+    /*#__PURE__*/
+    function () {
+      var _uploadFile = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(this.category && this.title)) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.services.saveFile(this.category, this.title, this.filesToUpload);
+
+              case 3:
+                response = _context.sent;
+
+                if (!response.error) {
+                  toastr['success']('The file was uploaded successfully.');
+                  this.filesToUpload = new Array();
+                  this.files = new Array();
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function uploadFile() {
+        return _uploadFile.apply(this, arguments);
+      }
+
+      return uploadFile;
+    }() // async submit() {
+    //   if (this.validation.validate(1)) {
+    //       let abstract = {
+    //           title: this.title,
+    //           description: this.description,
+    //           personId: this.userObj._id,
+    //           track: this.track
+    //       }
+    //       let response = await this.services.saveAbstract(abstract, this.filesToUpload);
+    //       if (!response.error) {
+    //           toastr['success']('The abstract was uploaded successfully.');
+    //           this.getPersonAbstracts();
+    //           this.title = "";
+    //           this.description = "";
+    //           this.track = "";
+    //           this.filesToUpload = new Array();
+    //           this.files = new Array();
+    //       }
+    //   }
+    // }
+    ;
+
+    _proto.changeFiles = function changeFiles() {
+      this.filesToUpload = new Array();
+      this.filesToUpload.push(this.files[0]);
+    };
+
+    return UploadFiles;
+  }()) || _class);
+  _exports.UploadFiles = UploadFiles;
+});;
+define('text!modules/conf2020/uploadFiles.html',[],function(){return "<template>\n  <div class=\"container\" style=\"padding-top:100px;\">\n    <div class=\"form-group\">\n      <label for=\"status\">Category</label>\n      <input value.bind=\"category\" type=\"text\" class=\"form-control\" id=\"status\" aria-describedby=\"statusHelp\"\n        placeholder=\"Category\">\n    </div>\n    <div class=\"form-group\">\n        <label for=\"status\">Title</label>\n        <input value.bind=\"title\" type=\"text\" class=\"form-control\" id=\"title\" aria-describedby=\"statusHelp\"\n          placeholder=\"Title\">\n      </div>\n    <div class=\"card\" style=\"margin-top:10px;\">\n      <div class=\"card-body\">\n        <div class=\"row\">\n          <div class=\"col-4\">\n            <label class=\"btn btn-primary\">\n              Browse for files&hellip; <input type=\"file\" style=\"display: none;\" change.delegate=\"changeFiles()\"\n                files.bind=\"files\">\n            </label>\n            <span id=\"files\"></span>\n          </div>\n          <div class=\"col\">\n            <ul>\n              <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\n                ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i class=\"fa fa-trash\"\n                    aria-hidden=\"true\"></i></span></li>\n            </ul>\n          </div>\n        </div>\n        <button click.trigger=\"uploadFile()\" class=\"btn btn-primary\" style=\"margin-top:5px;\">Upload File</button>\n      </div>\n    </div>\n  </div>\n</template>\n";});;
+define('text!modules/conf2020/userSubmit.html',[],function(){return "";});;
 define('text!modules/home/abstractEdit.html',[],function(){return "<template>\r\n    <div class=\"row\">\r\n        <div class=\"col-5 offset-1\">\r\n            <form>\r\n                <h3>${abstract.personId.firstName} ${abstract.personId.lastName}</h3>\r\n                <h3>${abstract.personId.university}</h3>\r\n                <div class=\"form-group\">\r\n                    <label for=\"title\">Title *</label>\r\n                    <input value.bind=\"abstract.title\" type=\"text\" class=\"form-control\" id=\"title\"\r\n                        aria-describedby=\"titleHelp\" placeholder=\"Title\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"description\">Track *</label>\r\n                    <select value.bind=\"abstract.track\" class=\"form-control\" id=\"track\">\r\n                        <option value=\"\">Select a track</option>\r\n                        <option value=\"${type}\" repeat.for=\"type of tracks\">${type}</optionp>\r\n                    </select>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"status\">Status *</label>\r\n                    <input value.bind=\"abstract.status\" type=\"text\" class=\"form-control\" id=\"status\"\r\n                        aria-describedby=\"statusHelp\" placeholder=\"Status\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <label for=\"description\">Description *</label>\r\n                    <textarea value.bind=\"abstract.description\" type=\"text\" class=\"form-control\" id=\"description\"\r\n                        aria-describedby=\"descriptionHelp\" placeholder=\"Description\" rows=\"10\"></textarea>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <a href=\"uploadedFiles/${abstract.file.fileName}\" target=\"_blank\"\r\n                        style=\"margin-top:20px;\">${abstract.file.originalFileName}</a>\r\n                </div>\r\n                <button class=\"btn btn-primary\" style=\"margin-top:25px\"\r\n                    click.trigger=\"saveEditAbstract()\">Submit</button>\r\n                <button class=\"btn btn-primary\" style=\"margin-top:25px\" click.trigger=\"cancelEdit()\">Cancel</button>\r\n            </form>\r\n            <div class=\"card\" style=\"margin-top:10px;\">\r\n                <div class=\"card-body\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-4\">\r\n                            <label class=\"btn btn-primary\" >\r\n                                Browse for files&hellip; <input type=\"file\" style=\"display: none;\"\r\n                                    change.delegate=\"changeFiles()\" files.bind=\"files\">\r\n                            </label>\r\n                            <span id=\"files\"></span>\r\n                        </div>\r\n                        <div class=\"col\">\r\n                            <ul>\r\n                                <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\r\n                                    ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i\r\n                                            class=\"fa fa-trash\" aria-hidden=\"true\"></i></span></li>\r\n                            </ul>\r\n                        </div>\r\n                    </div>\r\n                    <button click.trigger=\"uploadReview()\" class=\"btn btn-primary\" style=\"margin-top:5px;\">Save Review</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-5\">\r\n            <h5>You don't have to click submit to save changes to the abstract reviewers</h5>\r\n            <h3>Reviewers</h3>\r\n            <h2 show.bind=\"!abstract.reviewers.length\">No reviewers are assigned yet</h2>\r\n            <ul class=\"list-group\">\r\n                <li class=\"list-group-item\" click.trigger=\"removeReviewerFromAbstract(person)\"\r\n                    repeat.for=\"person of abstract.reviewers\">${person.firstName}\r\n                    ${person.lastName}<br>${person.university}\r\n                </li>\r\n            </ul>\r\n            <h3 style=\"margin-top:20px;\">Available Reviewers</h3>\r\n            <ul class=\"list-group\">\r\n                <li class=\"list-group-item\" click.trigger=\"addReviewerToAbstract(person)\"\r\n                    repeat.for=\"person of services.peopleArray | availableReviewers:abstract.reviewers\">\r\n                    ${person.firstName}\r\n                    ${person.lastName}<br>${person.university}\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</template>";});;
 define('modules/home/agenda',["exports", "aurelia-framework", "../../resources/data/services"], function (_exports, _aureliaFramework, _services) {
   "use strict";
@@ -318,17 +3065,6 @@ define('modules/home/home',["exports"], function (_exports) {
   _exports.Home = Home;
 });;
 define('text!modules/home/home.html',[],function(){return "<template>\r\n    <div class=\"container\">\r\n        <h1 class=\"text-center\" style=\"margin-top:100px;\">Community - Collaboration - Curriculum for Professors and Others</h1>\r\n    </div>\r\n</template>";});;
-define('modules/home/landing',["exports"], function (_exports) {
-  "use strict";
-
-  _exports.__esModule = true;
-  _exports.Landing = void 0;
-
-  var Landing = function Landing() {};
-
-  _exports.Landing = Landing;
-});;
-define('text!modules/home/landing.html',[],function(){return "<template>\r\n    <div class=\"parallax1\">\r\n        <div class=\"caption\">\r\n            <span class=\"border\">SAP Next-Gen Chapter Conference 2019</span>\r\n        </div>\r\n    </div>\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"col-8 offset-2 text-center\" style=\"margin-top:25px;\">\r\n                <h3>Co-hosted by the University Competence Centers and SAP Next-Gen Chapters\r\n                    at the University of Wisconsin-Milwaukee and California State University, Chico</h3>\r\n                <p> </p>\r\n                <h3>July 14 - 15, 2019</h3>\r\n                at University of Wisconsin-Milwaukee, Lubar School of Business\r\n                <p></p>\r\n                <p>Professors from SAP University Alliances / SAP Next-Gen member institutions are invited\r\n                    to attend the\r\n                    SAP Next-Gen Chapter Conference and SAP University Alliances Boot Camps July 14 – 19,\r\n                    2019 at\r\n                    University of Wisconsin-Milwaukee, Lubar School of Business.</p>\r\n                <p>The events are organized and co-hosted by the University Competence Centers and SAP\r\n                    Next-Gen Chapters\r\n                    at University of Wisconsin-Milwaukee and California State University, Chico. To cover\r\n                    costs\r\n                    associated with the conference, UW-Milwaukee charges a fee for registering and\r\n                    attending.</p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"parallax2\"></div>\r\n\r\n    <div class=\"container\">\r\n        <div class=\"row text-center\">\r\n            <div class=\"col-4 offset-4\">\r\n                <h2 style=\"margin-top:50px;\">Featured Speakers</h2>\r\n                <img src=\"/img/ron.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Ron Gilson\">\r\n                <h2><a href=\"/RonGilsonBioV4.pdf\">Ron Gilson</a></h2>\r\n                <h5>VP and CIO - Johnsonville, LLC</h5>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-6 offset-3\" style=\"margin-bottom:25px;\">\r\n                        <h6>Ron Gilson is Vice President and CIO of Johnsonville, LLC where he is a member of the senior executive team.  In his current role he has global responsibility for Information Technology.  Ron joined Johnsonville as a programmer/analyst in 1991, became coach of the Enterprise Applications Team in 1994 and CIO in 1998. </h6>\r\n                </div>\r\n            </div>\r\n                \r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"parallax2\"></div>\r\n\r\n    <div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"text-center\" style=\"margin-top:25px;\">\r\n                <h2>Conference Organizing Committee</h2>\r\n                <div class=\"row\">\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/Antonucci.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                            alt=\"Yvonne Antonucci\">\r\n                        <H2>Yvonne Antonucci</H2>\r\n                        <h5>Professor of Business Analytics and Business Process Innovation</h5>\r\n                        <h5>Widener University</h5>\r\n                        <h5>School of Business Administration</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/twilder.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                            alt=\"Tom Wilder\">\r\n                        <H2>Tom Wilder</H2>\r\n                        <h5>Lecturer in Business Information Systems</h5>\r\n                        <h5>Director SAP UCC at Chico</h5>\r\n                        <h5>California State University - Chico</h5>\r\n                        <h5>College of Business Administration</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/nitin.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Nitn Kalen\">\r\n                        <H2>Nitin Kale</H2>\r\n                        <h5>Associate Professor of Information Technology and Industrial and Systems Engineering\r\n                            Practice</h5>\r\n                        <h5>University of Southern California</h5>\r\n                        <h5>Viterbi School of Engineering</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/nancy.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                            alt=\"Nancy Jones\">\r\n                        <H2>Nancy Jones</H2>\r\n                        <h5>Lecturer in Accountancy</h5>\r\n                        <h5>San Diego State University</h5>\r\n                        <h5>Charles W. Lamden School of Accountancy</h5>\r\n                    </div>\r\n                </div>\r\n                <div class=\"row\">\r\n                        <div class=\"col\">\r\n                                <img src=\"/img/ross.jpg\" height=\"200\" class=\"rounded-circle\"\r\n                                    alt=\"Ross Hightower\">\r\n                                <H2>Ross Hightower</H2>\r\n                                <h5>Senior Lecturer in Information Technology Management</h5>\r\n                                <h5>Director SAP UCC at UWM</h5>\r\n                                <h5>University of Wiconsin - Milwaukee</h5>\r\n                                <h5>Lubar School of Business</h5>\r\n                            </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/simha.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Simha Magan\">\r\n                        <H2>Simha Magal</H2>\r\n                        <h5>Clinical Professor, SAP Mentor</h5>\r\n                        <h5>Georgia State University</h5>\r\n                        <h5>J. Mack Robinson of Business</h5>\r\n                    </div>\r\n                    <div class=\"col\">\r\n                        <img src=\"/img/jeff.jpg\" height=\"200\" class=\"rounded-circle\" alt=\"Jeff Word\">\r\n                        <H2>Jeff Word</H2>\r\n                        <h5>Head of ASUG University, Spirit Guide</h5>\r\n                        <h5>ASUG University</h5>\r\n\r\n                    </div>\r\n                </div>\r\n\r\n\r\n            </div>\r\n        </div>\r\n    </div>\r\n</template>";});;
 define('modules/home/logistics',["exports"], function (_exports) {
   "use strict";
 
@@ -1373,6 +4109,32 @@ define('modules/home/uploadFiles',["exports", "aurelia-framework", "../../resour
 });;
 define('text!modules/home/uploadFiles.html',[],function(){return "<template>\n  <div class=\"container\" style=\"padding-top:100px;\">\n    <div class=\"form-group\">\n      <label for=\"status\">Category</label>\n      <input value.bind=\"category\" type=\"text\" class=\"form-control\" id=\"status\" aria-describedby=\"statusHelp\"\n        placeholder=\"Category\">\n    </div>\n    <div class=\"form-group\">\n        <label for=\"status\">Title</label>\n        <input value.bind=\"title\" type=\"text\" class=\"form-control\" id=\"title\" aria-describedby=\"statusHelp\"\n          placeholder=\"Title\">\n      </div>\n    <div class=\"card\" style=\"margin-top:10px;\">\n      <div class=\"card-body\">\n        <div class=\"row\">\n          <div class=\"col-4\">\n            <label class=\"btn btn-primary\">\n              Browse for files&hellip; <input type=\"file\" style=\"display: none;\" change.delegate=\"changeFiles()\"\n                files.bind=\"files\">\n            </label>\n            <span id=\"files\"></span>\n          </div>\n          <div class=\"col\">\n            <ul>\n              <li repeat.for=\"file of filesToUpload\" class=\"list-group-item\">\n                ${file.name}<span click.delegate=\"removeFile($index)\" class=\"pull-right\"><i class=\"fa fa-trash\"\n                    aria-hidden=\"true\"></i></span></li>\n            </ul>\n          </div>\n        </div>\n        <button click.trigger=\"uploadFile()\" class=\"btn btn-primary\" style=\"margin-top:5px;\">Upload File</button>\n      </div>\n    </div>\n  </div>\n</template>\n";});;
 define('text!modules/home/userSubmit.html',[],function(){return "";});;
+define('modules/site/homePage',["exports", "aurelia-framework", "aurelia-router"], function (_exports, _aureliaFramework, _aureliaRouter) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.HomePage = void 0;
+
+  var _dec, _class;
+
+  var HomePage = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router), _dec(_class =
+  /*#__PURE__*/
+  function () {
+    function HomePage(router) {
+      this.router = router;
+    }
+
+    var _proto = HomePage.prototype;
+
+    _proto.navigateToPage = function navigateToPage(page) {
+      this.router.navigateToRoute(page);
+    };
+
+    return HomePage;
+  }()) || _class);
+  _exports.HomePage = HomePage;
+});;
+define('text!modules/site/homePage.html',[],function(){return "<template>\n  <div class=\"fluid-container\">\n    <div class=\"col-12\" style=\"height:50px;background-color:black;\"></div>\n    <div class=\"row\">\n      <div class=\"card bg-dark text-white col-12\" style=\"height:150px;background-color:#222;\">\n        <!-- <img src=\"http://localhost/img/sapua2.jpg\" class=\"card-img\" alt=\"...\"> -->\n        <div class=\"card-img-overlay\">\n          <h1 class=\"card-title offset-1\">SAP University Alliance User Group of the Americas</h1>\n          <!-- <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional\n            content. This content is a little bit longer.</p>\n          <p class=\"card-text\">Last updated 3 mins ago</p> -->\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-8 offset-2\">\n    <div class=\"col-12\" style=\"height:100px;\"></div>\n    <div class=\"row\">\n\n      <div class=\"col-6\">\n        <span>\n          <h3 class=\"border-bottom\">Conferences</h3>\n        </span>\n\n\n        <div class=\"card mb-3\" style=\"max-width: 540px;margin-top:15px;\">\n          <div class=\"row no-gutters\" style=\"height:120px;\">\n            <div class=\"col-md-4\">\n              <img src=\"http://localhost/img/Milwaukee8.jpg\" height=\"120\" class=\"card-img\" alt=\"...\">\n            </div>\n            <div class=\"col-md-8\">\n              <div class=\"card-body\">\n                <h5 class=\"card-title\">SAP University Alliance Conference North America 2020</h5>\n                <!-- <p class=\"card-text\">The first SAP Next-Gen Chapter Conference was held in Milwaukee.</p> -->\n                <a href=\"#/conf2020\">\n                  <p class=\"card-text\"><small class=\"text-muted\">More info...</small></p>\n                </a>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"card mb-3\" style=\"max-width: 540px;margin-top:15px;\">\n          <div class=\"row no-gutters\" style=\"height:120px;\">\n            <div class=\"col-md-4\">\n              <img src=\"http://localhost/img/Milwaukee4.jpg\" height=\"120\" class=\"card-img\" alt=\"...\">\n            </div>\n            <div class=\"col-md-8\">\n              <div class=\"card-body\">\n                <h5 class=\"card-title\">SAP Next-Gen Chapter Conference 2019</h5>\n                <!-- <p class=\"card-text\">The first SAP Next-Gen Chapter Conference was held in Milwaukee.</p> -->\n                <a href=\"#/conf2019\">\n                  <p class=\"card-text\"><small class=\"text-muted\">More info...</small></p>\n                </a>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class=\"col-5\">\n        <span>\n          <h3 class=\"border-bottom\">SAP University Competence Centers</h3>\n        </span>\n        <div class=\"card mb-3\" style=\"max-width: 540px;margin-top:15px;\">\n          <div class=\"row no-gutters\" style=\"height:120px;\">\n            <div class=\"col-md-4\">\n              <img src=\"http://localhost/img/chico1.jpg\" height=\"120\" class=\"card-img\" alt=\"...\">\n            </div>\n            <div class=\"col-md-8\">\n              <div class=\"card-body\">\n                <h5 class=\"card-title\">SAP UCC at California State University - Chico</h5>\n\n                <a href=\"https://athens.cob.csuchico.edu/\">\n                  <p class=\"card-text\"><small class=\"text-muted\">More info...</small></p>\n                </a>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div class=\"card mb-3\" style=\"max-width: 540px;margin-top:15px;\">\n          <div class=\"row no-gutters\" style=\"height:120px;\">\n            <div class=\"col-md-4\">\n              <img src=\"http://localhost/img/uwm1.jpg\" height=\"120\" class=\"card-img\" alt=\"...\">\n            </div>\n            <div class=\"col-md-8\">\n              <div class=\"card-body\">\n                <h5 class=\"card-title\">SAP UCC at University of Wisconin-Milwaukee</h5>\n\n                <a href=\"https://ucc.uwm.edu/\">\n                  <p class=\"card-text\"><small class=\"text-muted\">More info...</small></p>\n                </a>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class=\"col-5\" style=\"margin-top:50px;\">\n        <span>\n          <h3 class=\"border-bottom\">SAP University Alliances</h3>\n        </span>\n        <div class=\"card mb-3\" style=\"max-width: 540px;margin-top:15px;\">\n          <div class=\"row no-gutters\" style=\"height:120px;\">\n            <div class=\"col-md-4\">\n              <img src=\"http://localhost/img/sapua3.jpg\" height=\"120\" class=\"card-img\" alt=\"...\">\n            </div>\n            <div class=\"col-md-8\">\n              <div class=\"card-body\">\n                <h5 class=\"card-title\">SAP University Alliances Official Site</h5>\n\n                <a\n                  href=\"https://www.sap.com/corporate/en/company/innovation/next-gen-innovation-platform/university-alliances.html\">\n                  <p class=\"card-text\"><small class=\"text-muted\">More info...</small></p>\n                </a>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div class=\"card mb-3\" style=\"max-width: 540px;margin-top:15px;\">\n          <div class=\"row no-gutters\" style=\"height:120px;\">\n            <div class=\"col-md-4\">\n              <img src=\"http://localhost/img/sapua4.jpg\" height=\"120\" class=\"card-img\" alt=\"...\">\n            </div>\n            <div class=\"col-md-8\">\n              <div class=\"card-body\">\n                <h5 class=\"card-title\">SAP University Alliances Learning Hub</h5>\n\n                <a href=\"https://performancemanager.successfactors.eu/sf/home?bplte_company=learninghub\">\n                  <p class=\"card-text\"><small class=\"text-muted\">More info...</small></p>\n                </a>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</template>\n";});;
 define('text!resources/css/styles.css',[],function(){return "body, html {\r\n    height: 2500px;\r\n    font: 400 15px/1.8 \"Lato\", sans-serif;\r\n  }\r\n\r\n  .toolbar {\r\n    position:fixed;\r\n    z-index:1000;\r\n    width:100%;\r\n    left:0;\r\n    background-color:ghostwhite;\r\n  }\r\n\r\n  .smallMarginRight{\r\n    margin-right: 5px;\r\n  }\r\n\r\n  .sortable {\r\n    cursor: pointer;   \r\n  }\r\n\r\n  .has-error {\r\n      color:red;\r\n  }\r\n\r\n  .underline {\r\n    text-decoration: underline;\r\n    }\r\n\r\n.caption {\r\n    position: absolute;\r\n    left: 0;\r\n    top: 25%;\r\n    width: 100%;\r\n    text-align: center;\r\n    color: #000;\r\n}\r\n\r\n.caption span.border {\r\n    background-color: #111;\r\n    color: #fff;\r\n    padding: 18px;\r\n    font-size: 25px;\r\n    letter-spacing: 10px;\r\n}\r\n\r\n  \r\n.parallax1 {\r\n    /* The image used */\r\n    background-image: url(\"/img/parallax1.jpg\");\r\n\r\n    /* Set a specific height */\r\n   height: 500px;\r\n\r\n    /* Create the parallax scrolling effect */\r\n    background-attachment: fixed;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: cover;\r\n}\r\n\r\n  \r\n.parallax2 {\r\n    /* The image used */\r\n    background-image: url(\"/img/parallax1.jpg\");\r\n\r\n    /* Set a specific height */\r\n   height: 200px;\r\n\r\n    /* Create the parallax scrolling effect */\r\n    background-attachment: fixed;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: cover;\r\n}\r\n\r\n.agenda {  }\r\n\r\n/* Dates */\r\n.agenda .agenda-date { width: 170px; }\r\n.agenda .agenda-date .dayofmonth {\r\n  width: 40px;\r\n  font-size: 36px;\r\n  line-height: 36px;\r\n  float: left;\r\n  text-align: right;\r\n  margin-right: 10px; \r\n}\r\n.agenda .agenda-date .shortdate {\r\n  font-size: 0.75em; \r\n}\r\n\r\n\r\n/* Times */\r\n.agenda .agenda-time { width: 140px; } \r\n\r\n\r\n/* Events */\r\n.agenda .agenda-events {  } \r\n.agenda .agenda-events .agenda-event {  } \r\n\r\n@media (max-width: 767px) {\r\n    \r\n}";});;
 define('resources/data/auth',["exports", "aurelia-framework", "aurelia-event-aggregator", "./dataServices"], function (_exports, _aureliaFramework, _aureliaEventAggregator, _dataServices) {
   "use strict";
@@ -2384,6 +5146,125 @@ define('resources/elements/nav-bar',["exports", "aurelia-framework", "aurelia-ro
   }(), _temp)) || _class);
   _exports.NavBar = NavBar;
 });;
+define('resources/elements/nav-bar-2019',["exports", "aurelia-framework", "aurelia-router", "../data/auth", "../data/services", "toastr", "jquery"], function (_exports, _aureliaFramework, _aureliaRouter, _auth, _services, toastr, _jquery) {
+  "use strict";
+
+  _exports.__esModule = true;
+  _exports.NavBar = void 0;
+  toastr = _interopRequireWildcard(toastr);
+  _jquery = _interopRequireDefault(_jquery);
+
+  var _dec, _class, _temp;
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+  function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+  var NavBar = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _auth.Auth, _services.Services), _dec(_class = (_temp =
+  /*#__PURE__*/
+  function () {
+    function NavBar(router, auth, services) {
+      this.isAuthenticated = false;
+      this.subscription = {};
+      this.router = router;
+      this.auth = auth;
+      this.services = services;
+      this.isAuthenticated = this.auth.isAuthenticated();
+      this.userObj = JSON.parse(sessionStorage.getItem('user'));
+    }
+
+    var _proto = NavBar.prototype;
+
+    _proto.attached = function attached() {};
+
+    _proto.login =
+    /*#__PURE__*/
+    function () {
+      var _login = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var response;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.auth.login(this.email, this.password);
+
+              case 2:
+                response = _context.sent;
+
+                if (!response.error) {
+                  this.loginError = "";
+                  this.loginSuccess();
+                  this.isAuthenticated = this.auth.isAuthenticated();
+                } else {
+                  this.loginError = "Invalid credentials.";
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function login() {
+        return _login.apply(this, arguments);
+      }
+
+      return login;
+    }();
+
+    _proto.logout = function logout() {
+      if (this.userObj) this.auth.logout(this.userObj.email);
+      this.userObj = new Object();
+      this.isAuthenticated = this.auth.isAuthenticated();
+      this.router.navigate("landing");
+    };
+
+    _proto.loginSuccess =
+    /*#__PURE__*/
+    function () {
+      var _loginSuccess = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.userObj = JSON.parse(sessionStorage.getItem('user'));
+
+                if (this.userObj) {
+                  sessionStorage.setItem('role', this.userObj.role);
+                  this.router.navigate("home");
+                }
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function loginSuccess() {
+        return _loginSuccess.apply(this, arguments);
+      }
+
+      return loginSuccess;
+    }();
+
+    return NavBar;
+  }(), _temp)) || _class);
+  _exports.NavBar = NavBar;
+});;
+define('text!resources/elements/nav-bar-2019.html',[],function(){return "<template>\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark toolbar\"> \n    <img class=\"navbar-brand\" style=\"height:50px;\" src=\"img/sap_ua3.png\">\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\"\n      aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item active\">\n          <a class=\"nav-link\" style=\"color:white;\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/agenda\">Agenda</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"https://www.eventbrite.com/e/sap-next-gen-chapter-conference-tickets-58804908063\"\n            target=\"_blank\">Attendee Registration</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/files\">Files</a> \n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/logistics\">Logistics</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            href=\"https://events.sap.com/us/sap-university-alliances-summer-workshops-2019/en/home\"\n            target=\"_blank\">SAP UA Bootcamps</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://www.visitmilwaukee.org/\">Milwaukee</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"wall.html\">Social Media</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://milwaukee.qualtrics.com/jfe/form/SV_8IDZpZxHVEmihoN\">Survey</a>\n        </li>\n      </ul>\n    </div>\n    <div>\n      <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n        <ul class=\"navbar-nav\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link\" href=\"#/contact\">Contact</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    <!-- <form if.bind=\"!isAuthenticated\" class=\"form-inline my-2 my-lg-0\">\n        <label if.bind=\"loginError\" style=\"color:white;margin-right:5px;\">${loginError}</label>\n      <div class=\"form-group mb-2\">\n        <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"email\" placeholder=\"Email\"></input>\n      </div>\n      <div class=\"form-group mx-sm-3 mb-2\">\n        <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\"></input>\n      </div>\n      <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\n    </form>\n    <button if.bind=\"isAuthenticated\" class=\"btn btn-primary mb-2\" click.delegate='logout()'>Logout</button> -->\n    </div>\n  </nav>\n</template>\n";});;
 define('text!resources/elements/nav-bar.html',[],function(){return "<template>\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark toolbar\"> \n    <img class=\"navbar-brand\" style=\"height:50px;\" src=\"img/sap_ua3.png\">\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\"\n      aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item active\">\n          <a class=\"nav-link\" style=\"color:white;\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/agenda\">Agenda</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"https://www.eventbrite.com/e/sap-next-gen-chapter-conference-tickets-58804908063\"\n            target=\"_blank\">Attendee Registration</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/files\">Files</a> \n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#/logistics\">Logistics</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            href=\"https://events.sap.com/us/sap-university-alliances-summer-workshops-2019/en/home\"\n            target=\"_blank\">SAP UA Bootcamps</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://www.visitmilwaukee.org/\">Milwaukee</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"wall.html\">Social Media</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://milwaukee.qualtrics.com/jfe/form/SV_8IDZpZxHVEmihoN\">Survey</a>\n        </li>\n      </ul>\n    </div>\n    <div>\n      <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n        <ul class=\"navbar-nav\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link\" href=\"#/contact\">Contact</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    <!-- <form if.bind=\"!isAuthenticated\" class=\"form-inline my-2 my-lg-0\">\n        <label if.bind=\"loginError\" style=\"color:white;margin-right:5px;\">${loginError}</label>\n      <div class=\"form-group mb-2\">\n        <input value.bind=\"email\" type=\"email\" autofocus class=\"form-control\" id=\"email\" placeholder=\"Email\"></input>\n      </div>\n      <div class=\"form-group mx-sm-3 mb-2\">\n        <input value.bind=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\"></input>\n      </div>\n      <button class=\"btn btn-primary mb-2\" click.delegate='login()'>Login</button>\n    </form>\n    <button if.bind=\"isAuthenticated\" class=\"btn btn-primary mb-2\" click.delegate='logout()'>Logout</button> -->\n    </div>\n  </nav>\n</template>\n";});;
 define('resources/elements/table-navigation-bar',["exports", "aurelia-framework"], function (_exports, _aureliaFramework) {
   "use strict";
@@ -2431,7 +5312,7 @@ define('resources/index',["exports"], function (_exports) {
   _exports.configure = configure;
 
   function configure(config) {
-    config.globalResources(['./elements/nav-bar', './value-converters/reviewers', './value-converters/available-reviewers']);
+    config.globalResources(['./elements/nav-bar-2019', './value-converters/reviewers', './value-converters/available-reviewers']);
   }
 });;
 define('resources/utils/dataTable',["exports", "aurelia-framework", "moment", "./utils"], function (_exports, _aureliaFramework, _moment, _utils) {
