@@ -1,0 +1,41 @@
+<template>
+    <div class="container">
+        <div class="card" style="margin-top:100px;">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="firstName">First name *</label>
+                        <input value.bind="firstName" type="text" class="form-control" id="firstName"
+                            aria-describedby="firstNameHelp" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last name *</label>
+                        <input value.bind="lastName" type="text" class="form-control" id="lastName"
+                            aria-describedby="lastNameHelp" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="university">University/Company *</label>
+                        <input value.bind="university" type="text" class="form-control" id="university"
+                            aria-describedby="universityHelp" placeholder="University">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input value.bind="email" type="email" class="form-control" id="email"
+                            aria-describedby="emailHelp" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input value.bind="password" type="password" class="form-control" id="password"
+                            aria-describedby="passwordHelp" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_repeat">Repeat password *</label>
+                        <input value.bind="password_repeat" type="password" class="form-control" id="password_repeat"
+                            aria-describedby="passwordrepeatHelp" placeholder="Repeat Password">
+                    </div>
+                    <button class="btn btn-primary" click.trigger="save()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>

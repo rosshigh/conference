@@ -1,7 +1,7 @@
 import { inject } from 'aurelia-framework';
 import { Router } from "aurelia-router";
 import { Auth } from '../data/auth';
-import { Services } from '../../resources/data/services';
+import { Services } from '../data/services';
 import * as toastr from "toastr";
 import $ from "jquery";
 

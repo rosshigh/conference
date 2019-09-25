@@ -6,29 +6,14 @@
     "auditLog": "log\\.6425b6ef59d56488746d0ccea1d2ee6caecd0fd0-audit.json",
     "files": [
         {
-            "date": 1562165839770,
-            "name": "log\\error-2019-07-03-09.log",
-            "hash": "38ec2aadc85482c9bcea2748febd53ea"
+            "date": 1569334023025,
+            "name": "log\\error-2019-09-24-09.log",
+            "hash": "b0e8f418db60d01ba41f3fa40a233d65"
         },
         {
-            "date": 1562598112365,
-            "name": "log\\error-2019-07-08-10.log",
-            "hash": "899c24e0f2fe6892942e52d3ccae235d"
-        },
-        {
-            "date": 1562942802235,
-            "name": "log\\error-2019-07-12-09.log",
-            "hash": "13d9e664853806ee30f4b9e330146b59"
-        },
-        {
-            "date": 1562946787150,
-            "name": "log\\error-2019-07-12-10.log",
-            "hash": "4f4a78d949b5e5ff04fae30bfe73a494"
-        },
-        {
-            "date": 1562947655204,
-            "name": "log\\error-2019-07-12-11.log",
-            "hash": "150a858bac07e346fa9754a2fac90166"
+            "date": 1569418514961,
+            "name": "log\\error-2019-09-25-08.log",
+            "hash": "86010ef412441c75cc6e116f9fcff1b0"
         }
     ]
 }

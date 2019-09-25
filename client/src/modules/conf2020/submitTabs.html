@@ -1,0 +1,53 @@
+<template>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link active" id="submitAbstract-tab" data-toggle="tab" href="#submitAbstract" role="tab"
+                aria-controls="submitAbstract" aria-selected="true">Submit an Abstract</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="guidelines-tab" data-toggle="tab" href="#guidelines" role="tab"
+                aria-controls="guidelines" aria-selected="true">Guidelines</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="mysubmissions-tab" data-toggle="tab" href="#mysubmissions" role="tab"
+                aria-controls="mysubmissions" aria-selected="true">My Submissions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" show.bind="adminRole" id="submissions-tab" data-toggle="tab"
+                href="#submissions" role="tab" aria-controls="submissions" aria-selected="true">Submissions</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" show.bind="adminRole" id="reviewers-tab" data-toggle="tab" href="#reviewers"
+                role="tab" aria-controls="reviewers" aria-selected="true">Reviewers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" show.bind="adminRole" id="submitReview-tab" data-toggle="tab" href="#submitReview"
+                role="tab" aria-controls="submitReview" aria-selected="true">Submit Review</a>
+        </li>
+    </ul>
+    <p></p>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="submitAbstract" role="tabpanel" aria-labelledby="home-tab">
+            <div class="col-5">
+                <compose view="./registerPanel.html"></compose>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="guidelines" role="tabpanel" aria-labelledby="home-tab">
+            <div class="col-7">
+                <compose view="./guidelines.html"></compose>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="mysubmissions" role="tabpanel" aria-labelledby="home-tab">
+            <compose view="./mySubmissions.html"></compose>
+        </div>
+        <div class="tab-pane fade" id="submissions" role="tabpanel" aria-labelledby="home-tab">
+            <compose view="./submissionsTable.html"></compose>
+        </div>
+        <div class="tab-pane fade" id="reviewers" role="tabpanel" aria-labelledby="home-tab">
+            <compose view="./reviewersTable.html"></compose>
+        </div>
+        <div class="tab-pane fade" id="submitReview" role="tabpanel" aria-labelledby="home-tab">
+            <compose view="./submitReview.html"></compose>
+        </div>
+    </div>
+</template>

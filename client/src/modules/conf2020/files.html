@@ -1,0 +1,14 @@
+<template>
+    <div class="container" style="padding-top:100px;">
+       <ul>
+          <li repeat.for="category of categories" ref.bind="$index" style="margin-top:15px;">
+            <h2>${category.category}</h2>
+            <ul>
+              <li repeat.for="file of category.files">
+                <a href="uploadedFiles/files/${file.file.fileName}" target="_blank">${file.title}</a>
+              </li>
+            </ul>
+          </li>
+       </ul>
+    </div>
+</template>

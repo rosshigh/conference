@@ -3,67 +3,26 @@ export class App {
     this.router = router;
     config.map([
       {
-        route: ['', 'landing'],
-        moduleId: './modules/home/landing',
-        name: 'Landing',
+        route: ['', 'homePage'],
+        moduleId: './modules/site/homePage',
+        name: 'Home Page',
         settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
+        title: 'SAP Academic User Group'
       },
       {
-        route: 'home',
-        moduleId: './modules/home/home',
-        name: 'Home',
+        route: 'conf2019',
+        moduleId: './modules/conf2019/home',
+        name: 'Conference 2019',
         settings: { auth: false, roles: [] },
         title: 'SAP Next-Gen Chapter Conference 2019'
-      },
+      }
+      ,
       {
-        route: 'files',
-        moduleId: './modules/home/files',
-        name: 'Files',
+        route: 'conf2020',
+        moduleId: './modules/conf2020/home',
+        name: 'Conference 2020',
         settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      },
-      {
-        route: 'uploadFiles',
-        moduleId: './modules/home/uploadFiles',
-        name: 'UploadFiles',
-        settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      },
-      {
-        route: 'register',
-        moduleId: './modules/home/register',
-        name: 'Register',
-        settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      },
-      {
-        route: 'logistics',
-        moduleId: './modules/home/logistics',
-        name: 'Logistics',
-        settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      },
-      {
-        route: 'agenda',
-        moduleId: './modules/home/agenda',
-        name: 'Agenda',
-        settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      },
-      {
-        route: 'submit',
-        moduleId: './modules/home/submit',
-        name: 'Submission',
-        settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
-      },
-      {
-        route: 'contact',
-        moduleId: './modules/home/contact',
-        name: 'Contact',
-        settings: { auth: false, roles: [] },
-        title: 'SAP Next-Gen Chapter Conference 2019'
+        title: 'SAP University Alliance Conference 2020'
       }
     ])
   }
