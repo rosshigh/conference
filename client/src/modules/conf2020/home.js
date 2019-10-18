@@ -24,6 +24,13 @@ export class Conf2020Home {
         title: 'SAP Next-Gen Chapter Conference 2019'
       },
       {
+        route: 'highlights',
+        moduleId: './highlights',
+        name: 'Highlights',
+        settings: { auth: false, roles: [] },
+        title: 'SAP Next-Gen Chapter Conference 2019'
+      },
+      {
         route: 'files',
         moduleId: './files',
         name: 'Files',
