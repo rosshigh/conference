@@ -9,6 +9,31 @@
             "date": 1579887771597,
             "name": "log\\application-2020-01-24-11.log",
             "hash": "4142f79327f4285411ebe2606a67452b"
+        },
+        {
+            "date": 1580169510896,
+            "name": "log\\application-2020-01-27-17.log",
+            "hash": "ee43d55143093d592fa169d8fbac244c"
+        },
+        {
+            "date": 1580230494365,
+            "name": "log\\application-2020-01-28-10.log",
+            "hash": "6ebc023bb6d655ffc15bc7f9b90c96df"
+        },
+        {
+            "date": 1580234087998,
+            "name": "log\\application-2020-01-28-11.log",
+            "hash": "f28a2c4d392df2057d4b35b2fb534e7e"
+        },
+        {
+            "date": 1580234501429,
+            "name": "log\\application-2020-01-28-12.log",
+            "hash": "b5eb5052d7cf1699578e141b4e122041"
+        },
+        {
+            "date": 1580318737649,
+            "name": "log\\application-2020-01-29-11.log",
+            "hash": "88e47794fe45046ea5c32242c73ca781"
         }
     ]
 }
