@@ -9,6 +9,11 @@
             "date": 1582039361802,
             "name": "log\\application-2020-02-18-09.log",
             "hash": "6d10c6b038ca51b4c6af43333df6c3d6"
+        },
+        {
+            "date": 1582222970182,
+            "name": "log\\application-2020-02-20-12.log",
+            "hash": "878e2179c4c503778790dcc74dc365b5"
         }
     ]
 }
