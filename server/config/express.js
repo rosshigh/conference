@@ -21,10 +21,10 @@ module.exports = function(app, config) {
     maxAge: 0,
     includeSubDomains: false
   }));
- 
+
+  app.use(cors({origin: "*"}));
   app.use(express.static(config.root + '/public'));
   app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
-  app.use(cors({origin: "*"}));
 
   logger.log('info',"Loading Mongoose functionality");
   mongoose.Promise = require('bluebird');

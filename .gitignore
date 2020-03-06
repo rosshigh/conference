@@ -37,6 +37,10 @@ node_modules/
 jspm_packages/
 server/node_modules
 client/node_modules
+boot
+bootstrap
+naurelia
+server/log
 
 # TypeScript v1 declaration files
 typings/
