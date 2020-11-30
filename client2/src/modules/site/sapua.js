@@ -2,7 +2,7 @@ import { inject } from 'aurelia-framework';
 import { Config } from '../../resources/config/config'
 
 @inject(Config)
-export class Events {
+export class SAPUA {
 
     dataBrowser = [
         { string: navigator.userAgent, subString: "Chrome", identity: "Chrome" },

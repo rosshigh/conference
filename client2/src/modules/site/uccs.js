@@ -2,7 +2,7 @@ import { inject } from 'aurelia-framework';
 import { Config } from '../../resources/config/config'
 
 @inject(Config)
-export class Events {
+export class UCC {
 
     dataBrowser = [
         { string: navigator.userAgent, subString: "Chrome", identity: "Chrome" },
@@ -17,8 +17,8 @@ export class Events {
     constructor(config) {
         this.config = config;
 
-        this.pageHeader = "SAP North American Academic Community Events";
-        this.pageSubHeader = "Upcoming events of interest to the SAP Academic Community";
+        this.pageHeader = "University Competence Centers";
+        this.pageSubHeader = "";
     }
 
     attached() {

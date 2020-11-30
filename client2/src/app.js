@@ -31,6 +31,27 @@ export class App {
         title: 'Contact'
       },
       {
+        route: 'uccs',
+        moduleId: PLATFORM.moduleName('./modules/site/uccs'),
+        name: 'UCCs',
+        settings: { auth: false, roles: [] },
+        title: 'UCCs'
+      },
+      {
+        route: 'news',
+        moduleId: PLATFORM.moduleName('./modules/site/news'),
+        name: 'news',
+        settings: { auth: false, roles: [] },
+        title: 'news'
+      },
+      {
+        route: 'sapua',
+        moduleId: PLATFORM.moduleName('./modules/site/sapua'),
+        name: 'sapua',
+        settings: { auth: false, roles: [] },
+        title: 'sapua'
+      },
+      {
         route: 'conf2019',
         moduleId: './modules/conf2019/home',
         name: 'Conference 2019',
