@@ -1,0 +1,22 @@
+<template>
+    <div class="panel panel-info">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-5">
+                    <h3>Registered People</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item" click.trigger="addReviewer(person)" repeat.for="person of services.peopleArray | reviewers:0">${person.firstName} ${person.lastName}<br>${person.university}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-5">
+                    <h3>Reviewers</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item" click.trigger="removeReviewer(person)" repeat.for="person of services.peopleArray | reviewers:1">${person.firstName} ${person.lastName}<br>${person.university}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

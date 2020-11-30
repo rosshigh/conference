@@ -1,0 +1,76 @@
+<template>
+    <div style="padding-top:100px;padding-left:50px;padding-right:50px;">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-5 offset-1">
+                        <div if.bind="!isAuthenticated && !showRegisterPanel">
+                            <h5>Register to submit an abstract.</h5>
+                        </div>
+                        <form if.bind="!isAuthenticated && !showRegisterPanel" class="form-inline">
+                            <div class="form-group mb-2">
+                                <input value.bind="email" type="email" autofocus class="form-control" id="loginemail"
+                                    placeholder="Email"></input>
+                            </div>
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input value.bind="password" type="password" class="form-control" id="loginpassword"
+                                    placeholder="Password"></input>
+                            </div>
+                            <button class="btn btn-primary mb-2" click.delegate='login()'>Login</button>
+                            <button class="btn btn-primary mb-2" style="margin-left:5px;"
+                                click.delegate='showRegister()'>Register</button>
+                        </form>
+                        <label if.bind="loginError" style="color:black;margin-right:5px;">${loginError}</label>
+                        <div show.bind="showRegisterPanel">
+                            <h2>Register as an Author</h2>
+                            <form>
+                                <div class="form-group">
+                                    <label for="firstName">First name *</label>
+                                    <input value.bind="firstName" type="text" class="form-control" id="firstName"
+                                        aria-describedby="firstNameHelp" placeholder="First Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last name *</label>
+                                    <input value.bind="lastName" type="text" class="form-control" id="lastName"
+                                        aria-describedby="lastNameHelp" placeholder="Last Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="university">University/Company *</label>
+                                    <input value.bind="university" type="text" class="form-control" id="university"
+                                        aria-describedby="universityHelp" placeholder="University">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input value.bind="email" type="email" class="form-control" id="email"
+                                        aria-describedby="emailHelp" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password *</label>
+                                    <input value.bind="password" type="password" class="form-control" id="password"
+                                        aria-describedby="passwordHelp" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password_repeat">Repeat password *</label>
+                                    <input value.bind="password_repeat" type="password" class="form-control"
+                                        id="password_repeat" aria-describedby="passwordrepeatHelp"
+                                        placeholder="Repeat Password">
+                                </div>
+                                <button class="btn btn-primary" style="margin-top:25px"
+                                    click.trigger="save()">Register</button>
+                                <button class="btn btn-primary" style="margin-top:25px"
+                                    click.trigger="showRegister()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div if.bind="!isAuthenticated" class="col-5">
+                        <compose view="./guidelines.html"></compose>
+                    </div>
+                </div>
+                <div show.bind="isAuthenticated">
+                    <compose view="./submitTabs.html"></compose>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</template>

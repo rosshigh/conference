@@ -1,383 +1,55 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Aurelia Navigation Skeleton</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="">
+    <link rel="icon" href="favicon.ico">
+    <!-- imported CSS are concatenated and added automatically -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="/assets/libs/flickity/dist/flickity.min.css">
+    <link rel="stylesheet" href="/assets/libs/flickity-fade/flickity-fade.css">
+    <link rel="stylesheet" href="/assets/libs/fullpage.js/dist/fullpage.min.css">
+    <link rel="stylesheet" href="/assets/libs/highlightjs/styles/codepen-embed.css">
+    <link rel="stylesheet" href="/assets/libs/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/assets/libs/incline-icons/style.min.css">
+    <link rel="stylesheet" href="/assets/css/theme.min.css"> -->
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="/assets/css/gaia.css" rel="stylesheet"/>
 
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/ico/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/ico/favicon-16x16.png">
-  <link rel="manifest" href="assets/ico/site.webmanifest">
-  <link rel="mask-icon" href="assets/ico/safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="assets/ico/favicon.ico">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-config" content="assets/ico/browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
+    <!--     Fonts and icons     -->
+    <link href='https://fonts.googleapis.com/css?family=Cambo|Lato:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/assets/css/fonts/pe-icon-7-stroke.css" rel="stylesheet">
 
-  <!-- Plugins CSS -->
-  <link rel="stylesheet" href="assets/libs/flickity/dist/flickity.min.css">
-  <link rel="stylesheet" href="assets/libs/flickity-fade/flickity-fade.css">
-  <link rel="stylesheet" href="assets/libs/fullpage.js/dist/fullpage.min.css">
-  <link rel="stylesheet" href="assets/libs/highlightjs/styles/codepen-embed.css">
-  <link rel="stylesheet" href="assets/libs/@fortawesome/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="assets/libs/incline-icons/style.min.css">
+  </head>
+  <body aurelia-app="main">
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="/assets/libs/flickity/dist/flickity.pkgd.min.js"></script>
+<script src="/assets/libs/flickity-fade/flickity-fade.js"></script>
+<script src="/assets/libs/jquery-parallax.js/parallax.min.js"></script>
+<script src="/assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+<script src="/assets/libs/waypoints/lib/shortcuts/inview.min.js"></script>
+<script src="/assets/libs/fullpage.js/vendors/scrolloverflow.min.js"></script>
+<script src="/assets/libs/fullpage.js/dist/fullpage.min.js"></script>
+<script src="/assets/libs/highlightjs/highlight.pack.min.js"></script>
+<script src="/assets/js/theme.min.js"></script> -->
 
-  <!-- Theme CSS -->
-  <link rel="stylesheet" href="assets/css/theme.min.css">
+<!--   core js files    -->
+<script src="/assets/js/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/js/bootstrap.js" type="text/javascript"></script>
 
-  <title>Incline | Welcome</title>
-</head>
+<!--  js library for devices recognition -->
+<script type="text/javascript" src="/assets/js/modernizr.js"></script>
 
-<body>
+<!--  script for google maps   -->
+<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script> -->
 
-  <!-- NAVBAR
-    ================================================= -->
-  <nav class="navbar navbar-expand-xl navbar-dark  navbar-togglable  fixed-top">
-    <div class="container">
-
-      <!-- Brand -->
-      <a class="navbar-brand" href="index.html">
-        <img height="60px" src="img/sap_ua4.png">
-        <!-- <svg class="navbar-brand-svg" viewBox="0 0 245 80" xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink">
-          <path d="M0 0 L 20 10 L 0 20 Z" class="navbar-brand-svg-i" fill="currentColor"></path>
-          <path d="M0 30 L 20 40 L 0 50 Z M20 45 L 0 55 L 20 65 Z M0 60 L 20 70 L 0 80 Z" fill="currentColor"></path>
-          <text x="40" y="70" font-family="Arial, sans-serif" font-size="60" font-weight="bold" letter-spacing="-.025em"
-            fill="currentColor">incline.</text>
-        </svg> -->
-      </a>
-
-      <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Collapse -->
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-
-        <!-- Social -->
-        <!-- <ul class="navbar-nav mr-auto">
-          <li class="nav-item-divider">
-            <span class="nav-link">
-              <span></span>
-            </span>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fab fa-github"></i>
-              <span class="d-xl-none ml-2">
-                Github
-              </span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fab fa-twitter"></i>
-              <span class="d-xl-none ml-2">
-                Twitter
-              </span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fab fa-instagram"></i>
-              <span class="d-xl-none ml-2">
-                Instagram
-              </span>
-            </a>
-          </li>
-        </ul> -->
-
-        <!-- Links -->
-        <ul class="navbar-nav ml-auto">
-          <li>
-            <a href="participation.html" class="nav-link">
-              Participation
-            </a>
-          </li>
-          <li>
-            <a href="sponsorships.html" class="nav-link">
-              Sponsorships
-            </a>
-          </li>
-          <li>
-            <a href="logistics.html" class="nav-link">
-              Logistics
-            </a>
-          </li>
-          <li>
-            <a href="https://www.visitmilwaukee.org/" target="_blank" class="nav-link">
-              Milwaukee
-            </a>
-          </li>
-        </ul>
-      </div> <!-- / .navbar-collapse -->
-
-    </div> <!-- / .container -->
-  </nav>
-
-  <!-- HERO
-    ================================================== -->
-  <section class="section section-top section-full">
-
-    <!-- Cover -->
-    <div class="bg-cover" style="background-image: url(img/milwaukee4.jpg);"></div>
-
-    <!-- Overlay -->
-    <div class="bg-overlay"></div>
-
-    <!-- Triangles -->
-    <div class="bg-triangle bg-triangle-light bg-triangle-bottom bg-triangle-left"></div>
-    <div class="bg-triangle bg-triangle-light bg-triangle-bottom bg-triangle-right"></div>
-
-    <!-- Content -->
-    <div class="container">
-      <div class="row justify-content-center align-items-center">
-        <div class="col-md-8 col-lg-7">
-
-          <!-- Preheading -->
-          <!-- <p class="font-weight-medium text-center text-xs text-uppercase text-white text-muted" data-toggle="animation" data-animation="fadeUp" data-animation-order="0" data-animation-trigger="load">
-              by Simpleqode
-            </p> -->
-
-          <!-- Heading -->
-          <h1 class="text-white text-center mb-4" data-toggle="animation" data-animation="fadeUp"
-            data-animation-order="1" data-animation-trigger="load">
-            SAP Academic Alliance Conference - North America 2020
-          </h1>
-
-          <!-- Subheading -->
-          <h3 class="lead text-white text-muted text-center mb-5" data-toggle="animation" data-animation="fadeUp"
-            data-animation-order="2" data-animation-trigger="load">
-            Co-hosted by the University Competence Centers and SAP Next-Gen Chapters
-          </h3>
-
-          <h4 class="lead text-white text-muted text-center mb-5" data-toggle="animation" data-animation="fadeUp"
-            data-animation-order="2" data-animation-trigger="load">
-            Professors from SAP University Alliances / SAP Next-Gen member institutions are invited to attend the SAP
-            University Alliance Conference on July 20 - 21, 2020 and SAP University Alliances Boot Camps on July 22 -
-            24, 2020.
-          </h4>
-          <h4 class="lead text-white text-muted text-center mb-5" data-toggle="animation" data-animation="fadeUp"
-            data-animation-order="2" data-animation-trigger="load">
-            The events are organized and co-hosted by the University Competence Centers and SAP Next-Gen Chapters. To
-            cover costs associated with the conference, UW-Milwaukee charges a fee for registering and attending.
-          </h4>
-          <!-- Button -->
-          <!-- <h3 class="text-center mb-0" data-toggle="animation" data-animation="fadeUp" data-animation-order="3"
-            data-animation-trigger="load">
-            <a href="https://themes.getbootstrap.com/product/incline-landing-page-set/" target="_blank"
-              class="btn btn-outline-primary text-white">
-              Purchase now
-            </a>
-          </h3> -->
-
-        </div>
-      </div> <!-- / .row -->
-    </div> <!-- / .container -->
-
-  </section>
-
-  <!-- SECTIONS
-    ================================================== -->
-  <!-- PAGES
-    ================================================== -->
-  <section class="section" id="pages">
-
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-
-          <!-- Heading -->
-          <h2 class="text-center mb-4">
-            Networking Event
-          </h2>
-
-          <!-- Subheading -->
-          <p class="text-muted text-center mb-5">
-            The conference concludes with an opportunity to network over dinner at <a
-            href="https://county.milwaukee.gov/EN/Parks/Explore/The-Domes" target="_blank">The Domes.</a> Come help us celebrate a new beginning
-          for our community.  </p>
-          <p>
-            Experience a desert oasis, a tropical jungle and floral gardens…all at one destination only minutes from downtown Milwaukee!
-          </p>
-
-        </div>
-        <div class="col-lg-4">
-          <a href="https://county.milwaukee.gov/EN/Parks/Explore/The-Domes" target="_blank" class="card border-0 mb-3 mb-md-0">
-          
-            <!-- Image -->
-            <div class="card-img-top">
-              <img src="/img/domes3.jpg" alt="App landing" class="img-fluid">
-            </div>
-
-            <!-- Body -->
-            <div class="card-body">
-
-              <!-- Body -->
-              <p class="card-text text-muted">
-                
-              </p>
-
-            </div>
-
-          </a
-      
-        </div>
-      </div> 
-      <div class="row">
-        <div class="text-center" style="margin-top:100px;">
-          <h2>Conference Organizing Committee</h2>
-          <div class="row">
-            <div class="col">
-              <img src="/img/Antonucci.jpg" height="200" class="rounded-circle" alt="Yvonne Antonucci">
-              <H2>Yvonne Antonucci</H2>
-              <h5>Professor of Business Analytics and Business Process Innovation</h5>
-              <h5>Widener University</h5>
-              <h5>School of Business Administration</h5>
-            </div>
-            <div class="col">
-              <img src="/img/twilder.jpg" height="200" class="rounded-circle" alt="Tom Wilder">
-              <H2>Tom Wilder</H2>
-              <h5>Lecturer in Business Information Systems</h5>
-              <h5>Director SAP UCC at Chico</h5>
-              <h5>California State University - Chico</h5>
-              <h5>College of Business Administration</h5>
-            </div>
-            <div class="col">
-              <img src="/img/nitin.jpg" height="200" class="rounded-circle" alt="Nitn Kalen">
-              <H2>Nitin Kale</H2>
-              <h5>Associate Professor of Information Technology and Industrial and Systems Engineering
-                Practice</h5>
-              <h5>University of Southern California</h5>
-              <h5>Viterbi School of Engineering</h5>
-            </div>
-            <div class="col">
-              <img src="/img/nancy2.jpg" height="200" class="rounded-circle" alt="Nancy Jones">
-              <H2>Nancy Jones</H2>
-              <h5>Lecturer in Accountancy</h5>
-              <h5>San Diego State University</h5>
-              <h5>Charles W. Lamden School of Accountancy</h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <img src="/img/ross.jpg" height="200" class="rounded-circle" alt="Ross Hightower">
-              <H2>Ross Hightower</H2>
-              <h5>Senior Lecturer in Information Technology Management</h5>
-              <h5>Director SAP UCC at UWM</h5>
-              <h5>University of Wiconsin - Milwaukee</h5>
-              <h5>Lubar School of Business</h5>
-            </div>
-            <div class="col">
-              <img src="/img/simha.jpg" height="200" class="rounded-circle" alt="Simha Magan">
-              <H2>Simha Magal</H2>
-              <h5>Clinical Professor, SAP Mentor</h5>
-              <h5>Georgia State University</h5>
-              <h5>J. Mack Robinson of Business</h5>
-            </div>
-            <!-- <div class="col">
-              <img src="/img/jeff.jpg" height="200" class="rounded-circle" alt="Jeff Word">
-              <H2>Jeff Word</H2>
-              <h5>Head of ASUG University, Spirit Guide</h5>
-              <h5>ASUG University</h5>
-            </div> -->
-            <div class="col">
-              <img src="/img/michael.png" height="200" class="rounded-circle" alt="Michael Bliemel">
-              <H2>Michael Bliemel</H2>
-              <h5>Dean & Professor of Information Systems </h5>
-              <h5>Faculty of Business and Information Technology</h5>
-              <h5>Ontario Tech University </h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <img src="/img/robert.jpg" height="200" class="rounded-circle" alt="Jacques Robert">
-              <H2>Jacques Robert</H2>
-              <h5>Professor</h5>
-              <h5>Department of Information Technologies</h5>
-              <h5>HEC Montréal </h5>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER
-    ================================================== -->
-  <footer class="section bg-dark">
-
-    <!-- Triangles -->
-    <div class="bg-triangle bg-triangle-light bg-triangle-bottom bg-triangle-left"></div>
-    <div class="bg-triangle bg-triangle-light bg-triangle-bottom bg-triangle-right"></div>
-
-    <!--Content -->
-    <div class="container">
-      <div class="row align-self-center">
-        <div class="col-md-auto">
-
-          <!-- Brand -->
-          <p>
-            <img height="35px" src="img/sap_ua4.png">
-            <!-- <a href="#" class="footer-brand text-white">
-              <svg class="footer-brand-svg" viewBox="0 0 235 80" xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink">
-                <path d="M0 0 L 20 10 L 0 20 Z" class="text-primary" fill="currentColor"></path>
-                <path d="M0 30 L 20 40 L 0 50 Z M20 45 L 0 55 L 20 65 Z M0 60 L 20 70 L 0 80 Z" fill="currentColor">
-                </path>
-                <text x="40" y="70" font-family="Arial, sans-serif" font-size="60" font-weight="bold"
-                  letter-spacing="-.025em" fill="currentColor">incline.</text>
-              </svg>
-            </a> -->
-          </p>
-
-        </div>
-        <div class="col-md">
-
-          <!-- Links -->
-          <ul class="list-unstyled list-inline text-md-right">
-            <li class="list-inline-item">
-              <a href="#" class="text-white">
-                Contact us
-              </a>
-            </li>
-          </ul>
-
-        </div>
-      </div> <!-- / .row -->
-      <div class="row align-items-center">
-      </div> <!-- / .row -->
-    </div> <!-- / .container -->
-
-  </footer>
-
-  <!-- JAVASCRIPT
-    ================================================== -->
-  <!-- Global JS -->
-  <script src="assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnKt8_N4-FKOnhI_pSaDL7g_g-XI1-R9E"></script>
-
-  <!-- Plugins JS -->
-  <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/libs/flickity/dist/flickity.pkgd.min.js"></script>
-  <script src="assets/libs/flickity-fade/flickity-fade.js"></script>
-  <script src="assets/libs/jquery-parallax.js/parallax.min.js"></script>
-  <script src="assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
-  <script src="assets/libs/waypoints/lib/shortcuts/inview.min.js"></script>
-  <script src="assets/libs/fullpage.js/vendors/scrolloverflow.min.js"></script>
-  <script src="assets/libs/fullpage.js/dist/fullpage.min.js"></script>
-  <script src="assets/libs/highlightjs/highlight.pack.min.js"></script>
-
-  <!-- Theme JS -->
-  <script src="assets/js/theme.min.js"></script>
-
-</body>
-
+<!--   file where we handle all the script from the Gaia - Bootstrap Template   -->
+<script type="text/javascript" src="/assets/js/gaia.js"></script>
+  <script src="runtime~app.60d25dd3b7fe3a75b75e.bundle.js"></script><script src="vendors~2a42e354.60d25dd3b7fe3a75b75e.chunk.js"></script><script src="vendors~0ba1d959.60d25dd3b7fe3a75b75e.chunk.js"></script><script src="vendors~556c66f2.60d25dd3b7fe3a75b75e.chunk.js"></script><script src="vendors~72fdf3f2.60d25dd3b7fe3a75b75e.chunk.js"></script><script src="vendors~50e8d500.60d25dd3b7fe3a75b75e.chunk.js"></script><script src="vendors~ecff2e3d.60d25dd3b7fe3a75b75e.chunk.js"></script><script src="vendors~9e0f4621.60d25dd3b7fe3a75b75e.chunk.js"></script><script src="app~f075b844.60d25dd3b7fe3a75b75e.chunk.js"></script></body>
 </html>

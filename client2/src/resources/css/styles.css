@@ -1,0 +1,114 @@
+body, html {
+    height: 2500px;
+    font: 400 15px/1.8 "Lato", sans-serif;
+  }
+
+  .toolbar {
+    position:fixed;
+    z-index:1000;
+    width:100%;
+    left:0;
+    background-color:ghostwhite;
+  }
+
+  .smallMarginRight{
+    margin-right: 5px;
+  }
+
+  .sortable {
+    cursor: pointer;   
+  }
+
+  .has-error {
+      color:red;
+  }
+
+  .underline {
+    text-decoration: underline;
+    }
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+.caption span.border {
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+  
+.parallax1 {
+    /* The image used */
+    background-image: url("http://localhost/img/parallax1.jpg");
+
+    /* Set a specific height */
+   height: 500px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+  
+.parallax2 {
+    /* The image used */
+    background-image: url("http://localhost/img/parallax1.jpg");
+
+    /* Set a specific height */
+   height: 200px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.agenda {  }
+
+/* Dates */
+.agenda .agenda-date { width: 170px; }
+.agenda .agenda-date .dayofmonth {
+  width: 40px;
+  font-size: 36px;
+  line-height: 36px;
+  float: left;
+  text-align: right;
+  margin-right: 10px; 
+}
+.agenda .agenda-date .shortdate {
+  font-size: 0.75em; 
+}
+
+
+/* Times */
+.agenda .agenda-time { width: 140px; } 
+
+div.polaroid {
+  width: 600px;
+  box-shadow: 10px 10px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  background-color:white;
+}
+
+div.container {
+  padding: 10px;
+}
+
+body {
+  background-color: ghostwhite;
+}
+
+@media (max-width: 767px) {
+    
+}
