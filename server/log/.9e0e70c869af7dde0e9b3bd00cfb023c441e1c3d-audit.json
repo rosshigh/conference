@@ -114,6 +114,11 @@
             "date": 1606767952070,
             "name": "log\\application-2020-11-30-14.log",
             "hash": "e1480fd76d5948a95ec14625f37bee97"
+        },
+        {
+            "date": 1606936850358,
+            "name": "log\\application-2020-12-02-13.log",
+            "hash": "c3634ad3617b66acfe77ca14db39dfb2"
         }
     ]
 }

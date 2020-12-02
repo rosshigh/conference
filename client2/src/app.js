@@ -52,6 +52,13 @@ export class App {
         title: 'sapua'
       },
       {
+        route: 'library',
+        moduleId: PLATFORM.moduleName('./modules/site/library'),
+        name: 'library',
+        settings: { auth: false, roles: [] },
+        title: 'library'
+      },
+      {
         route: 'conf2019',
         moduleId: './modules/conf2019/home',
         name: 'Conference 2019',
