@@ -18,7 +18,7 @@ export class Gaia {
         this.config = config;
 
         this.pageHeader = "SAP North American Academic Community";
-        this.pageSubHeader = "The premeir leader elevating SAP academic innovation and success";
+        this.pageSubHeader = "The premier leader elevating SAP academic innovation and success";
     }
 
     attached() {
