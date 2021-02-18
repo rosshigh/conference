@@ -24,6 +24,13 @@ export class App {
         title: 'Board'
       },
       {
+        route: 'committees',
+        moduleId: PLATFORM.moduleName('./modules/site/committees'),
+        name: 'Committees',
+        settings: { auth: false, roles: [] },
+        title: 'Committees'
+      },
+      {
         route: 'contact',
         moduleId: PLATFORM.moduleName('./modules/site/contact'),
         name: 'Contact',
@@ -71,6 +78,13 @@ export class App {
         name: 'Conference 2020',
         settings: { auth: false, roles: [] },
         title: 'SAP University Alliance Conference 2020'
+      },
+      {
+        route: 'conf2021', 
+        moduleId: PLATFORM.moduleName('./modules/site/conf2021'),
+        name: 'Conference 2021',
+        settings: { auth: false, roles: [] },
+        title: 'SAP University Alliance Conference 2021'
       }
     ])
   }

@@ -6,54 +6,24 @@
     "auditLog": "log\\.6425b6ef59d56488746d0ccea1d2ee6caecd0fd0-audit.json",
     "files": [
         {
-            "date": 1606147088571,
-            "name": "log\\error-2020-11-23-09.log",
-            "hash": "5a40a3d9ac68055ed7f19daf27dac4c4"
+            "date": 1612883557437,
+            "name": "log\\error-2021-02-09-09.log",
+            "hash": "35371a6c2d3b9f949e79c1152da7282f"
         },
         {
-            "date": 1606321561949,
-            "name": "log\\error-2020-11-25-10.log",
-            "hash": "8b4ba464f69c39c2229935464623ca90"
+            "date": 1612981985576,
+            "name": "log\\error-2021-02-10-12.log",
+            "hash": "a31ae32463a5c769585c131035012d7f"
         },
         {
-            "date": 1606506307003,
-            "name": "log\\error-2020-11-27-13.log",
-            "hash": "990cdb5cd095168b072a893f247b8295"
+            "date": 1613054277185,
+            "name": "log\\error-2021-02-11-08.log",
+            "hash": "e56a68987e259aabfc07047322437893"
         },
         {
-            "date": 1606755414606,
-            "name": "log\\error-2020-11-30-10.log",
-            "hash": "0bed851bbbaff3db6e39bb4566b03e52"
-        },
-        {
-            "date": 1606755760159,
-            "name": "log\\error-2020-11-30-11.log",
-            "hash": "feb93a0bf15da301bfcfdcbf5351db83"
-        },
-        {
-            "date": 1606769728691,
-            "name": "log\\error-2020-11-30-14.log",
-            "hash": "d8381a4f41cfcf3056550e926796e75b"
-        },
-        {
-            "date": 1606936850355,
-            "name": "log\\error-2020-12-02-13.log",
-            "hash": "91fa7e331288b3031a8858a40b706885"
-        },
-        {
-            "date": 1607097913535,
-            "name": "log\\error-2020-12-04-10.log",
-            "hash": "c67db5aab25bea74cf5e54d2d00d9948"
-        },
-        {
-            "date": 1607286846901,
-            "name": "log\\error-2020-12-06-14.log",
-            "hash": "718254b3da3dc145da54016bc46bbb96"
-        },
-        {
-            "date": 1607289191885,
-            "name": "log\\error-2020-12-06-15.log",
-            "hash": "ad3e089f346da4ab05f7f2493f40cc82"
+            "date": 1613135862560,
+            "name": "log\\error-2021-02-12-07.log",
+            "hash": "5e2cd7b63c816a994b13e374497d3ffa"
         }
     ]
 }

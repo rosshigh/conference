@@ -1,3 +1,7 @@
+.bigTopMargin {
+  margin-top:30px;
+}
+
 body, html {
     height: 2500px;
     font: 400 15px/1.8 "Lato", sans-serif;
@@ -108,6 +112,11 @@ div.container {
 body {
   background-color: ghostwhite;
 }
+
+.images {
+  height:312px;
+  width:213px;
+} 
 
 @media (max-width: 767px) {
     
