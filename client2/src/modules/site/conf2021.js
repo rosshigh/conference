@@ -19,7 +19,7 @@ export class Conf2021 {
     constructor(config) {
         this.config = config;
 
-        this.pageHeader = "SAP Academic Community Conference 2021 - New Frontiers in Enterprise Systems Research and Practice";
+        this.pageHeader = "SAP Academic Community Conference 2021";
         this.pageSubHeader = "September 11-12, 2021";
     }
 
