@@ -17,7 +17,7 @@ export class Library {
     constructor(config) {
         this.config = config;
 
-        this.pageHeader = "SAP North American Academic Community Library";
+        this.pageHeader = "SAP North America Academic Community Library";
         this.pageSubHeader = "Documents of interest to the SAP Academic Community";
     }
 

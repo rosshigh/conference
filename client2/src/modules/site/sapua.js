@@ -17,7 +17,7 @@ export class SAPUA {
     constructor(config) {
         this.config = config;
 
-        this.pageHeader = "SAP North American Academic Community Events";
+        this.pageHeader = "SAP North America Academic Community Events";
         this.pageSubHeader = "Upcoming events of interest to the SAP Academic Community";
     }
 

@@ -17,7 +17,7 @@ export class Contact {
     constructor(config) {
         this.config = config;
 
-        this.pageHeader = "SAP North American Academic Community";
+        this.pageHeader = "SAP North America Academic Community";
         this.pageSubHeader = "Contact Info";
     }
 
