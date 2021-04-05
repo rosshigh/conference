@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import * as environment from '../config/environment.json';
 import {PLATFORM} from 'aurelia-pal';
 

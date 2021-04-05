@@ -27,15 +27,15 @@ module.exports = function(app, config) {
   app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
 
   logger.log('info',"Loading Mongoose functionality");
-  // mongoose.Promise = require('bluebird');
-  // mongoose.connect(config.db);
-  // var db = mongoose.connection;
-  // db.on('error', function () {
-  //   throw new Error('unable to connect to database at ' + config.db);
-  // });
-  // mongoose.connection.once('open', function callback() {
-  //   logger.log('info',"Mongoose connected to the database");
-  // });
+  mongoose.Promise = require('bluebird');
+  mongoose.connect(config.db);
+  var db = mongoose.connection;
+  db.on('error', function () {
+    throw new Error('unable to connect to database at ' + config.db);
+  });
+  mongoose.connection.once('open', function callback() {
+    logger.log('info',"Mongoose connected to the database");
+  });
 
   logger.log('info',"Attaching plugins");
   app.use(bodyParser.json({limit: '1000mb'}));
@@ -43,11 +43,11 @@ module.exports = function(app, config) {
   app.use(require('compression')());
   app.use(require('response-time')());
 
-  // logger.log('info',"Loading models");
-  // var models = glob.sync(config.root + '/app/models/*.js');
-  //   models.forEach(function (model) { 
-  //     require(model);
-  //   });
+  logger.log('info',"Loading models");
+  var models = glob.sync(config.root + '/app/models/*.js');
+    models.forEach(function (model) { 
+      require(model);
+    });
 
   app.use(function (req, res, next) {
       onFinished(res, function (err) {
@@ -56,11 +56,11 @@ module.exports = function(app, config) {
       next();
   });
 
-  // logger.log('info',"Loading controllers");
-  // var controllers = glob.sync(config.root + '/app/controllers/*.js');
-  //   controllers.forEach(function (controller) {
-  //     require(controller)(app, config);
-  // });
+  logger.log('info',"Loading controllers");
+  var controllers = glob.sync(config.root + '/app/controllers/*.js');
+    controllers.forEach(function (controller) {
+      require(controller)(app, config);
+  });
 
   // all other requests redirect to 404
   app.all("*", function (req, res, next) {

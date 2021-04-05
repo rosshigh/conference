@@ -1,0 +1,71 @@
+<template>
+    <compose view="../../resources/elements/header.html"></compose>
+
+    <div class="section" id="firstSection">
+        <div class="container">
+            <div show.bind="showForm">
+                <compose view="./forms/erpsimCompForm.html"></compose>
+            </div>
+
+            <h2>ERPsim Competition NA 2021</h2>
+            <p>The SAPNAAC board is happy to organize the first North American ERPsim Competition. All university members of the North America SAP University Alliances can register one team. Participation is free. The qualification events are planned for May 24th and May 26th between 18h to 21h EDT and the final is planned for June 2nd from 18h to 21h EDT. The best 3 teams in the North American competition will be invited to participate in the International ERPsim competition on June 9th. Registration for the 2021 North American ERPsim Competition will open soon, stay tune. </p>
+            <h4 class="sortable" click.trigger="showRegistrationForm()" href="#">Register your team!</h4>
+            <p>Deadline for Registration: Friday, May 14th, 2021 at noon</p>
+            <p>Qualification Round: May 25 & 27, 6 to 9 pm EST</p>
+            <p>Final Round: May 27, 6 to 9 pm EST</p>
+            <h4>General Rules</h4>
+            <ul>
+                <li>The competition is open to all university members of the SAP University Alliances </li>
+                <li>One team per university can register</li>
+                <li>Participation is free and registration must be performed by the faculty member who will coach the
+                    team</li>
+                <li>Depending on the number of teams registered, there will be between 2 to 3 qualification events and
+                    one final event</li>
+                <li>The qualification events are planned for May 24th and May 26th between 18h to 21h. The North
+                    American ERPsim Final is planned for June 2nd from 18h to 21h</li>
+                <li>The team size must be minimum of 3 and maximum of 5 students</li>
+                <li>The teams will play 4 rounds of the ERPsim Manufactring Extended game</li>
+                <li>One professor per university will be responsible for registering the team and act as the main point
+                    of contact for the team. Registration must include the university email of all participants</li>
+                <li>Prior to the competition, questions from the team can be sent by the main point of contact to
+                    erpsim@hec.ca with the Subject: "North America ERPsim Competition 2021"</li>
+                <li>We encourage diversity and inclusion, so try to arrange your team as diverse and inclusive as
+                    possible</li>
+                <li>No cheating is allowed! All teams must always behave ethically. The organizers reserve the rights to
+                    disqualify teams who are not playing ethically and fairly</li>
+                <li>Registration closes on: Friday, May 15, 2021 at noon EDT</li>
+            </ul>
+            <h4>Virtual Set Up</h4>
+            <ul>
+                <li>The first five teams of each semi-final will be invited to participate in the final</li>
+                <li>Students will be using a real SAP S/4HANA system</li>
+                <li>Each participant will need a computer with a good Internet connection</li>
+            </ul>
+            <h4>Awards</h4>
+            <ul>
+                <li>The event will be held via Zoom for a plenary session in-between rounds and virtual breakout rooms
+                    per team during the rounds</li>
+                <li>The first three teams in the North American ERPsim final will be invited in the International ERPsim
+                    Competition on June 9th, 18h30 EDT</li>
+                <li>The winners of the 2021 North American ERPsim final will be declared the 2021 North American ERPsim
+                    Champions</li>
+            </ul>
+            <h4>About the Game</h4>
+            <p>ERPsim Business Simulation Game: Manufacturing Extended</p>
+            <p>The ERPsim Manufacturing Game is a live ERP simulation game with a SAP S/4HANA and consists of producing
+                and selling Muesli breakfast cereals to the German market</p>
+            <p>During the game, the teams have to run a business in a make-to-stock manufacturing supply chain context
+                and must interact with suppliers and customers by sending and receiving orders, delivering their
+                products, and completing the whole end-to-end business cycle. </p>
+            <p>ERPsim automates the sales process such that each firm receives many orders every round of the
+                simulation. Several administrative functions in SAP are automated too, so that teams can focus on making
+                business decisions, rather than mastery of the many transactions of a complex ERP system. Using a mix of
+                the ERP system’s standard transactions and customized reports, students must analyze information and
+                make business decisions to ensure the profitability of their operations.</p>
+            <p>Company valuation is determined by profit and credit rating.</p>
+            <p>The company with the highest company value at the end of the simulation wins the game!</p>
+
+        </div>
+    </div>
+    <compose view="../../resources/elements/footer.html"></compose>
+</template>

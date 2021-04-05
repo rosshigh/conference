@@ -85,6 +85,13 @@ export class App {
         name: 'Conference 2021',
         settings: { auth: false, roles: [] },
         title: 'SAP North American Academic Community'
+      },
+      {
+        route: 'naerpsim', 
+        moduleId: PLATFORM.moduleName('./modules/site/naerpsim'),
+        name: 'ERPSim',
+        settings: { auth: false, roles: [] },
+        title: '2021 North American ERPsim Competition'
       }
     ])
   }

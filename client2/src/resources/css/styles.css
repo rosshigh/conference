@@ -2,6 +2,10 @@
   margin-top:30px;
 }
 
+.errorText {
+  color: red;
+}
+
 body, html {
     height: 2500px;
     font: 400 15px/1.8 "Lato", sans-serif;

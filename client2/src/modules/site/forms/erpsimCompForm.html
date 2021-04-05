@@ -1,0 +1,53 @@
+<template>
+    <h2>Register your Team</h2>
+    <form>
+        <div class="mb-3">
+          <label for="institutionName" class="form-label">Institution  (Must be a certified member of the North-American SAP University Alliance)</label>
+          <input value.bind="newRegObject.institution" type="text" class="form-control" id="institutionName" aria-describedby="institutionHelp">
+          <div show.bind="institutionError" id="institutionHelp" class="form-text errorText">The institution name is required</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <label for="facultyName" class="form-label bigTopMargin">Coach's Name (Must be a faculty of the University)</label>
+                <input value.bind="newRegObject.coach" type="text" class="form-control" id="facultyName"  aria-describedby="facultyNameHelp">
+                <div show.bind="coachError" id="facultyNameHelp" class="form-text errorText">The coach's name is required</div>
+            </div>
+            <div class="col-lg-6">
+                <label for="facultyEmail" class="form-label bigTopMargin">Coach's Email (Must be a University email)</label>
+                <input value.bind="newRegObject.coachEmail" type="email" class="form-control" id="facultyEmail" aria-describedby="emailHelp">
+                <div show.bind="coachEmailError" id="emailHelp" class="form-text errorText">The coach's email is required</div>
+            </div>
+        </div>
+        <!-- <div class="mb-3">
+          <label for="facultyName" class="form-label bigTopMargin">Coach's Name (Must be a faculty of the University)</label>
+          <input value.bind="newRegObject.coach" type="text" class="form-control" id="facultyName"  aria-describedby="facultyNameHelp">
+          <div id="facultyNameHelp" class="form-text">Must be a faculty of the University</div>
+          <div class="mb-3">
+            <label for="facultyEmail" class="form-label bigTopMargin">Coach's Email (Must be a University email)</label>
+            <input value.bind="newRegObject.coachEmail" type="email" class="form-control" id="facultyEmail" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Must be a University email.</div>
+          </div> -->
+
+          <div class="row">
+              <div class="col-lg-6">
+                <label class="form-label bigTopMargin">Team Member Name</label>
+              </div>
+              <div class="col-lg-6">
+                <label class="form-label bigTopMargin">Team Member Email</label>
+              </div>
+          </div>
+          <div show.bind="studentError" class="form-text errorText">You must enter the name and email of at least one team member</div>
+          <div repeat.for="student of newRegObject.students">
+              <div class="row">
+                  <div class="col-lg-6">
+                    <input value.bind="student.name" type="text" class="form-control" placeholder="Team member ${$index + 1} name">
+                  </div>
+                  <div class="col-lg-6">
+                    <input value.bind="student.email" type="email" class="form-control" placeholder="Team member ${$index + 1} email">
+                  </div>
+              </div>
+          </div>
+        <button click.trigger="saveRegistration()" class="btn btn-primary">Submit</button>
+        <button click.trigger="cancelRegistration()" class="btn btn-warning">Cancel</button>
+      </form>
+</template>
