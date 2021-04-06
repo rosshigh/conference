@@ -304,7 +304,8 @@ export class NAErpSIM {
     validateEntry(){
         this.institutionError = false;
         this.coachError = false;
-        this.coachError = false;
+        this.coachEmailError = false;
+        this.studentError = false;
         let errors = false;
         if( this.newRegObject.institution===""){
             errors = true;
@@ -319,12 +320,17 @@ export class NAErpSIM {
             this.coachEmailError = true;
         }
 
-        this.studentError = true;
+       
+        let numStudents = 0;
         this.newRegObject.students.forEach(item => {
             if(item.name !== "" && item.email !== ""){
-                this.studentError = false;
+                numStudents = numStudents + 1;
             }
         });
+       
+        if(numStudents < 3){
+            this.studentError = true;
+        }
 
         return !errors && !this.studentError;
     }
