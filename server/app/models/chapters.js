@@ -17,6 +17,16 @@ var TeamSchema = new Schema({
 
 module.exports = Mongoose.model('ERPSimTeam', TeamSchema);
 
+
+var ContactSchema = new Schema({
+  name: { type: String },
+  email: { type: String },
+  organization: { type: String },
+  createdDate: { type: Date, default: Date.now }
+});
+
+module.exports = Mongoose.model('Contact', ContactSchema);
+
 //   var FileSchema = new Schema({
 //     category: { type: String },
 //     title: { type: String },

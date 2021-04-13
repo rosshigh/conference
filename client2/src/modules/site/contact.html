@@ -1,13 +1,27 @@
 <template>
+    <compose view="./modals/confirmCOntactModal.html"></compose>
     <compose view="../../resources/elements/header.html"></compose>
     <div class="section" id="firstSection">
         <div class="container">
-            <h3>Email us at <a href="mailto:sapnaac@sapnacommunity.org">
-                sapnaac@sapnacommunity.org
-            </a></h3>
-            <p>&nbsp;</p>
-            <h3><a href="https://www.linkedin.com/company/sapnaac/" target="_blank">SAPNAAC on LinkedIn</a></h3>
+
+            <video autoplay loop src="${config.BASE_URL}/img/sapnaacVideo.mp4" controls style="max-width:100%; height:auto"></video>
+
+            <div class="row">
+                <div class="col-lg-5">
+                    <h3>Email us at <a href="mailto:sapnaac@sapnacommunity.org">
+                            sapnaac@sapnacommunity.org
+                        </a></h3>
+                    <p>&nbsp;</p>
+                    <h3><a href="https://www.linkedin.com/company/sapnaac/" target="_blank">SAPNAAC on LinkedIn</a></h3>
+                </div>
+
+                <div class="col-lg-6">
+                    <h4 class="topMargin">Join out contact list to receive the latest news on SAPNAAC</h4>
+                    <compose view="./forms/contactForm.html"></compose>
+                </div>
+            </div>
         </div>
+
     </div>
     <compose view="../../resources/elements/footer.html"></compose>
 </template>

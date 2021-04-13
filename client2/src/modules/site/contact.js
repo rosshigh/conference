@@ -1,5 +1,8 @@
 import { inject } from 'aurelia-framework';
 import { Config } from '../../resources/config/config'
+import { DataLayer } from '../../resources/data/dataLayer';
+
+@inject(Config, DataLayer)
 
 @inject(Config)
 export class Contact {
@@ -14,8 +17,9 @@ export class Contact {
     ]
     better_browser = '<div class="container"><div class="better-browser row"><div class="col-md-2"></div><div class="col-md-8"><h3>We are sorry but it looks like your Browser doesn\'t support our website Features. In order to get the full experience please download a new version of your favourite browser.</h3></div><div class="col-md-2"></div><br><div class="col-md-4"><a href="https://www.mozilla.org/ro/firefox/new/" class="btn btn-warning">Mozilla</a><br></div><div class="col-md-4"><a href="https://www.google.com/chrome/browser/desktop/index.html" class="btn ">Chrome</a><br></div><div class="col-md-4"><a href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-worldwide-languages" class="btn">Internet Explorer</a><br></div><br><br><h4>Thank you!</h4></div></div>';
 
-    constructor(config) {
+    constructor(config, data) {
         this.config = config;
+        this.data = data;
 
         this.pageHeader = "SAP North America Academic Community";
         this.pageSubHeader = "Contact Info";
@@ -23,6 +27,17 @@ export class Contact {
 
     attached() {
         this.initGaia();
+        this.emptyContact();
+    }
+
+    emptyContact(){
+        this.nameError = false;
+        this.emailError = false;
+        this.newRegObject = {
+            name: "",
+            email: "",
+            organization: ""
+        }
     }
 
     searchString(data) {
@@ -254,23 +269,6 @@ export class Contact {
 
     };
 
-    // isElementInViewport(elem) {
-    //     var $elem = $(elem);
-
-    //     // Get the scroll position of the page.
-    //     var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
-    //     var viewportTop = $(scrollElem).scrollTop();
-    //     var viewportBottom = viewportTop + $(window).height();
-
-    //     // Get the position of the element on the page.
-    //     var elemTop = Math.round($elem.offset().top);
-    //     var elemBottom = elemTop + $elem.height();
-
-    //     return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
-    // }
-
-
-
     debounce(func, wait, immediate) {
         var timeout;
         return function () {
@@ -284,10 +282,6 @@ export class Contact {
         };
     };
 
-
-
-
-
     searchVersion(dataString) {
         var index = dataString.indexOf(this.versionSearchString);
         if (index === -1) {
@@ -299,6 +293,29 @@ export class Contact {
             return parseFloat(dataString.substring(rv + 3));
         } else {
             return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
+        }
+    }
+
+    validateContact(){
+        this.nameError = false;
+        this.emailError = false;
+        if( this.newRegObject.name === ""){
+            this.nameError = true;
+        }
+        if(this.newRegObject.email === "") {
+            this.emailError = true;
+        }
+
+        return !(this.nameError || this.emailError);
+    }
+
+    async submitContact(){
+        if( this.validateContact()){
+            let response = await this.data.saveContact(this.newRegObject);
+            if(!response.error){
+                $("#confirmContactModal").modal('show');
+                this. emptyContact();
+            }
         }
     }
 }

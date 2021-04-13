@@ -1,15 +1,19 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
+import {Config} from '../config/config';
 
-@inject(HttpClient)
+@inject(HttpClient, Config)
 export class DataServices {
     isRequesting = false;
 
-    constructor(http) {
+    constructor(http, config) {
         this.http = http;
+        this.config = config;
     
 		this.http.configure(x => {
-            x.withBaseUrl("http://sapnaac.ucc.uwm.edu/api/");
+            x.withBaseUrl(this.config.BASE_URL + "/api/")
+            // x.withBaseUrl("http://sapnaac.ucc.uwm.edu/api/");
+
             // x.withBaseUrl("http://localhost/api/");
 		});
     }

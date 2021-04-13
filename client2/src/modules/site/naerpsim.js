@@ -1,8 +1,8 @@
 import { inject } from 'aurelia-framework';
 import { Config } from '../../resources/config/config';
-import { ERPSIMTEAMS } from '../../resources/data/erpsim';
+import { DataLayer } from '../../resources/data/dataLayer';
 
-@inject(Config, ERPSIMTEAMS)
+@inject(Config, DataLayer)
 export class NAErpSIM {
 
     dataBrowser = [

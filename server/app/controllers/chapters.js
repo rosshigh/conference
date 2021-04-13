@@ -2,6 +2,7 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   ERPSimTeam = mongoose.model('ERPSimTeam'),
+  Contact = mongoose.model('Contact'),
   asyncHandler = require('express-async-handler');
 
 module.exports = function (app) {
@@ -29,8 +30,35 @@ module.exports = function (app) {
   }));
 
   router.delete('/teams', asyncHandler(async (req, res) => {
-    Model.find({ _id: req.params.id }).remove().exec(object => {
+    ERPSimTeam.find({ _id: req.params.id }).remove().exec(object => {
         res.status(200).json({ message: "chapter deleted" });
+    })
+  }));
+
+  router.get('/contacts', asyncHandler(async (req, res) => {
+    var query = Contact.find();
+    query.exec().then(object => {
+        res.status(200).json(object);
+    });
+  }));
+
+  router.post('/contacts', asyncHandler(async (req, res) => {
+    var team = new Contact(req.body);
+    team.save().then(object => {
+        res.status(200).json(object);
+    });
+  }));
+
+  router.put('/contacts', asyncHandler(async (req, res) => {
+    Contact.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true, safe: true, multi: false })
+    .then(object => {
+      res.status(200).json(object);
+    })
+  }));
+
+  router.delete('/contacts', asyncHandler(async (req, res) => {
+    Contact.find({ _id: req.params.id }).remove().exec(object => {
+        res.status(200).json({ message: "contact deleted" });
     })
   }));
 };

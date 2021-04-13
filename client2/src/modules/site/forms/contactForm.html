@@ -1,0 +1,16 @@
+<template>
+    <div class="list-group-item" style="background-color:ghostwhite;">
+    <label for="name" class="form-label bigTopMargin">Name *</label>
+    <input value.bind="newRegObject.name" type="text" class="form-control" id="name"  aria-describedby="nameHelp">
+    <div show.bind="nameError" id="nameHelp" class="form-text errorText">Name is required</div>
+
+    <label for="email" class="form-label bigTopMargin">Email *</label>
+    <input value.bind="newRegObject.email" type="text" class="form-control" id="email"  aria-describedby="emailHelp">
+    <div show.bind="emailError" id="emailHelp" class="form-text errorText">Email is required</div>
+
+    <label for="organization" class="form-label bigTopMargin">Organization</label>
+    <input value.bind="newRegObject.organization" type="text" class="form-control" id="organization"  aria-describedby="organizationHelp">
+
+    <button click.trigger="submitContact()" class="btn btn-primary">Submit</button>
+</div>
+</template>
