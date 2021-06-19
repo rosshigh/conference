@@ -92,6 +92,19 @@ export class App {
         name: 'ERPSim',
         settings: { auth: false, roles: [] },
         title: '2021 North American ERPsim Competition'
+      },
+      {
+        route: 'confRegister', 
+        moduleId: PLATFORM.moduleName('./modules/site/conferenceRegister'),
+        name: 'confRegister',
+        settings: { auth: false, roles: [] },
+        title: '2021 Conference Registration'
+      },
+      {
+        route: 'confPayment/:fee',
+        moduleId: PLATFORM.moduleName('./modules/site/confPayment'),
+        name: 'confPayment',
+        settings: { auth: false, roles: [] }
       }
     ])
   }

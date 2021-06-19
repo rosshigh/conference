@@ -3,6 +3,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   ERPSimTeam = mongoose.model('ERPSimTeam'),
   Contact = mongoose.model('Contact'),
+  Register = mongoose.model('Register'),
   asyncHandler = require('express-async-handler');
 
 module.exports = function (app) {
@@ -59,6 +60,33 @@ module.exports = function (app) {
   router.delete('/contacts', asyncHandler(async (req, res) => {
     Contact.find({ _id: req.params.id }).remove().exec(object => {
         res.status(200).json({ message: "contact deleted" });
+    })
+  }));
+
+  router.get('/register', asyncHandler(async (req, res) => {
+    var query = Register.find();
+    query.exec().then(object => {
+        res.status(200).json(object);
+    });
+  }));
+
+  router.post('/register', asyncHandler(async (req, res) => {
+    var register = new Register(req.body);
+    register.save().then(object => {
+        res.status(200).json(object);
+    });
+  }));
+
+  router.put('/register', asyncHandler(async (req, res) => {
+    Register.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true, safe: true, multi: false })
+    .then(object => {
+      res.status(200).json(object);
+    })
+  }));
+
+  router.delete('/register', asyncHandler(async (req, res) => {
+    Register.find({ _id: req.params.id }).remove().exec(object => {
+        res.status(200).json({ message: "register deleted" });
     })
   }));
 };

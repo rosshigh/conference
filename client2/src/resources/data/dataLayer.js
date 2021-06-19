@@ -16,4 +16,9 @@ export class DataLayer {
         let response = await this.data.saveObject(contact, 'contacts', 'post');
         return response;
     }
+
+    async saveConferenceRegistration(obj){
+        let response = await this.data.saveObject(obj, 'register', 'post');
+        return response;
+    }
 }

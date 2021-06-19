@@ -1,9 +1,66 @@
 import { inject } from 'aurelia-framework';
+import { Router } from "aurelia-router";
 import { Config } from '../../resources/config/config'
+import { DataLayer } from '../../resources/data/dataLayer';
+import { Utils } from '../../resources/config/utils';
 
-@inject(Config)
-export class Conf2021 {
-    
+@inject(Router, Config, DataLayer, Utils)
+export class Conf2021Register {
+
+    countries = [
+        { code: "AR", country: "Argentina" },
+        { code: "BR", country: "Brazil" },
+        { code: "CA", country: "Canada" },
+        { code: "CL", country: "Chile" },
+        { code: "CO", country: "Columbia" },
+        { code: "CR", country: "Costa Rica" },
+        { code: "EC", country: "Ecuador" },
+        { code: "JM", country: "Jamaica" },
+        { code: "MX", country: "Mexico" },
+        { code: "PE", country: "Peru" },
+        { code: "Uruguay", country: "UY" },
+        { code: "US", country: "USA" },
+        { code: "VE", country: "Venezuela" },
+        { code: "Other", country: "Other" }
+    ];
+
+    roles = [
+        "Dean/Administrator",
+        "Faculty Coordinator",
+        "Professor/Lecturer",
+        "Student",
+        "Other"
+    ];
+
+    disciplines = [
+        "Accounting/Finance",
+        "Computer Science",
+        "Engineering",
+        "Human Capital Management",
+        "Information Systems",
+        "Management",
+        "Marketing",
+        "Operations/Supply Chain",
+        "Other"
+    ];
+
+    relationships = [
+        "Full Member",
+        "Associate Member",
+        "Prospective Member",
+        "SAP Customer",
+        "SAP Employee",
+        "SAP Partner",
+        "Other",
+    ];
+
+    howLongs = [
+        "0 - 1 year",
+        "1 - 5 years",
+        "6 - 10 years",
+        "More than 10 years"
+    ];
+
     dataBrowser = [
         { string: navigator.userAgent, subString: "Chrome", identity: "Chrome" },
         { string: navigator.userAgent, subString: "MSIE", identity: "Explorer" },
@@ -14,23 +71,140 @@ export class Conf2021 {
     ]
     better_browser = '<div class="container"><div class="better-browser row"><div class="col-md-2"></div><div class="col-md-8"><h3>We are sorry but it looks like your Browser doesn\'t support our website Features. In order to get the full experience please download a new version of your favourite browser.</h3></div><div class="col-md-2"></div><br><div class="col-md-4"><a href="https://www.mozilla.org/ro/firefox/new/" class="btn btn-warning">Mozilla</a><br></div><div class="col-md-4"><a href="https://www.google.com/chrome/browser/desktop/index.html" class="btn ">Chrome</a><br></div><div class="col-md-4"><a href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-worldwide-languages" class="btn">Internet Explorer</a><br></div><br><br><h4>Thank you!</h4></div></div>';
 
-    
-    constructor(config) {
+    constructor(router, config, data, utils) {
+        this.router = router;
         this.config = config;
+        this.data = data;
+        this.utils = utils;
 
         this.pageHeader = "SAP Academic Community Conference 2021";
         this.pageSubHeader = "September 11-12, 2021";
     }
 
-    
+    activate() {
+        this.newRegObject = {
+            event: "SAPNAAC Conference 2021",
+            firstName: "",
+            lastName: "",
+            email: "",
+            organization: "",
+            discipline: "",
+            relationship: "",
+            howLong: "",
+            country: "",
+        }
+
+        this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit"
+    }
+
     attached() {
         $(window).scrollTop(0);
         this.initGaia();
+        // setTimeout(()=>{this.initPayPalButton();}, 5000);       
     }
 
-    openRegisterForm(){
-        this.showRegisterForm = true;
+    initPayPalButton() {
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'pay',
+
+            },
+
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{ "description": "Conference Fee", "amount": { "currency_code": "USD", "value": 50 } }]
+                });
+            },
+
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                });
+            },
+
+            onError: function (err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container');
     }
+
+    validateInput() {
+        this.inputErrors = [];
+        this.firstnameError = false;
+        this.lastnameError = false;
+        this.emailError = false;
+        this.organizationError = false;
+        this.countryError = false;
+        this.disciplineError = false;
+        this.relationshipError = false;
+        this.experienceError = false;
+        this.roleError = false
+        this.experienceError = false;
+        if (this.newRegObject.firstName === "") {
+            this.inputErrors.push('First name is required');
+            this.firstnameError = true;
+        }
+        if (this.newRegObject.lastName === "") {
+            this.inputErrors.push('Last name is required');
+            this.lastnameError = true;
+        }
+        if (this.newRegObject.email === "") {
+            this.inputErrors.push('Email is required');
+            this.emailError = true;
+        }
+        if (this.newRegObject.organization === "") {
+            this.inputErrors.push('Organization is required');
+            this.organizationError = true;
+        }
+        if (this.newRegObject.country === "") {
+            this.inputErrors.push('Country is required');
+            this.countryError = true;
+        }
+        if (this.newRegObject.discipline === "") {
+            this.inputErrors.push('discipline is required');
+            this.disciplineError = true;
+        }
+        if (this.newRegObject.relationship === "") {
+            this.inputErrors.push('relationship is required');
+            this.relationshipError = true;
+        }
+        if (this.newRegObject.experience === "") {
+            this.inputErrors.push('experience is required');
+            this.experienceError = true;
+        }
+        if (this.newRegObject.role === "") {
+            this.inputErrors.push('Role is required');
+            this.roleError = true;
+        }
+        if (this.newRegObject.experience === "") {
+            this.inputErrors.push('experience is required');
+            this.experienceError = true;
+        }
+    }
+
+    async register() {
+        this.validateInput();
+        if (!this.inputErrors.length) {
+            let response = await this.data.saveConferenceRegistration(this.newRegObject);
+            if (!response.error) {
+                //    this.utils.showNotification('Your registration has been saved!',"");
+                // this.registered = true;
+                if(this.newRegObject.country === 'US' || this.newRegObject.country === 'CA' || this.newRegObject.country === 'Other'){
+                    var fee="NA";
+                } else {
+                    var fee="LA";
+                }
+                this.router.navigateToRoute('confPayment', { fee:fee });
+            }
+        }
+    }
+
+    // goToPayment(fee){
+    //     this.router.navigateToRoute('confPayment', { fee:fee });
+    // }
 
     searchString(data) {
         for (var i = 0; i < data.length; i++) {
@@ -260,23 +434,6 @@ export class Conf2021 {
         }
 
     };
-
-    // isElementInViewport(elem) {
-    //     var $elem = $(elem);
-
-    //     // Get the scroll position of the page.
-    //     var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
-    //     var viewportTop = $(scrollElem).scrollTop();
-    //     var viewportBottom = viewportTop + $(window).height();
-
-    //     // Get the position of the element on the page.
-    //     var elemTop = Math.round($elem.offset().top);
-    //     var elemBottom = elemTop + $elem.height();
-
-    //     return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
-    // }
-
-
 
     debounce(func, wait, immediate) {
         var timeout;

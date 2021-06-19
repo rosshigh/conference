@@ -2,6 +2,10 @@
   color: blue;
 }
 
+.bold {
+  font-weight: 900;
+}
+
 .bigTopMargin {
   margin-top:30px;
 }

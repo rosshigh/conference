@@ -1,0 +1,14 @@
+<template>
+    <compose view="../../resources/elements/header.html"></compose>
+    <div show.bind="!registered" class="section" id="firstSection">
+        <div class="container">
+            <compose view="./forms/conferenceRegsiter.html"></compose>
+        </div>
+    </div>
+    <div show.bind="registered" class="section" id="firstSection">
+        <div class="container">
+            <compose view="./forms/conferencePayment.html"></compose>
+        </div>
+    </div>
+    <compose view="../../resources/elements/footer.html"></compose>
+</template>

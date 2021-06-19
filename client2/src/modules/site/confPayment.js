@@ -1,9 +1,5 @@
-import { inject } from 'aurelia-framework';
-import { Config } from '../../resources/config/config'
+export class ConfPayment {
 
-@inject(Config)
-export class Conf2021 {
-    
     dataBrowser = [
         { string: navigator.userAgent, subString: "Chrome", identity: "Chrome" },
         { string: navigator.userAgent, subString: "MSIE", identity: "Explorer" },
@@ -14,22 +10,55 @@ export class Conf2021 {
     ]
     better_browser = '<div class="container"><div class="better-browser row"><div class="col-md-2"></div><div class="col-md-8"><h3>We are sorry but it looks like your Browser doesn\'t support our website Features. In order to get the full experience please download a new version of your favourite browser.</h3></div><div class="col-md-2"></div><br><div class="col-md-4"><a href="https://www.mozilla.org/ro/firefox/new/" class="btn btn-warning">Mozilla</a><br></div><div class="col-md-4"><a href="https://www.google.com/chrome/browser/desktop/index.html" class="btn ">Chrome</a><br></div><div class="col-md-4"><a href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-worldwide-languages" class="btn">Internet Explorer</a><br></div><br><br><h4>Thank you!</h4></div></div>';
 
-    
-    constructor(config) {
-        this.config = config;
 
-        this.pageHeader = "SAP Academic Community Conference 2021";
-        this.pageSubHeader = "September 11-12, 2021";
+    constructor() {
+      
     }
 
-    
+    async activate(params) {
+       
+        if (params.fee === 'NA') {
+            this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit";
+           this.fee = "$50.00";
+        } else {
+            this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit";
+            this.fee = "$10.00";
+        }
+
+    }
+
     attached() {
         $(window).scrollTop(0);
         this.initGaia();
+        setTimeout(()=>{this.initPayPalButton();}, 1000);      
     }
 
-    openRegisterForm(){
-        this.showRegisterForm = true;
+    initPayPalButton() {
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'pay',
+
+            },
+
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{ "description": "Conference Fee", "amount": { "currency_code": "USD", "value": 50 } }]
+                });
+            },
+
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                });
+            },
+
+            onError: function (err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container');
     }
 
     searchString(data) {
@@ -260,23 +289,6 @@ export class Conf2021 {
         }
 
     };
-
-    // isElementInViewport(elem) {
-    //     var $elem = $(elem);
-
-    //     // Get the scroll position of the page.
-    //     var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
-    //     var viewportTop = $(scrollElem).scrollTop();
-    //     var viewportBottom = viewportTop + $(window).height();
-
-    //     // Get the position of the element on the page.
-    //     var elemTop = Math.round($elem.offset().top);
-    //     var elemBottom = elemTop + $elem.height();
-
-    //     return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
-    // }
-
-
 
     debounce(func, wait, immediate) {
         var timeout;
