@@ -79,6 +79,8 @@ export class Conf2021Register {
 
         this.pageHeader = "SAP Academic Community Conference 2021";
         this.pageSubHeader = "September 11-12, 2021";
+
+        this.fee = "$50.00 USD";
     }
 
     activate() {
@@ -121,7 +123,9 @@ export class Conf2021Register {
 
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    this.paid = true;
+                    this.payer = details.payer.name.given_name;
+                    // alert('Transaction completed by ' + details.payer.name.given_name + '!');
                 });
             },
 
