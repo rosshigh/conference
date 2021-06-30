@@ -11,8 +11,8 @@ export class homePage {
   }
 
   attached() {
-    this.function1();
-    this.functionScroll();
+    // this.function1();
+    // this.functionScroll();
   }
 
   function1() {
@@ -39,39 +39,6 @@ export class homePage {
         })
       })
   }
-
-  // function2() {
-  //   window.addEventListener("alert.show", function (e) {
-  //     var t, n; t = e.detail, (n = document.createElement("div")).classList.add("alert", "alert-" + t.type, "alert-fixed", "fade", "show"), n.innerHTML = t.message.replace("0 -", ""), document.body.appendChild(n), setTimeout(function () { $(n).alert("close") }, 5e3)
-  //   }) 
-  // }
-
-  //   function () {
-  //     var e = document.querySelectorAll(".code");
-  //     window.hljs && [].forEach.call(e, function (e) {
-  //       var t; t = e, hljs.highlightBlock(t)
-  //     })
-  //   }
-    
-  //   function () {
-  //     var e = document.querySelectorAll(".dropup, .dropright, .dropdown, .dropleft"), t = document.querySelectorAll(".dropdown-menu .dropdown-toggle"); t && [].forEach.call(t, function (a) { a.addEventListener("click", function (e) { var t, n, o; e.preventDefault(), e.stopPropagation(), n = (t = a).closest(".dropdown-menu").querySelectorAll(".dropdown-menu"), o = t.parentElement.querySelector(".dropdown-menu"), [].forEach.call(n, function (e) { e !== o && e.classList.remove("show") }), o.classList.toggle("show") }) }), $(e).on("hide.bs.dropdown", function (e) { var t; t = this.querySelectorAll(".dropdown-menu"), [].forEach.call(t, function (e) { e.classList.remove("show") }) })
-  //   }
-    
-  //   function () { 
-  //     var e = document.querySelectorAll(".faq-item .collapse"); e && [].forEach.call(e, function (e) { var t = $(e); t.on("show.bs.collapse", function () { var e; (e = t).closest(".faq").find(".collapse").not(e).collapse("hide") }) }) 
-  //   } 
-    
-  //   function () { 
-  //     var e = document.querySelector(".fp-wrapper"); e && new fullpage(e, { licenseKey: "CA9DA262-9BD6447E-B1BF8C11-D1480312", anchors: ["hero", "about-1", "about-2", "services", "promo", "testimonials", "pricing"], sectionSelector: ".fp-section", scrollingSpeed: 700, easingcss3: "cubic-bezier(0.55, 0.055, 0.675, 0.19)", scrollOverflow: !0, responsiveWidth: 768, afterLoad: function (e, t, n) { var o = new CustomEvent("fpAfterLoad", { detail: { origin: e, destination: t, direction: n } }); window.dispatchEvent(o) }, onLeave: function (e, t, n) { var o = new CustomEvent("fpOnLeave", { detail: { origin: e, destination: t, direction: n } }); window.dispatchEvent(o) } }) 
-  //   }
-    
-  //   function () { 
-  //     var e = document.querySelectorAll(".map-container"); e && [].forEach.call(e, function (e) { var t, n, o, a, l, r; t = e, n = parseInt(t.getAttribute("data-zoom")), o = JSON.parse(t.getAttribute("data-markers")), a = { lat: o[0][0], lng: o[0][1] }, l = new google.maps.Map(t, { center: a, styles: [{ featureType: "all", elementType: "geometry.fill", stylers: [{ weight: "2.00" }] }, { featureType: "all", elementType: "geometry.stroke", stylers: [{ color: "#9c9c9c" }] }, { featureType: "all", elementType: "labels.text", stylers: [{ visibility: "on" }] }, { featureType: "landscape", elementType: "all", stylers: [{ color: "#f2f2f2" }] }, { featureType: "landscape", elementType: "geometry.fill", stylers: [{ color: "#ffffff" }] }, { featureType: "landscape.man_made", elementType: "geometry.fill", stylers: [{ color: "#ffffff" }] }, { featureType: "poi", elementType: "all", stylers: [{ visibility: "off" }] }, { featureType: "road", elementType: "all", stylers: [{ saturation: -100 }, { lightness: 45 }] }, { featureType: "road", elementType: "geometry.fill", stylers: [{ color: "#eeeeee" }] }, { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#7b7b7b" }] }, { featureType: "road", elementType: "labels.text.stroke", stylers: [{ color: "#ffffff" }] }, { featureType: "road.highway", elementType: "all", stylers: [{ visibility: "simplified" }] }, { featureType: "road.arterial", elementType: "labels.icon", stylers: [{ visibility: "off" }] }, { featureType: "transit", elementType: "all", stylers: [{ visibility: "off" }] }, { featureType: "water", elementType: "all", stylers: [{ color: "#46bcec" }, { visibility: "on" }] }, { featureType: "water", elementType: "geometry.fill", stylers: [{ color: "#c8d7d4" }] }, { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#070707" }] }, { featureType: "water", elementType: "labels.text.stroke", stylers: [{ color: "#ffffff" }] }], zoom: n }), r = new google.maps.LatLngBounds, o.forEach(function (e, t, n) { var o = { lat: e[0], lng: e[1] }; new google.maps.Marker({ position: o, map: l }); r.extend(o) }), n || l.fitBounds(r) }) 
-  //   }
-    
-  //   function () { 
-  //     var e = document.querySelector(".modal"); $(e).on("shown.bs.modal hide.bs.modal", function (e) { var t = this.querySelector("video"); t && "shown" == e.type ? t.play() : t && "hide" == e.type && t.pause() }) 
-  //   }
     
     functionScroll () { 
       var e = document.querySelector(".navbar"), t = document.querySelector(".navbar-collapse"), o = !1, a = !1, n = e.classList.contains("navbar-togglable"); 
