@@ -9,7 +9,6 @@ var express = require('express'),
   nodemailer = require('nodemailer'),
   handlebars = require('express-handlebars'),
   path = require('path'),
-  fs = require('fs'),
   exphbs = require('nodemailer-express-handlebars');
 
 module.exports = function (app) {
@@ -90,6 +89,12 @@ module.exports = function (app) {
       })
   }));
 
+  router.delete('/register', asyncHandler(async (req, res) => {
+    Register.find({ _id: req.params.id }).remove().exec(object => {
+      res.status(200).json({ message: "register deleted" });
+    })
+  }));
+
   router.post('/email', asyncHandler(async (req, res) => {
     console.log(req.body)
     let mailObject = {};
@@ -100,12 +105,6 @@ module.exports = function (app) {
     sendEmail(mailObject);
     res.status(200).json('Email sent');
   }));
-
-  router.delete('/register', asyncHandler(async (req, res) => {
-    Register.find({ _id: req.params.id }).remove().exec(object => {
-      res.status(200).json({ message: "register deleted" });
-    })
-  }));
 };
 
 let smtpConfig = {
@@ -114,22 +113,20 @@ let smtpConfig = {
 }
 
 var transporter = nodemailer.createTransport(smtpConfig);
-var viewEngine = handlebars.create({});
-var options = exphbs({
-  viewEngine: viewEngine,
-  viewPath: path.resolve(__dirname, '../views')
-});
-transporter.use('compile', options);
+// var viewEngine = handlebars.create({});
+// var options = exphbs({
+//   viewEngine: viewEngine,
+//   viewPath: path.resolve(__dirname, '../views')
+// });
+// transporter.use('compile', options);
 
 nodeMailerSendMail = function (mailObject) {
-  var thisMailObject = {
-    subject: mailObject.subject,
-    from: mailObject.from,
-    to: mailObject.to,
-    template: mailObject.template
-  };
-  transporter.sendMail(thisMailObject)
+  console.log(path.resolve(__dirname, '../views'))
+  console.log(mailObject)
+  transporter.sendMail(mailObject)
     .then(result => {
+      console.log('here')
+      console.log(result)
       var emailLog = new EmailLog({
         email: thisMailObject.to,
         subject: thisMailObject.subject,
@@ -141,6 +138,7 @@ nodeMailerSendMail = function (mailObject) {
       console.log(emailLog);
     })
     .catch(error => {
+      console.log('there')
       console.log( error);
     })
 };
@@ -150,6 +148,8 @@ sendEmail = function (mailObject) {
   mailObject.subject = mailObject.subject;
   mailObject.from = "sapnaac@sapnacommunity.org";
   mailObject.template = 'email-template';
+  mailObject.html='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" style="background:#f3f3f3!important"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><title></title></head><img src="http://sapnaac.ucc.uwm.edu/img/contactBanner.png"><h2>Thank you for registerting for the SAP Academic Community Conference 2021</h2><h4>Check back <a href="http://sapnaac.ucc.uwm.edu/#conf2021" target="_blank">sapnaac.ucc.uwm.edu</a> for confernce updates</h4><p>AC21 is seeking extended abstracts/research in progress on various topics exploring new technologies and issues in enterprise systems from multiple perspectives. These include but are not limited to fundamental research, practice-oriented cases, emerging areas such blockchain/robotic process automation/cloud computing/AI augmentation, and classroom use of enterprise systems.AC21 is a wonderful avenue to present research in progress and seek constructive feedback. AC21 also provides high-value networking opportunities with academics and industry professionals. Please see the full call for papers below submit today! Submissions are accepted through August 1, 2021.</p><h4>Go to <a href="http://sapnaac.ucc.uwm.edu/#conf2021" target="_blank">sapnaac.ucc.uwm.edu</a> to submit an abstract.</h4><body></body></html>';
+  mailObject.text="text";
 
   nodeMailerSendMail(mailObject);
 }
