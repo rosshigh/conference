@@ -83,6 +83,10 @@ export class Conf2021Register {
         this.fee = "$50.00 USD";
     }
 
+    async sendEmail(){
+        let response = await this.data.sendEmail(this.newRegObject);
+    }
+
     activate() {
         this.newRegObject = {
             event: "SAPNAAC Conference 2021",

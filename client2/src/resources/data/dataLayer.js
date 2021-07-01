@@ -21,4 +21,9 @@ export class DataLayer {
         let response = await this.data.saveObject(obj, 'register', 'post');
         return response;
     }
+
+    async sendEmail(obj){
+        let response = await this.data.saveObject(obj, 'email', 'post');
+        return response;
+    }
 }
