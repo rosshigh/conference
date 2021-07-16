@@ -19,6 +19,8 @@ export class Board {
 
         this.pageHeader = "The SAP North America Academic Board";
         this.pageSubHeader = "2020-2021";
+
+        this.regularBanner = true;
     }
 
     attached() {

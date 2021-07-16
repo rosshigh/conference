@@ -19,6 +19,8 @@ export class Gaia {
 
         this.pageHeader = "SAP North America Academic Community";
         this.pageSubHeader = "The premier leader elevating SAP academic innovation and success";
+
+        this.regularBanner = true;
     }
 
     attached() {

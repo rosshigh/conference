@@ -45,7 +45,8 @@
 
 
     <div class="section section-header">
-        <div class="parallax filter filter-color-black" style="height:400px;">
+        <img if.bind="!regularBanner" src="${config.BASE_URL}/img/conferenceBannerV7.png" width="100%">
+        <div if.bind="regularBanner" class="parallax filter filter-black" style="height:400px;" >
             <div class="image" style="
                  background-image: url('${config.BASE_URL}/img/D0TCMW.jpg');">
             </div>

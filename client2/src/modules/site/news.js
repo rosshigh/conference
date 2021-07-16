@@ -19,6 +19,8 @@ export class News {
 
         this.pageHeader = "SAP North America Academic Community Events";
         this.pageSubHeader = "Upcoming events of interest to the SAP Academic Community";
+
+        this.regularBanner = true;
     }
 
     attached() {

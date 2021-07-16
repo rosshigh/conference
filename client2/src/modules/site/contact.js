@@ -23,6 +23,8 @@ export class Contact {
 
         this.pageHeader = "SAP North America Academic Community";
         this.pageSubHeader = "Contact Info";
+
+        this.regularBanner = true;
     }
 
     attached() {

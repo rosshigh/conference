@@ -10,6 +10,8 @@
   }
 }
 
+
+
 .linkColor{
   color: blue;
 }
@@ -75,7 +77,7 @@ body, html {
   
 .parallax1 {
     /* The image used */
-    background-image: url("http://localhost/img/parallax1.jpg");
+    background-image: url("http://localhost/img/conferenceBannerV7.jpg");
 
     /* Set a specific height */
    height: 500px;

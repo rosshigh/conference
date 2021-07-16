@@ -21,6 +21,8 @@ export class NAErpSIM {
 
         this.pageHeader = "2021 North American ERPsim Competition";
         this.pageSubHeader = "";
+
+        this.regularBanner = true;
     }
 
     attached() {

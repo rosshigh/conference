@@ -19,6 +19,8 @@ export class Library {
 
         this.pageHeader = "SAP North America Academic Community Library";
         this.pageSubHeader = "Documents of interest to the SAP Academic Community";
+
+        this.regularBanner = true;
     }
 
     attached() {
