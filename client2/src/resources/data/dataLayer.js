@@ -36,4 +36,10 @@ export class DataLayer {
         let response = await this.data.get('register/' + id);
         return response;
     }
+
+    async pay(id){
+        let obj = {};
+        let response = await this.data.saveObject(obj, 'register/pay/' + id, 'put');
+        return response;
+    }
 }

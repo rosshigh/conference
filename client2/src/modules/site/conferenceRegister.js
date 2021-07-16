@@ -216,6 +216,7 @@ export class Conf2021Register {
             if (!this.inputErrors.length) {
                 let response = await this.data.saveConferenceRegistration(this.newRegObject);
                 if (!response.error && response.email === this.newRegObject.email ) {
+                    await this.sendEmail();
                     this.router.navigateToRoute('confPayment', { id:response._id });
                 }
             }

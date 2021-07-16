@@ -38,6 +38,7 @@ var RegisterSchema = new Schema({
   experience: { type: String },
   country: { type: String },
   role: { type: String },
+  paid: { type: Boolean, default: false },
   createdDate: { type: Date, default: Date.now }
 });
 

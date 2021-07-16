@@ -5,11 +5,10 @@ var express = require('express'),
   Contact = mongoose.model('Contact'),
   Register = mongoose.model('Register'),
   hbs = require('handlebars'),
-  asyncHandler = require('express-async-handler'),
-  nodemailer = require('nodemailer'),
-  handlebars = require('express-handlebars'),
-  path = require('path'),
-  exphbs = require('nodemailer-express-handlebars');
+  asyncHandler = require('express-async-handler');
+
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey('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');
 
 module.exports = function (app) {
   app.use('/api', router);
@@ -96,6 +95,17 @@ module.exports = function (app) {
       })
   }));
 
+  router.put('/register/pay/:id', asyncHandler(async (req, res) => {
+    Register.findById(req.params.id)
+      .then(object => {
+        object.paid = true;
+        object.save()
+          .then(result => {
+            res.status(200).json(result);
+          });
+      });
+  }));
+
   router.delete('/register', asyncHandler(async (req, res) => {
     Register.find({ _id: req.params.id }).remove().exec(object => {
       res.status(200).json({ message: "register deleted" });
@@ -107,69 +117,44 @@ module.exports = function (app) {
 
     var query = Register.findOne({ email: { $regex: new RegExp('^' + value, 'i') } });
     query.exec().then(object => {
-        if (object) {
-            res.status(200).json({ status: 'unavailable', registrant: object  });
-        } else {
-            res.status(404).json({ status: 'available'});
-        }
+      if (object) {
+        res.status(200).json({ status: 'unavailable', registrant: object });
+      } else {
+        res.status(404).json({ status: 'available' });
+      }
     });
-}));
+  }));
 
   router.post('/email', asyncHandler(async (req, res) => {
     console.log(req.body)
     let mailObject = {};
+    mailObject.fullName = req.body.firstName + " " + req.body.lastName;
     mailObject.to = req.body.email;
     mailObject.subject = "Registration for AC21 confirmed";
-    mailObject.from = "sapnaac@sapnacommunity.org";
-    mailObject.template = 'email-template';
     sendEmail(mailObject);
     res.status(200).json('Email sent');
   }));
 };
 
-let smtpConfig = {
-  host: 'smtprelay.uwm.edu',
-  pool: true
-}
+function sendEmail(obj) {
 
-var transporter = nodemailer.createTransport(smtpConfig);
-// var viewEngine = handlebars.create({});
-// var options = exphbs({
-//   viewEngine: viewEngine,
-//   viewPath: path.resolve(__dirname, '../views')
-// });
-// transporter.use('compile', options);
+  let emailBody = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" style="background:#f3f3f3!important"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><title></title></head><img src="http://sapnaac.ucc.uwm.edu/img/contactBanner.png"><h2>Thank you ' + obj.fullName + ' for registering for the SAP Academic Community Conference 2021</h2><h4>Check back <a href="http://sapnaac.ucc.uwm.edu/#conf2021" target="_blank">sapnaac.ucc.uwm.edu</a> for confernce updates</h4><p>AC21 is seeking extended abstracts/research in progress on various topics exploring new technologies and issues in enterprise systems from multiple perspectives. These include but are not limited to fundamental research, practice-oriented cases, emerging areas such blockchain/robotic process automation/cloud computing/AI augmentation, and classroom use of enterprise systems.AC21 is a wonderful avenue to present research in progress and seek constructive feedback. AC21 also provides high-value networking opportunities with academics and industry professionals. Please see the full call for papers below submit today! Submissions are accepted through August 1, 2021.</p><h4>Go to <a href="http://sapnaac.ucc.uwm.edu/#conf2021" target="_blank">sapnaac.ucc.uwm.edu</a> to submit an abstract.</h4><body></body></html>';
 
-nodeMailerSendMail = function (mailObject) {
-  console.log(path.resolve(__dirname, '../views'))
-  console.log(mailObject)
-  transporter.sendMail(mailObject)
-    .then(result => {
-      console.log('here')
-      console.log(result)
-      var emailLog = new EmailLog({
-        email: thisMailObject.to,
-        subject: thisMailObject.subject,
-        body: JSON.stringify(thisMailObject),
-        from: thisMailObject.from,
-        topic: thisMailObject.topic ? thisMailObject.topic : ""
-      });
-      // emailLog.save();
-      console.log(emailLog);
+  let msg = {
+    to: obj.to, // Change to your recipient
+    from: 'sapnaac@sapnacommunity.org', // Change to your verified sender
+    subject: obj.subject,
+    text: 'Thank you, ' + obj.fullName + ' for registering for the SAP Academic Community Conference 2021',
+    html: emailBody,
+  }
+
+  sgMail
+    .send(msg)
+    .then((response) => {
+      console.log(response[0].statusCode)
+      console.log(response[0].headers)
     })
-    .catch(error => {
-      console.log('there')
-      console.log( error);
+    .catch((error) => {
+      console.error(error)
     })
-};
-
-sendEmail = function (mailObject) {
-  console.log("Email Sent");
-  mailObject.subject = mailObject.subject;
-  mailObject.from = "sapnaac@sapnacommunity.org";
-  mailObject.template = 'email-template';
-  mailObject.html='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" style="background:#f3f3f3!important"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><title></title></head><img src="http://sapnaac.ucc.uwm.edu/img/contactBanner.png"><h2>Thank you for registerting for the SAP Academic Community Conference 2021</h2><h4>Check back <a href="http://sapnaac.ucc.uwm.edu/#conf2021" target="_blank">sapnaac.ucc.uwm.edu</a> for confernce updates</h4><p>AC21 is seeking extended abstracts/research in progress on various topics exploring new technologies and issues in enterprise systems from multiple perspectives. These include but are not limited to fundamental research, practice-oriented cases, emerging areas such blockchain/robotic process automation/cloud computing/AI augmentation, and classroom use of enterprise systems.AC21 is a wonderful avenue to present research in progress and seek constructive feedback. AC21 also provides high-value networking opportunities with academics and industry professionals. Please see the full call for papers below submit today! Submissions are accepted through August 1, 2021.</p><h4>Go to <a href="http://sapnaac.ucc.uwm.edu/#conf2021" target="_blank">sapnaac.ucc.uwm.edu</a> to submit an abstract.</h4><body></body></html>';
-  mailObject.text="text";
-
-  nodeMailerSendMail(mailObject);
 }

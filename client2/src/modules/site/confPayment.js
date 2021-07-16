@@ -25,6 +25,7 @@ export class ConfPayment {
         if (params.id) {
             let response = await this.data.getRegister(params.id);
             if (!response.error) {
+                this.id = response._id;
                 this.fullName = response.firstName + " " + response.lastName;
                 if (response.country === 'US' || response.country === 'CA' || response.country === 'Other') {
                     this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit";
@@ -61,6 +62,7 @@ export class ConfPayment {
 
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
+                    this.data.pay(this.id);
                     this.paid = true;
                     this.payer = details.payer.name.given_name;
                     // alert('Transaction completed by ' + details.payer.name.given_name + '!');
