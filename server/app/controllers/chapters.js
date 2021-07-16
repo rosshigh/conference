@@ -75,6 +75,13 @@ module.exports = function (app) {
     });
   }));
 
+  router.get('/register/:id', asyncHandler(async (req, res) => {
+    var query = Register.findById(req.params.id);
+    query.exec().then(object => {
+      res.status(200).json(object);
+    });
+  }));
+
   router.post('/register', asyncHandler(async (req, res) => {
     var register = new Register(req.body);
     register.save().then(object => {
@@ -94,6 +101,19 @@ module.exports = function (app) {
       res.status(200).json({ message: "register deleted" });
     })
   }));
+
+  router.get('/register/checkEmail/:email', asyncHandler(async (req, res) => {
+    var value = req.params.email.toLowerCase();
+
+    var query = Register.findOne({ email: { $regex: new RegExp('^' + value, 'i') } });
+    query.exec().then(object => {
+        if (object) {
+            res.status(200).json({ status: 'unavailable', registrant: object  });
+        } else {
+            res.status(404).json({ status: 'available'});
+        }
+    });
+}));
 
   router.post('/email', asyncHandler(async (req, res) => {
     console.log(req.body)

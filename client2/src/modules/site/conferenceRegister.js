@@ -139,6 +139,23 @@ export class Conf2021Register {
         }).render('#paypal-button-container');
     }
 
+    async checkEmail() {
+        let response = await this.data.checkEmail(this.newRegObject.email);
+        if(response.status === 'unavailable'){
+            this.registrant = response.registrant;
+            this.duplicateEmailMessage = true;
+        } else {
+            this.registrant = undefined;
+            this.duplicateEmailMessage = false;
+        }
+    }
+
+    goToPaymenPage(){
+        if(this.registrant){
+            this.router.navigateToRoute('confPayment', { id:this.registrant._id });
+        }
+    }
+
     validateInput() {
         this.inputErrors = [];
         this.firstnameError = false;
@@ -194,25 +211,16 @@ export class Conf2021Register {
     }
 
     async register() {
-        this.validateInput();
-        if (!this.inputErrors.length) {
-            let response = await this.data.saveConferenceRegistration(this.newRegObject);
-            if (!response.error) {
-                //    this.utils.showNotification('Your registration has been saved!',"");
-                // this.registered = true;
-                if(this.newRegObject.country === 'US' || this.newRegObject.country === 'CA' || this.newRegObject.country === 'Other'){
-                    var fee="NA";
-                } else {
-                    var fee="LA";
+        if(this.duplicateEmailMessage === false){
+            this.validateInput();
+            if (!this.inputErrors.length) {
+                let response = await this.data.saveConferenceRegistration(this.newRegObject);
+                if (!response.error && response.email === this.newRegObject.email ) {
+                    this.router.navigateToRoute('confPayment', { id:response._id });
                 }
-                this.router.navigateToRoute('confPayment', { fee:fee });
             }
-        }
+        }  
     }
-
-    // goToPayment(fee){
-    //     this.router.navigateToRoute('confPayment', { fee:fee });
-    // }
 
     searchString(data) {
         for (var i = 0; i < data.length; i++) {

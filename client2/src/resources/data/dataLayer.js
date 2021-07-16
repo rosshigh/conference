@@ -26,4 +26,14 @@ export class DataLayer {
         let response = await this.data.saveObject(obj, 'email', 'post');
         return response;
     }
+
+    async checkEmail(email){
+        let response = await this.data.get('register/checkEmail/' + email);
+        return response;
+    }
+
+    async getRegister(id){
+        let response = await this.data.get('register/' + id);
+        return response;
+    }
 }

@@ -1,3 +1,7 @@
+import { inject } from 'aurelia-framework';
+import { DataLayer } from '../../resources/data/dataLayer';
+
+@inject(DataLayer)
 export class ConfPayment {
 
     dataBrowser = [
@@ -11,26 +15,32 @@ export class ConfPayment {
     better_browser = '<div class="container"><div class="better-browser row"><div class="col-md-2"></div><div class="col-md-8"><h3>We are sorry but it looks like your Browser doesn\'t support our website Features. In order to get the full experience please download a new version of your favourite browser.</h3></div><div class="col-md-2"></div><br><div class="col-md-4"><a href="https://www.mozilla.org/ro/firefox/new/" class="btn btn-warning">Mozilla</a><br></div><div class="col-md-4"><a href="https://www.google.com/chrome/browser/desktop/index.html" class="btn ">Chrome</a><br></div><div class="col-md-4"><a href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-worldwide-languages" class="btn">Internet Explorer</a><br></div><br><br><h4>Thank you!</h4></div></div>';
 
 
-    constructor() {
+    constructor(data) {
+        this.data = data;
         this.paid = false;
     }
 
     async activate(params) {
-       
-        if (params.fee === 'NA') {
-            this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit";
-           this.fee = "$50.00";
-        } else {
-            this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit";
-            this.fee = "$10.00";
-        }
 
+        if (params.id) {
+            let response = await this.data.getRegister(params.id);
+            if (!response.error) {
+                this.fullName = response.firstName + " " + response.lastName;
+                if (response.country === 'US' || response.country === 'CA' || response.country === 'Other') {
+                    this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit";
+                    this.fee = "$50.00";
+                } else {
+                    this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&currency=USD&disable-funding=credit";
+                    this.fee = "$10.00";
+                }
+            }
+        }
     }
 
     attached() {
         $(window).scrollTop(0);
         this.initGaia();
-        setTimeout(()=>{this.initPayPalButton();}, 1000);      
+        setTimeout(() => { this.initPayPalButton(); }, 1000);
     }
 
     initPayPalButton() {

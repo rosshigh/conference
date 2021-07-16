@@ -101,7 +101,7 @@ export class App {
         title: '2021 Conference Registration'
       },
       {
-        route: 'confPayment/:fee',
+        route: 'confPayment/:id',
         moduleId: PLATFORM.moduleName('./modules/site/confPayment'),
         name: 'confPayment',
         settings: { auth: false, roles: [] }
