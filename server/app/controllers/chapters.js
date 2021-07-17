@@ -8,7 +8,7 @@ var express = require('express'),
   asyncHandler = require('express-async-handler');
 
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey('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');
+sgMail.setApiKey('');
 
 module.exports = function (app) {
   app.use('/api', router);
