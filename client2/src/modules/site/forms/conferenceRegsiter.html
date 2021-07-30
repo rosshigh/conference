@@ -1,10 +1,7 @@
 <template>
     <h3>Conference Registration Form</h3>
     <p>
-        The conference is open to faculty, representatives of the SAP University Alliance and industry representatives. <span class="bold">The fee for the conference is ${fee}, payable at time of registration</span>.
-    </p>
-    <p>
-        If you have previously registered and need to make a payment, enter your email address in the email field.
+        The conference is open to faculty, representatives of the SAP University Alliance and industry representatives.
     </p>
     <div class="container row" style="background-color:ghostwhite;">
         <!-- <div class=""> -->
@@ -24,7 +21,9 @@
             <input value.bind="newRegObject.email" blur.trigger="checkEmail()" type="text" class="form-control" id="email"
                 aria-describedby="emailHelp">
             <div if.bind="emailError" id="emailHelp" class="form-text errorText">Email is required</div>
-            <div if.bind="duplicateEmailMessage" id="duplicateEmailHelp" class="form-text errorText">A registration with that email alread exists.<br/><button class="btn btn-primary" click.trigger="goToPaymenPage()">Make a payment</button></div>
+            <div if.bind="duplicateEmailMessage" id="duplicateEmailHelp" class="form-text errorText">A registration with that email alread exists.
+                <!-- <br/><button class="btn btn-primary" click.trigger="goToPaymenPage()">Make a payment</button> -->
+            </div>
 
             <label for="organization" class="form-label bigTopMargin">Organization *</label>
             <input value.bind="newRegObject.organization" type="text" class="form-control" id="organization"
