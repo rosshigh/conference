@@ -20,12 +20,18 @@ export class Conf2021 {
 
         this.pageHeader = "SAP Academic Community Conference 2021";
         this.pageSubHeader = "September 11-12, 2021";
+
+        this.show = 'home';
     }
 
     
     attached() {
         $(window).scrollTop(0);
         this.initGaia();
+    }
+
+    showWhat(showThis){
+        this.show = showThis;
     }
 
     openRegisterForm(){

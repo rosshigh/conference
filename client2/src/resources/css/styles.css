@@ -45,6 +45,10 @@ body, html {
     margin-right: 5px;
   }
 
+  .italics {
+    font-style: italic;
+  }
+
   .sortable {
     cursor: pointer;   
   }
