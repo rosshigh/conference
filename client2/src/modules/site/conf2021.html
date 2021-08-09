@@ -8,13 +8,16 @@
             <div class="row">
                 <div class="col-lg-2">
                     <ul class="list-group">
-                        <li click.trigger="showWhat('home')" class="list-group-item sortable">Home</li>
-                        <li click.trigger="showWhat('call')" class="list-group-item sortable">Call for Proposals</li>
-                        <li click.trigger="showWhat('program')" class="list-group-item sortable">Program</li>
-                        <li click.trigger="showWhat('keynotes')" class="list-group-item sortable">Keynotes</li>
+                        <li id="home" click.trigger="showWhat('home')" class="list-group-item sortable bold">Home</li>
+                        <li id="call" click.trigger="showWhat('call')" class="list-group-item sortable">Call for Proposals</li>
+                        <li id="program" click.trigger="showWhat('program')" class="list-group-item sortable">Program</li>
+                        <li id="keynotes" click.trigger="showWhat('keynotes')" class="list-group-item sortable">Keynotes</li>
                         <!-- <li click.trigger="showWhat('proceed')" class="list-group-item sortable">Proceedings</li> -->
-                        <li click.trigger="showWhat('contact')" class="list-group-item sortable">Contact Us</li>
+                        <li id="contact" click.trigger="showWhat('contact')" class="list-group-item sortable">Contact Us</li>
+                        <!-- <li click.trigger="showWhat('register')" class="list-group-item sortable">Register for Free!</li> -->
                     </ul>
+
+                    <h3 click.trigger="showWhat('register')" class="btn btn-primary"  href="#confRegister">Register for Free</h3> 
                 </div>
                 <div class="col-lg-10">
                     <compose show.bind="show === 'home'" view="./conference2021/home.html"></compose>
@@ -22,6 +25,7 @@
                     <compose show.bind="show === 'program'" view="./conference2021/program.html"></compose>
                     <compose show.bind="show === 'contact'" view="./conference2021/contact.html"></compose>
                     <compose show.bind="show === 'keynotes'" view="./conference2021/keynotes.html"></compose>
+                    <compose show.bind="show === 'register'" view="./conference2021/conferenceRegister.html"></compose>
                 </div>
             </div>
 

@@ -1,8 +1,65 @@
 import { inject } from 'aurelia-framework';
 import { Config } from '../../resources/config/config'
+import { Router } from "aurelia-router";
+import { DataLayer } from '../../resources/data/dataLayer';
+import { Utils } from '../../resources/config/utils';
 
-@inject(Config)
+@inject(Config, Router, DataLayer, Utils)
 export class Conf2021 {
+
+    countries = [
+        { code: "AR", country: "Argentina" },
+        { code: "BR", country: "Brazil" },
+        { code: "CA", country: "Canada" },
+        { code: "CL", country: "Chile" },
+        { code: "CO", country: "Columbia" },
+        { code: "CR", country: "Costa Rica" },
+        { code: "EC", country: "Ecuador" },
+        { code: "JM", country: "Jamaica" },
+        { code: "MX", country: "Mexico" },
+        { code: "PE", country: "Peru" },
+        { code: "Uruguay", country: "UY" },
+        { code: "US", country: "USA" },
+        { code: "VE", country: "Venezuela" },
+        { code: "Other", country: "Other" }
+    ];
+
+    roles = [
+        "Dean/Administrator",
+        "Faculty Coordinator",
+        "Professor/Lecturer",
+        "Student",
+        "Other"
+    ];
+
+    disciplines = [
+        "Accounting/Finance",
+        "Computer Science",
+        "Engineering",
+        "Human Capital Management",
+        "Information Systems",
+        "Management",
+        "Marketing",
+        "Operations/Supply Chain",
+        "Other"
+    ];
+
+    relationships = [
+        "Full Member",
+        "Associate Member",
+        "Prospective Member",
+        "SAP Customer",
+        "SAP Employee",
+        "SAP Partner",
+        "Other",
+    ];
+
+    howLongs = [
+        "0 - 1 year",
+        "1 - 5 years",
+        "6 - 10 years",
+        "More than 10 years"
+    ];
     
     dataBrowser = [
         { string: navigator.userAgent, subString: "Chrome", identity: "Chrome" },
@@ -15,22 +72,117 @@ export class Conf2021 {
     better_browser = '<div class="container"><div class="better-browser row"><div class="col-md-2"></div><div class="col-md-8"><h3>We are sorry but it looks like your Browser doesn\'t support our website Features. In order to get the full experience please download a new version of your favourite browser.</h3></div><div class="col-md-2"></div><br><div class="col-md-4"><a href="https://www.mozilla.org/ro/firefox/new/" class="btn btn-warning">Mozilla</a><br></div><div class="col-md-4"><a href="https://www.google.com/chrome/browser/desktop/index.html" class="btn ">Chrome</a><br></div><div class="col-md-4"><a href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-worldwide-languages" class="btn">Internet Explorer</a><br></div><br><br><h4>Thank you!</h4></div></div>';
 
     
-    constructor(config) {
+    constructor(config, router, data, utils) {
         this.config = config;
+        this.router = router;
+        this.data = data;
+        this.utils = utils;
 
         this.pageHeader = "SAP Academic Community Conference 2021";
         this.pageSubHeader = "September 11-12, 2021";
 
         this.show = 'home';
+        this.registered = false;
     }
-
-    
+   
     attached() {
         $(window).scrollTop(0);
         this.initGaia();
     }
 
+    async checkEmail() {
+        let response = await this.data.checkEmail(this.newRegObject.email);
+        if(response.status === 'unavailable'){
+            this.registrant = response.registrant;
+            this.duplicateEmailMessage = true;
+        } else {
+            this.registrant = undefined;
+            this.duplicateEmailMessage = false;
+        }
+    }
+
+    goToPaymenPage(){
+        if(this.registrant){
+            this.router.navigateToRoute('confPayment', { id:this.registrant._id });
+        }
+    }
+
+    validateInput() {
+        this.inputErrors = [];
+        this.firstnameError = false;
+        this.lastnameError = false;
+        this.emailError = false;
+        this.organizationError = false;
+        this.countryError = false;
+        this.disciplineError = false;
+        this.relationshipError = false;
+        this.experienceError = false;
+        this.roleError = false
+        this.experienceError = false;
+        if (this.newRegObject.firstName === "") {
+            this.inputErrors.push('First name is required');
+            this.firstnameError = true;
+        }
+        if (this.newRegObject.lastName === "") {
+            this.inputErrors.push('Last name is required');
+            this.lastnameError = true;
+        }
+        if (this.newRegObject.email === "") {
+            this.inputErrors.push('Email is required');
+            this.emailError = true;
+        }
+        if (this.newRegObject.organization === "") {
+            this.inputErrors.push('Organization is required');
+            this.organizationError = true;
+        }
+        if (this.newRegObject.country === "") {
+            this.inputErrors.push('Country is required');
+            this.countryError = true;
+        }
+        if (this.newRegObject.discipline === "") {
+            this.inputErrors.push('discipline is required');
+            this.disciplineError = true;
+        }
+        if (this.newRegObject.relationship === "") {
+            this.inputErrors.push('relationship is required');
+            this.relationshipError = true;
+        }
+        if (this.newRegObject.experience === "") {
+            this.inputErrors.push('experience is required');
+            this.experienceError = true;
+        }
+        if (this.newRegObject.role === "") {
+            this.inputErrors.push('Role is required');
+            this.roleError = true;
+        }
+        if (this.newRegObject.experience === "") {
+            this.inputErrors.push('experience is required');
+            this.experienceError = true;
+        }
+    }
+
+    async register() {
+        if(this.duplicateEmailMessage === false){
+            this.validateInput();
+            if (!this.inputErrors.length) {
+                let response = await this.data.saveConferenceRegistration(this.newRegObject);
+                if (!response.error && response.email === this.newRegObject.email ) {
+                    await this.sendEmail();
+                    this.fullName = this.newRegObject.firstName + " " + this.newRegObject.lastName;
+                    this.registered = true;
+                   
+                }
+            }
+        }  
+    }
+
+    async sendEmail(){
+        let response = await this.data.sendEmail(this.newRegObject);
+    }
+
     showWhat(showThis){
+        $(".list-group-item").removeClass('bold');
+        $("#" + showThis).addClass('bold');
         this.show = showThis;
     }
 

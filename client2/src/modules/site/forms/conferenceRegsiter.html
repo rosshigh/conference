@@ -1,84 +1,93 @@
 <template>
     <h3>Conference Registration Form</h3>
-    <p>
-        The conference is open to faculty, representatives of the SAP University Alliance and industry representatives.
-    </p>
-    <div class="container row" style="background-color:ghostwhite;">
-        <!-- <div class=""> -->
-        <div class="col-lg-6">
-            <label for="firstName" class="form-label bigTopMargin">First name *</label>
-            <input value.bind="newRegObject.firstName" type="text" class="form-control" id="firstName"
-                aria-describedby="firstnameHelp">
-            <div show.bind="firstnameError" id="firstnameHelp" class="form-text errorText">First Name is required
+    <div show.bind="registered">
+        <h2>Thank you ${fullName}! You are registered for the conference.</h2>
+    </div>
+    <div show.bind="!registered">
+        <p>
+            The conference is open to faculty, representatives of the SAP University Alliance and industry
+            representatives.
+        </p>
+        <div class="container row" style="background-color:ghostwhite;">
+            <!-- <div class=""> -->
+            <div class="col-lg-6">
+                <label for="firstName" class="form-label bigTopMargin">First name *</label>
+                <input value.bind="newRegObject.firstName" type="text" class="form-control" id="firstName"
+                    aria-describedby="firstnameHelp">
+                <div show.bind="firstnameError" id="firstnameHelp" class="form-text errorText">First Name is required
+                </div>
+
+                <label for="lastName" class="form-label bigTopMargin">Last name *</label>
+                <input value.bind="newRegObject.lastName" type="text" class="form-control" id="lastName"
+                    aria-describedby="lastnameHelp">
+                <div show.bind="lastnameError" id="lastnameHelp" class="form-text errorText">Last Name is required</div>
+
+                <label for="email" class="form-label bigTopMargin">Email *</label>
+                <input value.bind="newRegObject.email" blur.trigger="checkEmail()" type="text" class="form-control"
+                    id="email" aria-describedby="emailHelp">
+                <div if.bind="emailError" id="emailHelp" class="form-text errorText">Email is required</div>
+                <div if.bind="duplicateEmailMessage" id="duplicateEmailHelp" class="form-text errorText">A registration
+                    with that email alread exists.
+                    <!-- <br/><button class="btn btn-primary" click.trigger="goToPaymenPage()">Make a payment</button> -->
+                </div>
+
+                <label for="organization" class="form-label bigTopMargin">Organization *</label>
+                <input value.bind="newRegObject.organization" type="text" class="form-control" id="organization"
+                    aria-describedby="organizationHelp">
+                <div show.bind="organizationError" id="organizationHelp" class="form-text errorText">Organization is
+                    required</div>
+
+                <label for="country" class="form-label bigTopMargin">Country *</label>
+                <select value.bind="newRegObject.country" class="form-control" id="country"
+                    aria-describedby="countrypHelp">
+                    <option value=""></option>
+                    <option repeat.for="country of countries" value.bind="country.code">${country.country}</option>
+                </select>
+                <div show.bind="countryError" id="countryHelp" class="form-text errorText">Country is
+                    required</div>
+
+                <button class="btn btn-primary" click.trigger="register()">Register</button>
             </div>
+            <div class="col-lg-6">
+                <label for="discipline" class="form-label bigTopMargin">Discipline *</label>
+                <select value.bind="newRegObject.discipline" class="form-control" id="discipline"
+                    aria-describedby="disciplineHelp">
+                    <option value=""></option>
+                    <option repeat.for="discipline of disciplines" value="${discipline}">${discipline}</option>
+                </select>
+                <div show.bind="disciplineError" id="disciplineHelp" class="form-text errorText">Discipline is required
+                </div>
 
-            <label for="lastName" class="form-label bigTopMargin">Last name *</label>
-            <input value.bind="newRegObject.lastName" type="text" class="form-control" id="lastName"
-                aria-describedby="lastnameHelp">
-            <div show.bind="lastnameError" id="lastnameHelp" class="form-text errorText">Last Name is required</div>
+                <label for="role" class="form-label bigTopMargin">What is your role? *</label>
+                <select value.bind="newRegObject.role" class="form-control" id="role" aria-describedby="roleHelp">
+                    <option value=""></option>
+                    <option repeat.for="role of roles" value="${role}">${role}</option>
+                </select>
+                <div show.bind="roleError" id="roleHelp" class="form-text errorText">Role is required
+                </div>
 
-            <label for="email" class="form-label bigTopMargin">Email *</label>
-            <input value.bind="newRegObject.email" blur.trigger="checkEmail()" type="text" class="form-control" id="email"
-                aria-describedby="emailHelp">
-            <div if.bind="emailError" id="emailHelp" class="form-text errorText">Email is required</div>
-            <div if.bind="duplicateEmailMessage" id="duplicateEmailHelp" class="form-text errorText">A registration with that email alread exists.
-                <!-- <br/><button class="btn btn-primary" click.trigger="goToPaymenPage()">Make a payment</button> -->
-            </div>
+                <label for="relationship" class="form-label bigTopMargin">Relationship to SAP *</label>
+                <select value.bind="newRegObject.relationship" class="form-control" id="relationship"
+                    aria-describedby="relationshipHelp">
+                    <option value=""></option>
+                    <option repeat.for="relationship of relationships" value="${relationship}">${relationship}</option>
+                </select>
+                <div show.bind="relationshipError" id="relationshipHelp" class="form-text errorText">Relationship is
+                    required
+                </div>
 
-            <label for="organization" class="form-label bigTopMargin">Organization *</label>
-            <input value.bind="newRegObject.organization" type="text" class="form-control" id="organization"
-                aria-describedby="organizationHelp">
-            <div show.bind="organizationError" id="organizationHelp" class="form-text errorText">Organization is
-                required</div>
-
-            <label for="country" class="form-label bigTopMargin">Country *</label>
-            <select value.bind="newRegObject.country" class="form-control" id="country" aria-describedby="countrypHelp">
-                <option value=""></option>
-                <option repeat.for="country of countries" value.bind="country.code">${country.country}</option>
-            </select>
-            <div show.bind="countryError" id="countryHelp" class="form-text errorText">Country is
-                required</div>
-
-            <button class="btn btn-primary" click.trigger="register()">Register</button>
-        </div>
-        <div class="col-lg-6">
-            <label for="discipline" class="form-label bigTopMargin">Discipline *</label>
-            <select value.bind="newRegObject.discipline" class="form-control" id="discipline"
-                aria-describedby="disciplineHelp">
-                <option value=""></option>
-                <option repeat.for="discipline of disciplines" value="${discipline}">${discipline}</option>
-            </select>
-            <div show.bind="disciplineError" id="disciplineHelp" class="form-text errorText">Discipline is required
-            </div>
-
-            <label for="role" class="form-label bigTopMargin">What is your role? *</label>
-            <select value.bind="newRegObject.role" class="form-control" id="role" aria-describedby="roleHelp">
-                <option value=""></option>
-                <option repeat.for="role of roles" value="${role}">${role}</option>
-            </select>
-            <div show.bind="roleError" id="roleHelp" class="form-text errorText">Role is required
-            </div>
-
-            <label for="relationship" class="form-label bigTopMargin">Relationship to SAP *</label>
-            <select value.bind="newRegObject.relationship" class="form-control" id="relationship"
-                aria-describedby="relationshipHelp">
-                <option value=""></option>
-                <option repeat.for="relationship of relationships" value="${relationship}">${relationship}</option>
-            </select>
-            <div show.bind="relationshipError" id="relationshipHelp" class="form-text errorText">Relationship is required
-            </div>
-
-            <label for="howLong" class="form-label bigTopMargin">How long have you been involved with SAP? *</label>
-            <select value.bind="newRegObject.experience" class="form-control" id="howLong"
-                aria-describedby="relationshipHelp">
-                <option value=""></option>
-                <option repeat.for="howLong of howLongs" value="${howLong}">${howLong}</option>
-            </select>
-            <div show.bind="experienceError" id="howLongHelp" class="form-text errorText">Your experience with SAP is required
+                <label for="howLong" class="form-label bigTopMargin">How long have you been involved with SAP? *</label>
+                <select value.bind="newRegObject.experience" class="form-control" id="howLong"
+                    aria-describedby="relationshipHelp">
+                    <option value=""></option>
+                    <option repeat.for="howLong of howLongs" value="${howLong}">${howLong}</option>
+                </select>
+                <div show.bind="experienceError" id="howLongHelp" class="form-text errorText">Your experience with SAP
+                    is required
+                </div>
             </div>
         </div>
     </div>
-
     </div>
 
 </template>
