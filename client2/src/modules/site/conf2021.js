@@ -3,6 +3,7 @@ import { Config } from '../../resources/config/config'
 import { Router } from "aurelia-router";
 import { DataLayer } from '../../resources/data/dataLayer';
 import { Utils } from '../../resources/config/utils';
+import moment from 'moment';
 
 @inject(Config, Router, DataLayer, Utils)
 export class Conf2021 {
@@ -88,6 +89,10 @@ export class Conf2021 {
     attached() {
         $(window).scrollTop(0);
         this.initGaia();
+
+        let today = new Date();
+        let cutoff = new Date('9/3/2021');
+        this.registrationClosed = moment(today).isAfter(cutoff);
     }
 
     async checkEmail() {

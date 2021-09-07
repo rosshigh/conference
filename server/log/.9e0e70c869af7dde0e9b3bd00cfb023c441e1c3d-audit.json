@@ -6,59 +6,9 @@
     "auditLog": "log\\.9e0e70c869af7dde0e9b3bd00cfb023c441e1c3d-audit.json",
     "files": [
         {
-            "date": 1628007333213,
-            "name": "log\\application-2021-08-03-11.log",
-            "hash": "db4fdf66b27e99bb6837d603936455cf"
-        },
-        {
-            "date": 1628010402077,
-            "name": "log\\application-2021-08-03-12.log",
-            "hash": "855d7a7e3769cb9186a8a4c09e22809b"
-        },
-        {
-            "date": 1628264740154,
-            "name": "log\\application-2021-08-06-10.log",
-            "hash": "25e7921cd2ba06a05b4d44302ba94e2e"
-        },
-        {
-            "date": 1628267379054,
-            "name": "log\\application-2021-08-06-11.log",
-            "hash": "ec294a7c16b238195129b5f70e886578"
-        },
-        {
-            "date": 1628273237037,
-            "name": "log\\application-2021-08-06-13.log",
-            "hash": "0f4bed69f2ba159d09d987e534c4b5c2"
-        },
-        {
-            "date": 1628447756673,
-            "name": "log\\application-2021-08-08-13.log",
-            "hash": "1503d8c383e14921ff01c27d3fae4d4e"
-        },
-        {
-            "date": 1628516911850,
-            "name": "log\\application-2021-08-09-08.log",
-            "hash": "148d1e24d93de6759dabfe6fc24dd9fa"
-        },
-        {
-            "date": 1628517637567,
-            "name": "log\\application-2021-08-09-09.log",
-            "hash": "fe4ca8537d7541fb7c56ef1ad287b629"
-        },
-        {
-            "date": 1628531394211,
-            "name": "log\\application-2021-08-09-12.log",
-            "hash": "d65c57cdcb990908f08440afc88de78d"
-        },
-        {
-            "date": 1628867245057,
-            "name": "log\\application-2021-08-13-10.log",
-            "hash": "90b442823f2af4e58f5afb61c9de9774"
-        },
-        {
-            "date": 1628870736704,
-            "name": "log\\application-2021-08-13-11.log",
-            "hash": "1caff779f4b823dd7e194a6f4307307b"
+            "date": 1631030809360,
+            "name": "log\\application-2021-09-07-11.log",
+            "hash": "70960a25f656fc6bf8602aa84c76105e"
         }
     ]
 }

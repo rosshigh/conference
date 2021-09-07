@@ -17,7 +17,7 @@
                         <!-- <li click.trigger="showWhat('register')" class="list-group-item sortable">Register for Free!</li> -->
                     </ul>
 
-                    <h3 click.trigger="showWhat('register')" class="btn btn-primary"  href="#confRegister">Register for Free</h3> 
+                    <h3 if.bind="!registrationClosed" click.trigger="showWhat('register')" class="btn btn-primary"  href="#confRegister">Register for Free</h3> 
                 </div>
                 <div class="col-lg-10">
                     <compose show.bind="show === 'home'" view="./conference2021/home.html"></compose>
