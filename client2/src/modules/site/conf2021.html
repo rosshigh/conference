@@ -16,7 +16,7 @@
                         <li id="contact" click.trigger="showWhat('contact')" class="list-group-item sortable">Contact Us</li>
                         <!-- <li click.trigger="showWhat('register')" class="list-group-item sortable">Register for Free!</li> -->
                     </ul>
-
+                    <h3 class="sortable bold" click.trigger="showWhat('carousel')">Conference Hightlights!</h3>
                     <h3 if.bind="!registrationClosed" click.trigger="showWhat('register')" class="btn btn-primary"  href="#confRegister">Register for Free</h3> 
                 </div>
                 <div class="col-lg-10">
@@ -26,6 +26,7 @@
                     <compose show.bind="show === 'contact'" view="./conference2021/contact.html"></compose>
                     <compose show.bind="show === 'keynotes'" view="./conference2021/keynotes.html"></compose>
                     <compose show.bind="show === 'register'" view="./conference2021/conferenceRegister.html"></compose>
+                    <compose show.bind="show === 'carousel'" view="./conference2021/carousel.html"></compose>
                 </div>
             </div>
 
