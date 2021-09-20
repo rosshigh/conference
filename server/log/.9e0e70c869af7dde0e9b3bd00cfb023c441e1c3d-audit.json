@@ -59,6 +59,11 @@
             "date": 1631552666209,
             "name": "log\\application-2021-09-13-12.log",
             "hash": "fd5c0e1d8d0ec66245918f460dffb356"
+        },
+        {
+            "date": 1632144240875,
+            "name": "log\\application-2021-09-20-08.log",
+            "hash": "8c146f07803142b173d2edc56c8b698f"
         }
     ]
 }
