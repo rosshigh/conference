@@ -20,7 +20,7 @@ export class Events {
         this.pageHeader = "SAP North America Academic Community Events";
         this.pageSubHeader = "Upcoming events of interest to the SAP Academic Community";
 
-        this.regularBanner = false;
+        this.regularBanner = true;
     }
 
     attached() {
