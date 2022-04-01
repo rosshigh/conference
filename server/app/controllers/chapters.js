@@ -4,6 +4,7 @@ var express = require('express'),
   ERPSimTeam = mongoose.model('ERPSimTeam'),
   Contact = mongoose.model('Contact'),
   Register = mongoose.model('Register'),
+  Committee = mongoose.model('Committee'),
   hbs = require('handlebars'),
   asyncHandler = require('express-async-handler');
 
@@ -133,6 +134,33 @@ module.exports = function (app) {
     mailObject.subject = "Registration for AC21 confirmed";
     sendEmail(mailObject);
     res.status(200).json('Email sent');
+  }));
+
+  router.get('/committees', asyncHandler(async (req, res) => {
+    var query = Committee.find();
+    query.exec().then(object => {
+      res.status(200).json(object);
+    });
+  }));
+
+  router.post('/committees', asyncHandler(async (req, res) => {
+    var team = new Committee(req.body);
+    team.save().then(object => {
+      res.status(200).json(object);
+    });
+  }));
+
+  router.put('/committees', asyncHandler(async (req, res) => {
+    Committee.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true, safe: true, multi: false })
+      .then(object => {
+        res.status(200).json(object);
+      })
+  }));
+
+  router.delete('/committees', asyncHandler(async (req, res) => {
+    Committee.find({ _id: req.params.id }).remove().exec(object => {
+      res.status(200).json({ message: "committee deleted" });
+    })
   }));
 };
 

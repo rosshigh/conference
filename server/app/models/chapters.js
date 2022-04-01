@@ -43,3 +43,20 @@ var RegisterSchema = new Schema({
 });
 
 module.exports = Mongoose.model('Register', RegisterSchema);
+
+var CommitteeSchema = new Schema({
+  committee: { type: String },
+  year: { type: Number },
+  firstName: { type: String },
+  lastName: { type: String },
+  email: { type: String },
+  organization: { type: String },
+  linkedIn: { type: String },
+  url: { type: String },
+  title: { type: String },
+  department: { type: String },
+  address: { type: String },
+  research: { type: String }
+});
+
+module.exports = Mongoose.model('Committee', CommitteeSchema);
