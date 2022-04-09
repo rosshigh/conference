@@ -13,7 +13,7 @@
     "aurelia-http-client": "^1.3.0",
     "aurelia-notification": "^1.1.0",
     "bluebird": "^3.5.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "requirejs": "^2.3.6",
     "text": "github:requirejs/text#latest",
     "toastr": "^2.1.4"
