@@ -9,6 +9,16 @@
             "date": 1650912290715,
             "name": "log\\error-2022-04-25-13.log",
             "hash": "17832f6cd26b4f04ada913d0756d6082"
+        },
+        {
+            "date": 1650915503787,
+            "name": "log\\error-2022-04-25-14.log",
+            "hash": "cbcc33d3c0b14cf6cf878bbf7750f308"
+        },
+        {
+            "date": 1651683849042,
+            "name": "log\\error-2022-05-04-12.log",
+            "hash": "3f20d58055288ada7cd9e4edc5c0ef9c"
         }
     ]
 }
