@@ -2,12 +2,19 @@
 export class Conf2022 {
     regularBanner = true;
 
+    constructor(){
+        
+        this.pageHeader = "North American SAP Academic Community Conference 2022";
+        this.pageSubHeader = "July 18-19, 2022";
+
+    }
+
     activate() {
         this.paypalURL = "https://www.paypal.com/sdk/js?client-id=AdG7HOB9ups2a4OOPuJuZKGadkv4qlFIXkkG4trDM_HKI3rl---nO0FEEyNPLHD-p-o8cWnNOdExGvfA&enable-funding=venmo&currency=USD&disable-funding=credit,venmo";
     }
 
     attached() {
-        setTimeout(() => { this.initPayPalButton(); }, 500);
+        setTimeout(() => { this.initPayPalButton(); }, 1000);
     }
 
     initPayPalButton() {
