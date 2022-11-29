@@ -5,6 +5,7 @@ var express = require('express'),
   Contact = mongoose.model('Contact'),
   Register = mongoose.model('Register'),
   Committee = mongoose.model('Committee'),
+  Board = mongoose.model('Board'),
   hbs = require('handlebars'),
   asyncHandler = require('express-async-handler');
 
@@ -160,6 +161,33 @@ module.exports = function (app) {
   router.delete('/committees', asyncHandler(async (req, res) => {
     Committee.find({ _id: req.params.id }).remove().exec(object => {
       res.status(200).json({ message: "committee deleted" });
+    })
+  }));
+
+  router.get('/board', asyncHandler(async (req, res) => {
+    var query = Board.find().sort({lastName: 'asc'});
+    query.exec().then(object => {
+      res.status(200).json(object);
+    });
+  }));
+
+  router.post('/board', asyncHandler(async (req, res) => {
+    var team = new Board(req.body);
+    team.save().then(object => {
+      res.status(200).json(object);
+    });
+  }));
+
+  router.put('/board', asyncHandler(async (req, res) => {
+    Board.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true, safe: true, multi: false })
+      .then(object => {
+        res.status(200).json(object);
+      })
+  }));
+
+  router.delete('/board', asyncHandler(async (req, res) => {
+    Board.find({ _id: req.params.id }).remove().exec(object => {
+      res.status(200).json({ message: "boardmember deleted" });
     })
   }));
 };

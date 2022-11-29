@@ -60,3 +60,19 @@ var CommitteeSchema = new Schema({
 });
 
 module.exports = Mongoose.model('Committee', CommitteeSchema);
+
+var BoardMembersSchema = new Schema({
+  firstName:  { type: String },
+  lastName:  { type: String },
+  email:  { type: String },
+  linkedin: { type: String },
+  position:  { type: String },
+  department: { type: String },
+  college:  { type: String },
+  school: { type: String },
+  location: { type: String },
+  image: { type: String },
+  role: {type: String }
+});
+
+module.exports = Mongoose.model('Board', BoardMembersSchema);
