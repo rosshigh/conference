@@ -14,6 +14,16 @@
             "date": 1669752002719,
             "name": "log\\application-2022-11-29-14.log",
             "hash": "bb36930becbb723b8ff79831fa13e1fa"
+        },
+        {
+            "date": 1669755633716,
+            "name": "log\\application-2022-11-29-15.log",
+            "hash": "87d8cc87717024d9617b6a8260249859"
+        },
+        {
+            "date": 1669826925475,
+            "name": "log\\application-2022-11-30-10.log",
+            "hash": "892ca94a0f216dcea9f71dd2f70b548f"
         }
     ]
 }
