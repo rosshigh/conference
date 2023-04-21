@@ -4,8 +4,8 @@ export class Conf2022 {
 
     constructor(){
         
-        this.pageHeader = "North American SAP Academic Community Conference 2022";
-        this.pageSubHeader = "July 18-19, 2022";
+        this.pageHeader = "North American SAP Academic Community Conference 2023";
+        this.pageSubHeader = "July 19-20, 2023";
 
     }
 
