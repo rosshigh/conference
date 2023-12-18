@@ -6,9 +6,9 @@
     "auditLog": "log\\.9e0e70c869af7dde0e9b3bd00cfb023c441e1c3d-audit.json",
     "files": [
         {
-            "date": 1689086845691,
-            "name": "log\\application-2023-07-11-09.log",
-            "hash": "00c033dd0a640c381675229285ba74d2"
+            "date": 1702922417761,
+            "name": "log\\application-2023-12-18-12.log",
+            "hash": "6fdfad67250a4fea4b00f8bc5338c9b1"
         }
     ]
 }
