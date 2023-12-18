@@ -17,7 +17,7 @@ export class Committees{
         this.config = config;
 
         this.pageHeader = "The SAP North America Community Committees";
-        this.pageSubHeader = "2020-2021";
+        this.pageSubHeader = ""; 
 
         this.regularBanner = true;
     }
